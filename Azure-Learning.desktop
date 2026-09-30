@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Azure Learning
+Comment=Local AZ-900 exam preparation
+Exec=/home/dimitri/workspace/projects/azure-learning/Azure-Learning
+Path=/home/dimitri/workspace/projects/azure-learning
+Icon=utilities-terminal
+Terminal=false
+Categories=Education;Development;
+StartupNotify=true
