@@ -53,6 +53,19 @@ Required next work before any store submission
   audits documented in the mobile archive.
 
 
+Desktop AZ-900 exam correctness fixes — 2026-10-01
+- Fixed `_finish_exam` so unanswered items still score as wrong but are no longer
+  persisted as attempts or pushed into the spaced-repetition schedule.
+- Aligned `_build_exam_set` question selection with `EXAM_DOMAIN_WEIGHTS`
+  (official AZ-900 July 2026 midpoints: cloud 27.5%, architecture 37.5%,
+  governance 32.5%), removing the previous governance 0.35 selection drift.
+- Added focused regression tests in `tests/test_az900_exam.py` covering blank
+  and partial exams plus weighted selection.
+- Verification: `python3 -m py_compile azure_learning_app.py` passes;
+  `python3 -m pytest tests/test_az900_exam.py -v` passes (3/3).
+- Mobile scope unchanged; this is the legacy desktop correction slice only.
+
+
 Archive index
 - `archive/handoff/desktop-app-development-2026-09.md`
   Chronological implementation, validation, UI/theme, packaging, and bugfix

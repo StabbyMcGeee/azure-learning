@@ -4540,7 +4540,10 @@ class AzureLearningApp:
         self._tick_exam_timer()
 
     def _build_exam_set(self, count):
-        weights = {"cloud": 0.275, "architecture": 0.375, "governance": 0.35}
+        # Use the same authoritative blueprint weights as the score calculation
+        # (EXAM_DOMAIN_WEIGHTS: official AZ-900 July 2026 midpoints) so question
+        # selection and scoring always agree.
+        weights = EXAM_DOMAIN_WEIGHTS
         target_counts = {category: round(count * weight) for category, weight in weights.items()}
         target_counts["architecture"] += count - sum(target_counts.values())
 
@@ -4775,7 +4778,11 @@ class AzureLearningApp:
                         "answered": self._has_answer(question, answer),
                     }
                 )
-            self._record_attempt(question["id"], correct, mode="exam", score=100 if correct else 0)
+            # Only answered exam items become attempts and affect the spaced-
+            # repetition schedule. Unanswered items still count as wrong for
+            # scoring but must not be persisted as answered attempts.
+            if self._has_answer(question, answer):
+                self._record_attempt(question["id"], correct, mode="exam", score=100 if correct else 0)
         score = round((correct_count / total) * 100, 1) if total else 0.0
         scaled_score, passed = compute_scaled_score(domain_results)
         self.last_exam_result = {
