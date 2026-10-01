@@ -5,6 +5,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:study_app/data/local_store.dart';
 import 'package:study_app/data/question_bank.dart';
 import 'package:study_app/models/attempt.dart';
+import 'package:study_app/models/content_pack.dart';
 import 'package:study_app/models/question.dart';
 import 'package:study_app/models/session.dart';
 
@@ -51,6 +52,20 @@ class FakeLocalStore extends LocalStore {
   FakeLocalStore([List<Question>? questions]) {
     if (questions != null) _questions.addAll(questions);
   }
+
+  @override
+  Future<void> applyContentPack(ContentPack pack) async {
+    for (final q in pack.questions) {
+      _questions.removeWhere((existing) => existing.id == q.id);
+      _questions.add(q.toQuestion());
+    }
+  }
+
+  @override
+  Future<void> applyContentPackToTransaction(
+    Transaction txn,
+    ContentPack pack,
+  ) async => applyContentPack(pack);
 
   @override
   Future<void> close() async {}

@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import '../models/attempt.dart';
+import '../models/content_pack.dart';
 import '../models/question.dart';
 import '../models/session.dart';
 
@@ -23,6 +24,46 @@ class LocalStore {
   Future<Database> get database async => _testDb ?? (_db ??= await _initDb());
 
   static Future<void> createSchema(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS questions(
+        id TEXT PRIMARY KEY,
+        text TEXT NOT NULL,
+        options TEXT NOT NULL,
+        correctOptionIndex INTEGER NOT NULL,
+        explanation TEXT,
+        domain TEXT NOT NULL,
+        difficulty TEXT NOT NULL,
+        source TEXT,
+        rightsBasis TEXT
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS attempts(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        questionId TEXT NOT NULL,
+        selectedOptionIndex INTEGER NOT NULL,
+        correct INTEGER NOT NULL,
+        timestamp INTEGER NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS sessions(
+        id TEXT PRIMARY KEY,
+        mode TEXT NOT NULL,
+        startedAt INTEGER NOT NULL,
+        finishedAt INTEGER NOT NULL,
+        questionCount INTEGER NOT NULL,
+        correctCount INTEGER NOT NULL,
+        scorePercent INTEGER
+      )
+    ''');
+  }
+
+  /// Creates the original v1 schema without provenance columns.
+  ///
+  /// This helper exists only for migration testing; production code always
+  /// uses [createSchema] for new databases.
+  static Future<void> createV1Schema(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS questions(
         id TEXT PRIMARY KEY,
@@ -56,13 +97,24 @@ class LocalStore {
     ''');
   }
 
+  /// Migrates an existing v1 database to v2, adding provenance columns.
+  static Future<void> migrateV1ToV2(Database db) async {
+    await db.execute('ALTER TABLE questions ADD COLUMN source TEXT');
+    await db.execute('ALTER TABLE questions ADD COLUMN rightsBasis TEXT');
+  }
+
   static Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'study_app.db');
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (db, version) async => createSchema(db),
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await migrateV1ToV2(db);
+        }
+      },
     );
   }
 
@@ -71,6 +123,36 @@ class LocalStore {
       await _db!.close();
       _db = null;
     }
+  }
+
+  /// Atomically applies a validated [ContentPack] to the question bank.
+  ///
+  /// Existing questions with the same id are replaced, but attempt and session
+  /// history is left untouched because those rows live in separate tables.
+  /// Repeat calls with the same pack are safe.
+  Future<void> applyContentPack(ContentPack pack) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await applyContentPackToTransaction(txn, pack);
+    });
+  }
+
+  /// Variant of [applyContentPack] that writes into an already-open
+  /// [Transaction]. This is exposed for tests that want to verify rollback
+  /// behavior.
+  Future<void> applyContentPackToTransaction(
+    Transaction txn,
+    ContentPack pack,
+  ) async {
+    final batch = txn.batch();
+    for (final q in pack.questions) {
+      batch.insert(
+        'questions',
+        q.toQuestion().toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
   }
 
   Future<void> insertQuestions(List<Question> questions) async {
