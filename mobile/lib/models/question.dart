@@ -3,6 +3,9 @@
 /// The mobile v1 bank is intentionally empty at runtime. The legacy 133
 /// desktop questions are NOT carried into this build because their rights are
 /// unresolved. Synthetic fixtures may be injected in tests only.
+///
+/// Questions loaded from a [ContentPack] carry [source] and [rightsBasis]
+/// provenance metadata; legacy rows may leave these null.
 class Question {
   final String id;
   final String text;
@@ -11,6 +14,8 @@ class Question {
   final String? explanation;
   final String domain;
   final String difficulty;
+  final String? source;
+  final String? rightsBasis;
 
   const Question({
     required this.id,
@@ -20,6 +25,8 @@ class Question {
     this.explanation,
     required this.domain,
     required this.difficulty,
+    this.source,
+    this.rightsBasis,
   });
 
   Map<String, dynamic> toMap() => {
@@ -30,6 +37,8 @@ class Question {
         'explanation': explanation,
         'domain': domain,
         'difficulty': difficulty,
+        'source': source,
+        'rightsBasis': rightsBasis,
       };
 
   factory Question.fromMap(Map<String, dynamic> map) {
@@ -42,6 +51,8 @@ class Question {
       explanation: map['explanation'] as String?,
       domain: map['domain'] as String,
       difficulty: map['difficulty'] as String,
+      source: map['source'] as String?,
+      rightsBasis: map['rightsBasis'] as String?,
     );
   }
 

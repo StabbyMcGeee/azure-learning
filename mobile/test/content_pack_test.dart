@@ -1,0 +1,414 @@
+import 'dart:io';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:study_app/data/content_pack_loader.dart';
+import 'package:study_app/data/local_store.dart';
+import 'package:study_app/models/attempt.dart';
+import 'package:study_app/models/content_pack.dart';
+import 'package:study_app/models/question.dart';
+import 'package:study_app/models/session.dart';
+
+import 'test_helpers.dart';
+
+const String _validPackJson = '''
+{
+  "formatVersion": "azpack-v1",
+  "packId": "com.example.test.synthetic",
+  "packVersion": 1,
+  "title": "Synthetic test pack",
+  "source": "Test fixture",
+  "rightsBasis": "synthetic-fixture",
+  "questions": [
+    {
+      "id": "q-001",
+      "text": "Sample question one?",
+      "options": ["A", "B", "C"],
+      "correctOptionIndex": 1,
+      "domain": "Domain A",
+      "difficulty": "easy",
+      "source": "Per-question fixture",
+      "rightsBasis": "per-question-synthetic"
+    },
+    {
+      "id": "q-002",
+      "text": "Sample question two?",
+      "options": ["X", "Y"],
+      "correctOptionIndex": 0,
+      "explanation": "X is correct.",
+      "domain": "Domain B",
+      "difficulty": "medium",
+      "source": "Per-question fixture",
+      "rightsBasis": "per-question-synthetic"
+    }
+  ]
+}
+''';
+
+void main() {
+  setUpAll(initTestDatabase);
+
+  group('ContentPack parsing', () {
+    test('parses a valid synthetic pack', () {
+      final pack = ContentPack.parse(_validPackJson);
+      expect(pack.formatVersion, 'azpack-v1');
+      expect(pack.packId, 'com.example.test.synthetic');
+      expect(pack.packVersion, 1);
+      expect(pack.questions.length, 2);
+      expect(pack.questions.first.id, 'q-001');
+    });
+
+    test('rejects invalid JSON', () {
+      expect(() => ContentPack.parse('{'), throwsA(isA<FormatException>()));
+    });
+
+    test('rejects a pack with missing required fields', () {
+      const badPack = '''
+      {
+        "formatVersion": "azpack-v1",
+        "packId": "missing-fields"
+      }
+      ''';
+      expect(() => ContentPack.parse(badPack), throwsA(isA<FormatException>()));
+    });
+  });
+
+  group('ContentPack validation', () {
+    test('accepts a valid synthetic pack', () {
+      final pack = ContentPack.parse(_validPackJson);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, isEmpty);
+    });
+
+    test('rejects unsupported formatVersion', () {
+      final json = _validPackJson.replaceFirst('azpack-v1', 'azpack-v2');
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('Unsupported formatVersion')));
+    });
+
+    test('rejects packVersion less than 1', () {
+      final json = _validPackJson.replaceFirst('"packVersion": 1', '"packVersion": 0');
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('packVersion must be >= 1')));
+    });
+
+    test('rejects duplicate question ids within a pack', () {
+      final json = _validPackJson.replaceFirst('"q-002"', '"q-001"');
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('duplicate id')));
+    });
+
+    test('rejects out-of-range correctOptionIndex', () {
+      final json = _validPackJson.replaceFirst('"correctOptionIndex": 1', '"correctOptionIndex": 5');
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('out of range')));
+    });
+
+    test('rejects too few options', () {
+      final json = _validPackJson.replaceFirst(
+        '["A", "B", "C"]',
+        '["A"]',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('at least two options')));
+    });
+
+    test('rejects missing per-question source', () {
+      final json = _validPackJson.replaceFirst(
+        '"source": "Per-question fixture"',
+        '"source": ""',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('missing or empty source')));
+    });
+
+    test('rejects missing per-question rightsBasis', () {
+      final json = _validPackJson.replaceFirst(
+        '"rightsBasis": "per-question-synthetic"',
+        '"rightsBasis": ""',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('missing or empty rightsBasis')));
+    });
+
+    test('rejects empty question list beyond max bound', () {
+      final pack = ContentPack(
+        formatVersion: 'azpack-v1',
+        packId: 'big-pack',
+        packVersion: 1,
+        title: 'Big',
+        source: 'synthetic',
+        rightsBasis: 'synthetic',
+        questions: List.generate(
+          contentPackMaxQuestions + 1,
+          (i) => PackQuestion(
+            id: 'q-$i',
+            text: 'Q',
+            options: const ['A', 'B'],
+            correctOptionIndex: 0,
+            domain: 'D',
+            difficulty: 'easy',
+            source: 'synthetic',
+            rightsBasis: 'synthetic',
+          ),
+        ),
+      );
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('maximum is $contentPackMaxQuestions')));
+    });
+  });
+
+  group('ContentPack atomic application', () {
+    late LocalStore store;
+
+    setUp(() async {
+      final db = await openTestDatabase();
+      store = LocalStore.withDatabase(db);
+    });
+
+    tearDown(() async {
+      await store.close();
+    });
+
+    test('applies a valid pack and persists provenance', () async {
+      final success = await ContentPackLoader.loadPackFromString(store, _validPackJson);
+      expect(success, isTrue);
+
+      final questions = await store.getAllQuestions();
+      expect(questions.length, 2);
+
+      final first = questions.firstWhere((q) => q.id == 'q-001');
+      expect(first.source, 'Per-question fixture');
+      expect(first.rightsBasis, 'per-question-synthetic');
+    });
+
+    test('invalid pack is rejected and writes nothing', () async {
+      const badPack = '''
+      {
+        "formatVersion": "azpack-v1",
+        "packId": "bad",
+        "packVersion": 1,
+        "title": "Bad",
+        "source": "synthetic",
+        "rightsBasis": "synthetic",
+        "questions": [
+          {
+            "id": "q-001",
+            "text": "T",
+            "options": ["A"],
+            "correctOptionIndex": 0,
+            "domain": "D",
+            "difficulty": "easy",
+            "source": "synthetic",
+            "rightsBasis": "synthetic"
+          }
+        ]
+      }
+      ''';
+      final success = await ContentPackLoader.loadPackFromString(store, badPack);
+      expect(success, isFalse);
+      expect(await store.getAllQuestions(), isEmpty);
+    });
+
+    test('repeat loading does not duplicate questions', () async {
+      final pack = ContentPack.parse(_validPackJson);
+      await store.applyContentPack(pack);
+
+      final attempt = Attempt(
+        questionId: 'q-001',
+        selectedOptionIndex: 1,
+        correct: true,
+        timestamp: DateTime.now(),
+      );
+      await store.recordAttempt(attempt);
+      await store.saveSession(
+        StudySession(
+          id: 's-1',
+          mode: 'practice',
+          startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
+          finishedAt: DateTime.now(),
+          questionCount: 2,
+          correctCount: 1,
+        ),
+      );
+
+      // Load the same pack again.
+      await store.applyContentPack(pack);
+
+      final questions = await store.getAllQuestions();
+      expect(questions.length, 2);
+      expect(await store.getAllAttempts(), hasLength(1));
+      expect(await store.getSessions(), hasLength(1));
+    });
+
+    test('reloading an updated pack replaces question content', () async {
+      final initial = ContentPack.parse(_validPackJson);
+      await store.applyContentPack(initial);
+
+      final updatedJson = _validPackJson.replaceFirst(
+        'Sample question one?',
+        'Updated sample question one?',
+      );
+      final updated = ContentPack.parse(updatedJson);
+      await store.applyContentPack(updated);
+
+      final q = await store.getQuestion('q-001');
+      expect(q, isNotNull);
+      expect(q!.text, 'Updated sample question one?');
+    });
+
+    test('transaction failure rolls back the entire pack', () async {
+      final db = await openTestDatabase();
+      store = LocalStore.withDatabase(db);
+      final pack = ContentPack.parse(_validPackJson);
+
+      Object? caught;
+      try {
+        await db.transaction((txn) async {
+          await store.applyContentPackToTransaction(txn, pack);
+          throw Exception('forced transaction failure');
+        });
+      } catch (e) {
+        caught = e;
+      }
+
+      expect(caught, isNotNull);
+      expect(await store.getAllQuestions(), isEmpty);
+    });
+  });
+
+  group('Schema migration', () {
+    test('v1 database migrates to v2 with provenance columns', () async {
+      final db = await openDatabase(
+        inMemoryDatabasePath,
+        singleInstance: false,
+      );
+      await LocalStore.createV1Schema(db);
+      await db.insert('questions', {
+        'id': 'legacy-q1',
+        'text': 'Legacy question',
+        'options': 'A\nB\nC',
+        'correctOptionIndex': 0,
+        'explanation': null,
+        'domain': 'Legacy',
+        'difficulty': 'easy',
+      });
+
+      await LocalStore.migrateV1ToV2(db);
+
+      final rows = await db.query('questions');
+      expect(rows.length, 1);
+      expect(rows.first['id'], 'legacy-q1');
+      expect(rows.first['source'], isNull);
+      expect(rows.first['rightsBasis'], isNull);
+
+      final question = Question.fromMap(rows.first);
+      expect(question.source, isNull);
+      expect(question.rightsBasis, isNull);
+
+      final info = await db.rawQuery('PRAGMA table_info(questions)');
+      final names = info.map((r) => r['name'] as String).toSet();
+      expect(names, contains('source'));
+      expect(names, contains('rightsBasis'));
+
+      await db.close();
+    });
+
+    test('file-based v1 database upgrades to v2 on open', () async {
+      final dbPath = await getDatabasesPath();
+      final path = join(dbPath, 'migration_test.db');
+      await deleteDatabase(path);
+
+      final v1 = await openDatabase(
+        path,
+        version: 1,
+        onCreate: (db, version) => LocalStore.createV1Schema(db),
+      );
+      await v1.insert('questions', {
+        'id': 'legacy-file-q1',
+        'text': 'Legacy file question',
+        'options': 'A\nB',
+        'correctOptionIndex': 0,
+        'domain': 'Legacy',
+        'difficulty': 'easy',
+      });
+      await v1.close();
+
+      final v2 = await openDatabase(
+        path,
+        version: 2,
+        onCreate: (db, version) => LocalStore.createSchema(db),
+        onUpgrade: (db, oldVersion, newVersion) async {
+          if (oldVersion < 2) {
+            await LocalStore.migrateV1ToV2(db);
+          }
+        },
+      );
+      final rows = await v2.query('questions');
+      expect(rows.length, 1);
+      expect(rows.first['id'], 'legacy-file-q1');
+
+      final info = await v2.rawQuery('PRAGMA table_info(questions)');
+      final names = info.map((r) => r['name'] as String).toSet();
+      expect(names, containsAll(['source', 'rightsBasis']));
+
+      await v2.close();
+      await deleteDatabase(path);
+    });
+  });
+
+  group('Pack loader integration', () {
+    test('loadPackFromString returns false for invalid JSON', () async {
+      final db = await openTestDatabase();
+      final store = LocalStore.withDatabase(db);
+      final success = await ContentPackLoader.loadPackFromString(store, 'not-json');
+      expect(success, isFalse);
+      await store.close();
+    });
+
+    test('dryRun returns validation errors without touching the store', () async {
+      const badPack = '''
+      {
+        "formatVersion": "azpack-v1",
+        "packId": "bad",
+        "packVersion": 1,
+        "title": "Bad",
+        "source": "synthetic",
+        "rightsBasis": "synthetic",
+        "questions": [
+          {
+            "id": "q-001",
+            "text": "T",
+            "options": ["A", "B"],
+            "correctOptionIndex": 0,
+            "domain": "D",
+            "difficulty": "easy",
+            "source": "",
+            "rightsBasis": "synthetic"
+          }
+        ]
+      }
+      ''';
+      final errors = ContentPackLoader.dryRun(badPack);
+      expect(errors, isNotEmpty);
+    });
+
+    test('fixture file parses and validates', () async {
+      final fixture = File('test/fixtures/synthetic-demo-pack.json');
+      final jsonString = await fixture.readAsString();
+      final pack = ContentPack.parse(jsonString);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, isEmpty);
+      expect(pack.questions.length, 2);
+    });
+  });
+}
