@@ -1,0 +1,49 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:study_app/app.dart';
+import 'package:study_app/data/question_bank.dart';
+import 'package:study_app/navigation/app_router.dart';
+
+import 'test_helpers.dart';
+
+void main() {
+  setUpAll(initTestDatabase);
+
+  group('Navigation', () {
+    testWidgets('dashboard shows study areas', (tester) async {
+      await tester.pumpWidget(const StudyApp());
+      expect(find.text('Study App (placeholder)'), findsOneWidget);
+      expect(find.text('Study'), findsOneWidget);
+      expect(find.text('Practice'), findsOneWidget);
+      expect(find.text('Exam'), findsOneWidget);
+      expect(find.text('Review'), findsOneWidget);
+      expect(find.text('Progress'), findsOneWidget);
+    });
+
+    testWidgets('tapping Study navigates to empty study screen', (tester) async {
+      await tester.pumpWidget(const StudyApp());
+      await tester.tap(find.text('Study'));
+      await tester.pumpAndSettle();
+      expect(find.text('Study material is empty'), findsOneWidget);
+    });
+
+    testWidgets('tapping Practice navigates to practice screen', (tester) async {
+      final store = FakeLocalStore(QuestionBank.syntheticFixtures());
+      await tester.pumpWidget(StudyApp(store: store));
+      await tester.tap(find.text('Practice'));
+      await tester.pumpAndSettle();
+      expect(find.text('Practice'), findsWidgets);
+    });
+
+    testWidgets('direct route to progress screen renders', (tester) async {
+      final store = FakeLocalStore();
+      await tester.pumpWidget(
+        StudyApp(
+          store: store,
+          initialRoute: AppRouter.progress,
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Progress'), findsWidgets);
+    });
+  });
+}

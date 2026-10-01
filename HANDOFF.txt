@@ -88,3 +88,27 @@ Coordination notes
   project handoff state; it does not grant or remove any agent ownership.
 - Do not edit `AGENTS.md` or `CLAUDE.md` to add handoff knowledge; corrections
   of factual errors only.
+
+
+Mobile Flutter v1 scaffold — 2026-10-01
+- Added `mobile/` Flutter project with Android and iOS platforms enabled.
+- Uses unmistakable placeholder identifiers:
+  - display name: `Study App (placeholder)`
+  - package/bundle id: `com.example.studyapp`
+  Both are documented in `mobile/README.md` and must be replaced after brand
+  clearance.
+- Implemented offline-first architecture: dashboard, study, practice, exam
+  simulation, review/spaced-repetition, and progress persistence backed by
+  local SQLite via sqflite.
+- Runtime question bank starts empty; no legacy 133 desktop questions imported.
+  Synthetic fixtures live in `test/` only.
+- v1 is account-free, sync-free, analytics-free, ads-free, and has no in-app
+  payment SDK; the $1 model is a paid-app download handled by the store.
+- Added empty-content states and responsive dashboard grid.
+- Tests cover navigation, persistence, answer/exam behavior, and review
+  scheduling. `flutter analyze` and `flutter test` pass.
+- Validation prerequisites not met on this WSL Linux host: no Android SDK/Java,
+  no Xcode/macOS. Android/iOS builds were not run. Details recorded in
+  `mobile/README.md`.
+- Next: clear final brand, replace identifiers, load rights-cleared curriculum,
+  add icons/splash/legal screens, and run device/store acceptance audits.
