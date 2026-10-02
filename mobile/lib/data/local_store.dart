@@ -223,13 +223,20 @@ class LocalStore {
         .map((q) => q.courseId)
         .where((c) => c.isNotEmpty)
         .toSet();
-    await txn.delete(
-      'settings',
-      where:
-          "key = 'contentLastVerifiedAt' OR "
-          "key IN (${List.filled(courseIds.length, '?').join(',')})",
-      whereArgs: courseIds.map((c) => 'contentLastVerifiedAt_$c').toList(),
-    );
+    if (courseIds.isNotEmpty) {
+      await txn.delete(
+        'settings',
+        where:
+            "key = 'contentLastVerifiedAt' OR "
+            "key IN (${List.filled(courseIds.length, '?').join(',')})",
+        whereArgs: courseIds.map((c) => 'contentLastVerifiedAt_$c').toList(),
+      );
+    } else {
+      await txn.delete(
+        'settings',
+        where: "key = 'contentLastVerifiedAt'",
+      );
+    }
 
     // Record content-last-verified dates from the pack metadata. A per-course
     // date is recorded for every course present in the pack, plus a global date.
