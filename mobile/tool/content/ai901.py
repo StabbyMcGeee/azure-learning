@@ -341,14 +341,16 @@ QUESTIONS = [
        "unstructured content such as documents, images, audio, and video.",
        "medium"),
     qf("ai-901-034",
-       "A developer builds an app that reads a spoken question and answers "
-       "using a model that understands both audio and text. Which model type "
-       "fits?",
-       ["A multimodal model", "A keyword extraction model",
-        "A sentiment analysis model", "A table model"],
+       "A developer builds an app that converts spoken audio to text and "
+       "then reads the answer back aloud. Which Foundry tool provides these "
+       "speech capabilities?",
+       ["Azure Speech in Foundry Tools",
+        "Azure Content Understanding in Foundry Tools",
+        "A sentiment analysis model",
+        "A keyword extraction model"],
        0,
-       "A multimodal model can process both audio and text, so it can "
-       "respond to spoken prompts.",
+       "Azure Speech in Foundry Tools provides speech recognition and speech "
+       "synthesis for converting audio to text and text to speech.",
        "medium"),
     qf("ai-901-035",
        "Which Foundry capability lets a developer create new images from text "
@@ -386,15 +388,15 @@ QUESTIONS = [
        "reasoning about an uploaded image alongside text.",
        "medium"),
     qf("ai-901-038",
-       "Which tool lets a developer build a lightweight client application "
-       "that connects to an agent?",
+       "A developer must connect a client application to an agent deployed "
+       "in Microsoft Foundry so the application can invoke the agent. Which "
+       "component does the developer use?",
        ["The Foundry SDK",
         "A virtual machine image",
         "A storage account",
         "A SQL query"],
        0,
-       "The Foundry SDK lets a developer build a lightweight client "
-       "application that connects to an agent or model deployed in "
-       "Microsoft Foundry.",
+       "The Foundry SDK connects a lightweight client application to an agent "
+       "or model deployed in Microsoft Foundry.",
        "medium"),
 ]

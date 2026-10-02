@@ -463,7 +463,9 @@ QUESTIONS = [
       "hard"),
     # az-900-076 -> MG.2 Azure Policy
     q("az-900-076",
-      "Which statement about Azure Policy is correct?",
+      "A subscription must reject any resource that violates a compliance "
+      "rule before it is created. Which Azure Policy capability achieves "
+      "this?",
       [
           "It can prevent non-compliant resources from being created",
           "It provides personalized cost-saving advice",

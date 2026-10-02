@@ -176,9 +176,9 @@ QUESTIONS = [
     {
         "id": "az-900-007",
         "text": (
-            "A developer wants to run small pieces of code in response to "
-            "events without managing any servers. Which approach fits this "
-            "requirement?"
+            "Which term describes a cloud compute model where the provider "
+            "manages the servers and automatically scales resources as "
+            "events arrive?"
         ),
         "options": [
             "serverless",

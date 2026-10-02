@@ -111,7 +111,7 @@
     },
     {
       "id": "az-900-007",
-      "text": "A developer wants to run small pieces of code in response to events without managing any servers. Which approach fits this requirement?",
+      "text": "Which term describes a cloud compute model where the provider manages the servers and automatically scales resources as events arrive?",
       "options": [
         "a dedicated physical server",
         "a virtual machine that the developer fully maintains",
@@ -1369,15 +1369,15 @@
     },
     {
       "id": "az-900-129",
-      "text": "Which feature groups virtual machines to protect them from planned maintenance and hardware failures within a datacenter?",
+      "text": "Which feature keeps virtual machines available during Azure planned maintenance by placing them in separate update domains?",
       "options": [
         "An availability set",
         "An availability zone",
-        "A region pair",
-        "A subscription"
+        "A management group",
+        "A network security group"
       ],
       "correctOptionIndex": 0,
-      "explanation": "An availability set groups VMs across fault and update domains to protect against hardware failures and planned maintenance.",
+      "explanation": "An availability set places virtual machines in separate update domains so planned maintenance does not reboot all instances at once.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -1403,15 +1403,15 @@
     },
     {
       "id": "az-900-135",
-      "text": "Which type of Azure region is isolated and dedicated to meeting specific compliance or legal requirements for certain customers?",
+      "text": "A government agency needs Azure services that are physically and logically isolated from commercial Azure regions to satisfy national legal requirements. Which region type provides this?",
       "options": [
         "sovereign regions",
-        "region pairs",
         "availability zones",
-        "public regions"
+        "resource groups",
+        "virtual networks"
       ],
       "correctOptionIndex": 0,
-      "explanation": "Sovereign regions are isolated Azure regions dedicated to specific compliance or legal requirements.",
+      "explanation": "Sovereign regions are physically and logically isolated Azure environments for customers with strict legal or compliance requirements, such as government agencies.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2032,7 +2032,7 @@
     },
     {
       "id": "az-900-076",
-      "text": "Which statement about Azure Policy is correct?",
+      "text": "A subscription must reject any resource that violates a compliance rule before it is created. Which Azure Policy capability achieves this?",
       "options": [
         "It provides personalized cost-saving advice",
         "It monitors application latency",
@@ -3732,15 +3732,15 @@
     },
     {
       "id": "ai-901-034",
-      "text": "A developer builds an app that reads a spoken question and answers using a model that understands both audio and text. Which model type fits?",
+      "text": "A developer builds an app that converts spoken audio to text and then reads the answer back aloud. Which Foundry tool provides these speech capabilities?",
       "options": [
-        "A keyword extraction model",
-        "A multimodal model",
+        "Azure Content Understanding in Foundry Tools",
+        "Azure Speech in Foundry Tools",
         "A sentiment analysis model",
-        "A table model"
+        "A keyword extraction model"
       ],
       "correctOptionIndex": 1,
-      "explanation": "A multimodal model can process both audio and text, so it can respond to spoken prompts.",
+      "explanation": "Azure Speech in Foundry Tools provides speech recognition and speech synthesis for converting audio to text and text to speech.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
@@ -3800,7 +3800,7 @@
     },
     {
       "id": "ai-901-038",
-      "text": "Which tool lets a developer build a lightweight client application that connects to an agent?",
+      "text": "A developer must connect a client application to an agent deployed in Microsoft Foundry so the application can invoke the agent. Which component does the developer use?",
       "options": [
         "A virtual machine image",
         "A storage account",
@@ -3808,7 +3808,7 @@
         "A SQL query"
       ],
       "correctOptionIndex": 2,
-      "explanation": "The Foundry SDK lets a developer build a lightweight client application that connects to an agent or model deployed in Microsoft Foundry.",
+      "explanation": "The Foundry SDK connects a lightweight client application to an agent or model deployed in Microsoft Foundry.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",

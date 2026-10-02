@@ -695,17 +695,17 @@ QUESTIONS = [
       "hard"),
     # az-900-129 -> AA.2 availability sets
     q("az-900-129",
-      "Which feature groups virtual machines to protect them from planned "
-      "maintenance and hardware failures within a datacenter?",
+      "Which feature keeps virtual machines available during Azure planned "
+      "maintenance by placing them in separate update domains?",
       [
           "An availability set",
           "An availability zone",
-          "A region pair",
-          "A subscription",
+          "A management group",
+          "A network security group",
       ],
       0,
-      "An availability set groups VMs across fault and update domains to "
-      "protect against hardware failures and planned maintenance.",
+      "An availability set places virtual machines in separate update "
+      "domains so planned maintenance does not reboot all instances at once.",
       "medium"),
     # ---- gap items (7 outline topics the legacy bank never covered) ----
     # az-900-134 -> AA.2 Azure Virtual Desktop
@@ -724,17 +724,19 @@ QUESTIONS = [
       "medium"),
     # az-900-135 -> AA.1 sovereign regions
     q("az-900-135",
-      "Which type of Azure region is isolated and dedicated to meeting "
-      "specific compliance or legal requirements for certain customers?",
+      "A government agency needs Azure services that are physically and "
+      "logically isolated from commercial Azure regions to satisfy national "
+      "legal requirements. Which region type provides this?",
       [
           "sovereign regions",
-          "region pairs",
           "availability zones",
-          "public regions",
+          "resource groups",
+          "virtual networks",
       ],
       0,
-      "Sovereign regions are isolated Azure regions dedicated to specific "
-      "compliance or legal requirements.",
+      "Sovereign regions are physically and logically isolated Azure "
+      "environments for customers with strict legal or compliance "
+      "requirements, such as government agencies.",
       "medium"),
     # az-900-136 -> AA.4 Microsoft Entra Domain Services
     q("az-900-136",
