@@ -183,7 +183,31 @@ CREATE TABLE settings(
 ```
 
 Existing rows receive `NULL` pack/course identity. The migrations run
-automatically when an older database is opened at version 3.
+automatically when an older database is opened at version 5.
+
+### v4 study-status migration
+
+The v4 schema adds the per-course study status table:
+
+```sql
+CREATE TABLE study_status(
+  courseId TEXT NOT NULL,
+  questionId TEXT NOT NULL,
+  status TEXT NOT NULL,
+  updatedAt INTEGER NOT NULL,
+  PRIMARY KEY (courseId, questionId)
+);
+```
+
+### v5 attempt-courseId migration
+
+The v5 schema adds a `courseId` column to `attempts` so that history rows keep
+their course attribution even when the question row they answer is retired or
+withdrawn:
+
+```sql
+ALTER TABLE attempts ADD COLUMN courseId TEXT;
+```
 
 ## How to prepare a future pack
 

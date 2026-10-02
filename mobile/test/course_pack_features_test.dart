@@ -122,12 +122,14 @@ void main() {
 
       await store.recordAttempt(Attempt(
         questionId: 'q-a1',
+        courseId: 'course-A',
         selectedOptionIndex: 0,
         correct: true,
         timestamp: DateTime.now(),
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-b1',
+        courseId: 'course-B',
         selectedOptionIndex: 0,
         correct: false,
         timestamp: DateTime.now(),
@@ -315,12 +317,14 @@ void main() {
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-a1',
+        courseId: 'course-A',
         selectedOptionIndex: 0,
         correct: true,
         timestamp: DateTime.now(),
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-b1',
+        courseId: 'course-B',
         selectedOptionIndex: 0,
         correct: false,
         timestamp: DateTime.now(),

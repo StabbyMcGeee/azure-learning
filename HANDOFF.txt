@@ -10,7 +10,7 @@ This file is a short current-state pointer. Use `.agents/skills/azure-learning-h
 ## Implementation
 - Private repo: `https://github.com/StabbyMcGeee/azure-learning`; local/remote `main` is `fe904bd`.
 - Flutter offline study/practice/exam/review/progress shell is implemented. `flutter analyze` and targeted tests passed. Android/iOS packaging and device tests have not run; this host lacks Android SDK/Java and a Mac/Xcode.
-- `fm/azpack-v1` at `e61850f` adds versioned content-pack loading, per-question provenance, and SQLite migration. All 40 tests and `flutter analyze` passed with synthetic fixtures only. Production content is empty. The captain approved landing exactly `e61850f` locally, but it has not been merged.
+- `fm/azpack-v1` at `e61850f` adds versioned content-pack loading, per-question provenance, and SQLite migration. `07abf07` extended it with course/pack identity and a pack ledger. Both commits are carried by this branch and will merge to `main` together with the study surface. Production content remains empty.
 - `fm/azcontent-gate-v1` adds enumerated `rightsBasis` validation, a private evidence-register validator, terminology lint, and an About & Legal screen. Follow-up commits address a no-mistakes review gate: registered courseIds are enforced, verifiedTerms are wired into the linter, AI-901 retired terms are course-scoped, stale contentLastVerifiedAt dates are cleared on every pack apply, legacy getter aliases are removed, the committed evidence-register.json is validated in tests, and the five auto-fix findings (optional-field typing, duplicated ledger insert, pubspec substring test, LicenseRegistry drain, and lenient ISO date parsing) are resolved. `flutter analyze` and all 98 mobile tests pass; 3 Python tests pass. Production content remains empty.
 - Course selection and course-scoped progress are implemented on `fm/azmulti-course-packs-v1`; the multi-course catalog beyond the three launch courses is still open.
 - Multi-course catalog, dashboard course selection, per-course study status, and course-scoped practice/exam/review/progress content are implemented; Study lists the selected course.
@@ -46,8 +46,8 @@ Multi-course pack support, per-item authoring provenance, the AZ-900/DP-900/AI-9
   together, with controls to mark it as seen or needing more work.
 - Study progress is coverage of the loaded material per course; it updates
   correctly when content is added, replaced, or withdrawn.
-- Study marks are persisted per course through the existing SQLite store via a
-  new `study_status` table and a schema v3→v4 migration.
+- Study marks are persisted per course through the existing SQLite store via
+  new `study_status` (v3→v4) and `attempts.courseId` (v4→v5) migrations.
 - Study actions do not record `Attempt` rows, so they never affect practice,
   exam, review, or progress history.
 - Added widget tests covering empty/partial/content-arrival cases and persistence

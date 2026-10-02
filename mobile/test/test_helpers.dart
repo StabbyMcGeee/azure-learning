@@ -164,16 +164,7 @@ class FakeLocalStore extends LocalStore {
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     var result = List<Attempt>.from(_attempts);
     if (courseId != null) {
-      final courseQuestionIds = _questions
-          .where((q) => q.courseId == courseId)
-          .map((q) => q.id)
-          .toSet();
-      result = result.where((a) {
-        if (courseQuestionIds.contains(a.questionId)) return true;
-        return _questions
-            .where((q) => q.id == a.questionId)
-            .every((q) => q.courseId == null || q.courseId!.isEmpty);
-      }).toList();
+      result = result.where((a) => a.courseId == courseId || a.courseId == null).toList();
     }
     return List.unmodifiable(result.reversed.toList());
   }

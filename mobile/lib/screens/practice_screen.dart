@@ -118,6 +118,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     final correct = question.isCorrect(_selected!);
     await _store.recordAttempt(Attempt(
       questionId: question.id,
+      courseId: question.courseId,
       selectedOptionIndex: _selected!,
       correct: correct,
       timestamp: DateTime.now(),

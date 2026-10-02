@@ -147,19 +147,6 @@ void main() {
       expect(await store.getAttempts(), isEmpty);
     });
 
-    testWidgets('Resume action surfaces when there is unfinished material',
-        (tester) async {
-      final store = FakeLocalStore(_sampleQuestions());
-      await tester.pumpWidget(StudyApp(store: store));
-
-      await tester.tap(find.text('Study'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('AZ-900'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Resume'), findsOneWidget);
-    });
-
     testWidgets('coverage follows content that is replaced or withdrawn',
         (tester) async {
       final store = FakeLocalStore();

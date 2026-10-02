@@ -31,7 +31,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
     seen: 0,
     needsReview: 0,
   );
-  Question? _resumeTarget;
   bool _loaded = false;
 
   @override
@@ -47,7 +46,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
     setState(() {
       _rows = _planRows(questions, statuses);
       _progress = _coverage(questions, statuses);
-      _resumeTarget = _firstUnfinished(questions, statuses);
       _loaded = true;
     });
   }
@@ -108,19 +106,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
     );
   }
 
-  Question? _firstUnfinished(
-    List<Question> questions,
-    Map<String, StudyMaterialStatus> statuses,
-  ) {
-    for (final q in questions) {
-      final status = statuses[q.id];
-      if (status == null || status == StudyMaterialStatus.needsReview) {
-        return q;
-      }
-    }
-    return null;
-  }
-
   Future<void> _mark(String questionId, StudyMaterialStatus status) async {
     await _store.saveStudyStatus(
       courseId: widget.courseId,
@@ -130,36 +115,10 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
     await _load();
   }
 
-  void _scrollToResume() {
-    final target = _resumeTarget;
-    if (target == null) return;
-    final key = _itemKeys[target.id];
-    if (key == null) return;
-    final context = key.currentContext;
-    if (context == null) return;
-    Scrollable.ensureVisible(
-      context,
-      duration: const Duration(milliseconds: 300),
-      alignment: 0.1,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.courseId),
-        actions: [
-          if (_resumeTarget != null)
-            TextButton(
-              onPressed: _scrollToResume,
-              child: const Text(
-                'Resume',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-        ],
-      ),
+      appBar: AppBar(title: Text(widget.courseId)),
       body: _body(),
     );
   }

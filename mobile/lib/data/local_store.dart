@@ -110,13 +110,58 @@ class LocalStore {
     }
   }
 
-  /// Creates the current (v4) schema for a fresh database.
+  /// Creates the current (v5) schema for a fresh database.
   static Future<void> createSchema(Database db) async {
-    await _createTable(db, 'questions', _questionsV3Columns);
-    await _createTable(db, 'attempts', _attemptsColumns);
-    await _createTable(db, 'sessions', _sessionsV3Columns);
-    await _createTable(db, 'pack_ledger', _packLedgerColumns);
-    await _createTable(db, 'settings', _settingsColumns);
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS questions(
+        id TEXT PRIMARY KEY,
+        text TEXT NOT NULL,
+        options TEXT NOT NULL,
+        correctOptionIndex INTEGER NOT NULL,
+        explanation TEXT,
+        domain TEXT NOT NULL,
+        difficulty TEXT NOT NULL,
+        source TEXT,
+        rightsBasis TEXT,
+        packId TEXT,
+        courseId TEXT
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS attempts(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        questionId TEXT NOT NULL,
+        courseId TEXT,
+        selectedOptionIndex INTEGER NOT NULL,
+        correct INTEGER NOT NULL,
+        timestamp INTEGER NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS sessions(
+        id TEXT PRIMARY KEY,
+        mode TEXT NOT NULL,
+        courseId TEXT,
+        startedAt INTEGER NOT NULL,
+        finishedAt INTEGER NOT NULL,
+        questionCount INTEGER NOT NULL,
+        correctCount INTEGER NOT NULL,
+        scorePercent INTEGER
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS pack_ledger(
+        packId TEXT PRIMARY KEY,
+        version INTEGER NOT NULL,
+        appliedAt INTEGER NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS settings(
+        key TEXT PRIMARY KEY,
+        value TEXT
+      )
+    ''');
     await db.execute('''
       CREATE TABLE IF NOT EXISTS study_status(
         courseId TEXT NOT NULL,
@@ -179,12 +224,19 @@ class LocalStore {
     ''');
   }
 
+  /// Migrates an existing v4 database to v5, adding the courseId column to
+  /// attempts so history rows keep their course attribution even when the
+  /// question row is retired or withdrawn.
+  static Future<void> migrateV4ToV5(Database db) async {
+    await db.execute('ALTER TABLE attempts ADD COLUMN courseId TEXT');
+  }
+
   static Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'study_app.db');
     return openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: (db, version) async => createSchema(db),
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
@@ -195,6 +247,9 @@ class LocalStore {
         }
         if (oldVersion < 4) {
           await migrateV3ToV4(db);
+        }
+        if (oldVersion < 5) {
+          await migrateV4ToV5(db);
         }
       },
     );
@@ -506,24 +561,20 @@ class LocalStore {
     return rows.map(Attempt.fromMap).toList();
   }
 
-  /// All recorded attempts, optionally filtered to a single course by joining
-  /// with the current question bank.
+  /// All recorded attempts, optionally filtered to a single course.
   ///
-  /// Rows that cannot be attributed to any course - a question with no
-  /// `courseId`, or a question whose pack has been withdrawn - belong to every
-  /// course scope, so selecting a course never hides earlier history.
+  /// Attempts written before courses existed have a NULL `courseId` and
+  /// belong to every course scope, so selecting a course never hides earlier
+  /// history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
         ? await db.query('attempts', orderBy: 'timestamp DESC')
-        : await db.rawQuery(
-            '''
-            SELECT a.* FROM attempts a
-            LEFT JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ? OR q.courseId IS NULL
-            ORDER BY a.timestamp DESC
-            ''',
-            [courseId],
+        : await db.query(
+            'attempts',
+            where: 'courseId = ? OR courseId IS NULL',
+            whereArgs: [courseId],
+            orderBy: 'timestamp DESC',
           );
     return rows.map(Attempt.fromMap).toList();
   }

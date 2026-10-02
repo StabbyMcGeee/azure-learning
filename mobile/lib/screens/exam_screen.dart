@@ -183,6 +183,7 @@ class _ExamScreenState extends State<ExamScreen> {
         // Persist attempts only for answered items.
         await _store.recordAttempt(Attempt(
           questionId: q.id,
+          courseId: q.courseId,
           selectedOptionIndex: selected,
           correct: correct,
           timestamp: now,
