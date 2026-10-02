@@ -40,9 +40,9 @@ cat > release/Azure-Learning/Azure-Learning.desktop <<'EOF'
 [Desktop Entry]
 Type=Application
 Name=Azure Learning
-Comment=Local AZ-900 exam preparation
-Exec=/home/dimitri/workspace/projects/azure-learning/release/Azure-Learning/Azure-Learning
-Path=/home/dimitri/workspace/projects/azure-learning/release/Azure-Learning
+Comment=Lokale AZ-900-Prüfungsvorbereitung
+Exec=bash -c 'cd "$(dirname "%k")" && exec ./Azure-Learning'
+Path=
 Icon=utilities-terminal
 Terminal=false
 Categories=Education;Development;

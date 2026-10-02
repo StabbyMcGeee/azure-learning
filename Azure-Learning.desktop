@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=Azure Learning
-Comment=Local AZ-900 exam preparation
-Exec=/home/dimitri/workspace/projects/azure-learning/Azure-Learning
-Path=/home/dimitri/workspace/projects/azure-learning
+Comment=Lokale AZ-900-Prüfungsvorbereitung
+Exec=bash -c 'cd "$(dirname "%k")" && exec python3 azure_learning_app.py'
+Path=
 Icon=utilities-terminal
 Terminal=false
 Categories=Education;Development;
