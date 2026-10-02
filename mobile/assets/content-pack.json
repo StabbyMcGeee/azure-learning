@@ -722,23 +722,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-019",
-      "text": "Which option gives a resource a private IP address inside a virtual network so it is not exposed to the public internet?",
-      "options": [
-        "public endpoint",
-        "a load balancer",
-        "a network security group",
-        "private endpoint (Azure Private Link)"
-      ],
-      "correctOptionIndex": 3,
-      "explanation": "A private endpoint, enabled by Azure Private Link, assigns a private IP address inside a virtual network for private access to a service.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-020",
       "text": "What is the purpose of Azure management groups?",
       "options": [
@@ -926,40 +909,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-056",
-      "text": "Which statement about Azure ExpressRoute is correct?",
-      "options": [
-        "It is a virtual network peering option",
-        "It provides a private connection that does not use the public internet",
-        "It is a storage redundancy option",
-        "It encrypts data at rest"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Azure ExpressRoute provides a private, dedicated connection between on-premises and Azure that does not travel over the public internet.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-061",
-      "text": "Which benefit does a private endpoint provide for a storage account?",
-      "options": [
-        "Faster physical shipment of hard drives",
-        "Access through a private IP without exposure to the public internet",
-        "Automatic geo-replication of data",
-        "Passwordless sign-in"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "A private endpoint lets a storage account be reached through a private IP inside a virtual network, removing public internet exposure.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-063",
       "text": "Which Azure service enables the private endpoint connection into a virtual network?",
       "options": [
@@ -1140,23 +1089,6 @@
       ],
       "correctOptionIndex": 0,
       "explanation": "Azure Files provides fully managed file shares accessible by multiple virtual machines over SMB or NFS.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-090",
-      "text": "Which characteristic describes Azure availability zones?",
-      "options": [
-        "They replicate data to a different country",
-        "They are the same as resource groups",
-        "They are physically separate datacenters within a region",
-        "They are logical billing boundaries"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "Availability zones are physically separate datacenters within a region that provide fault isolation and high availability.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2388,6 +2320,278 @@
       "courseId": "az-900"
     },
     {
+      "id": "az-900-141",
+      "text": "Which term describes the on-demand delivery of computing services such as servers, storage, and databases over the internet?",
+      "options": [
+        "edge computing",
+        "colocation",
+        "cloud computing",
+        "virtualization"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "Cloud computing delivers computing services such as servers, storage, and databases over the internet on demand.",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-142",
+      "text": "Under the shared responsibility model for a SaaS application, which item remains the customer's responsibility?",
+      "options": [
+        "The physical datacenter",
+        "The application code",
+        "The network hardware",
+        "Their data and user accounts"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "Even with SaaS the customer remains responsible for its data, endpoints, and account access management.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-143",
+      "text": "Which cloud model is best for an organization that must keep data on hardware it owns and controls in its own datacenter?",
+      "options": [
+        "private cloud",
+        "public cloud",
+        "hybrid cloud",
+        "serverless"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "A private cloud dedicates hardware to a single organization, giving it full control in its own datacenter.",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-144",
+      "text": "Which pricing approach charges for the resources actually consumed, with no up-front purchase?",
+      "options": [
+        "capital expenditure",
+        "a perpetual license",
+        "consumption-based model",
+        "a fixed hardware lease"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "The consumption-based model charges for actual resource use with no up-front purchase, unlike capital expenditure.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-145",
+      "text": "Which benefit of cloud services provides safeguards that help protect data and applications from threats?",
+      "options": [
+        "scalability",
+        "high availability",
+        "security",
+        "manageability"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "Security is a benefit of cloud services, delivered through controls that protect data, applications, and infrastructure.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-146",
+      "text": "Which benefit keeps a workload available during a datacenter failure by running it across multiple locations?",
+      "options": [
+        "high availability",
+        "scalability",
+        "predictability",
+        "governance"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "High availability keeps a workload available during failures by using redundancy across multiple locations.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-147",
+      "text": "Which benefit describes having predictable performance and predictable cost?",
+      "options": [
+        "scalability",
+        "predictability",
+        "security",
+        "manageability"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Predictability means both performance and cost can be anticipated, supported by autoscaling and cost-tracking tools.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-148",
+      "text": "Which benefit of cloud services lets an organization apply policies and controls consistently across its resources?",
+      "options": [
+        "scalability",
+        "governance",
+        "high availability",
+        "reliability"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Governance lets an organization apply policies and controls consistently across cloud resources.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-149",
+      "text": "Which cloud service type requires the customer to manage the operating system and applications?",
+      "options": [
+        "platform as a service (PaaS)",
+        "software as a service (SaaS)",
+        "infrastructure as a service (IaaS)",
+        "serverless"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "With IaaS the customer manages the operating system and applications, while the provider manages the physical infrastructure.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-150",
+      "text": "Microsoft 365, which delivers fully managed productivity applications over the internet, is an example of which service type?",
+      "options": [
+        "infrastructure as a service (IaaS)",
+        "platform as a service (PaaS)",
+        "serverless",
+        "software as a service (SaaS)"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "Microsoft 365 is software as a service (SaaS): the provider fully manages the applications and infrastructure.",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-151",
+      "text": "Which cloud service type provides a managed platform for developing and deploying applications without managing the underlying infrastructure?",
+      "options": [
+        "infrastructure as a service (IaaS)",
+        "software as a service (SaaS)",
+        "a physical datacenter",
+        "platform as a service (PaaS)"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "PaaS provides a managed platform (runtime, middleware, tools) so developers do not manage the underlying infrastructure.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-152",
+      "text": "Which compute approach runs code only when needed and bills only for the compute time used, with the provider managing the servers?",
+      "options": [
+        "a dedicated physical server",
+        "serverless",
+        "a colocated rack",
+        "a virtual machine managed by the customer"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Serverless runs code on demand and bills for actual execution, with the provider managing the servers.",
+      "domain": "Cloud Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-153",
+      "text": "Which tool provides a graphical web interface for creating and managing Azure resources?",
+      "options": [
+        "Azure Cloud Shell",
+        "Azure portal",
+        "Azure CLI",
+        "Azure PowerShell"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "The Azure portal is the graphical web interface for creating and managing Azure resources.",
+      "domain": "Azure Management and Governance",
+      "difficulty": "easy",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-154",
+      "text": "An administrator must prevent accidental deletion of a critical storage account. Which feature should they apply?",
+      "options": [
+        "A tag",
+        "An Azure Advisor recommendation",
+        "A role assignment",
+        "A resource lock"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "A resource lock (read-only or delete) prevents accidental deletion or modification of a resource such as a storage account.",
+      "domain": "Azure Management and Governance",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-155",
+      "text": "Which Azure Blob storage tier offers the lowest storage cost for data that is rarely accessed and can tolerate retrieval latency of hours?",
+      "options": [
+        "Hot tier",
+        "Archive tier",
+        "Cool tier",
+        "Cold tier"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "The archive tier has the lowest storage cost for rarely accessed data that can tolerate retrieval latency of hours.",
+      "domain": "Azure Architecture and Services",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
+      "id": "az-900-156",
+      "text": "Which security model protects a workload by layering multiple independent controls so a failure in one layer does not expose the whole system?",
+      "options": [
+        "Zero Trust",
+        "defense-in-depth",
+        "the shared responsibility model",
+        "single sign-on (SSO)"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "defense-in-depth layers multiple independent security controls so that one failing layer does not compromise the whole system.",
+      "domain": "Azure Architecture and Services",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "az-900"
+    },
+    {
       "id": "dp-900-001",
       "text": "Which type of data is organized into a fixed schema of rows and columns, such as a relational database table?",
       "options": [
@@ -3170,6 +3374,193 @@
       "courseId": "dp-900"
     },
     {
+      "id": "dp-900-047",
+      "text": "Which file format is a compact, row-based binary format often used for data serialization?",
+      "options": [
+        "CSV",
+        "JSON",
+        "Avro",
+        "XML"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "Avro is a compact, row-based binary format commonly used for data serialization.",
+      "domain": "Core Data Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-048",
+      "text": "Which characteristic distinguishes semi-structured data from structured data?",
+      "options": [
+        "It always lives in a relational table",
+        "It has a flexible or self-describing schema",
+        "It has no organization at all",
+        "It can only be stored as binary"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Semi-structured data has a flexible or self-describing schema (for example JSON), unlike the fixed schema of structured data.",
+      "domain": "Core Data Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-049",
+      "text": "Which type of data store stores records as objects or documents with no fixed relational schema?",
+      "options": [
+        "A document store",
+        "A relational database",
+        "A data warehouse",
+        "A file share"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "A document store keeps records as documents (often JSON) with no fixed relational schema.",
+      "domain": "Core Data Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-050",
+      "text": "Which workload requires atomic, consistent, isolated, durable (ACID) transactions on current data?",
+      "options": [
+        "An analytical workload",
+        "A batch job",
+        "An archive job",
+        "A transactional workload"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "Transactional workloads rely on ACID transactions over current data, whereas analytical workloads aggregate historical data.",
+      "domain": "Core Data Concepts",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-051",
+      "text": "Which SQL statement changes values in existing rows of a table?",
+      "options": [
+        "UPDATE",
+        "SELECT",
+        "INSERT",
+        "CREATE"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "UPDATE modifies values in existing rows; INSERT adds rows, SELECT reads rows, and CREATE defines objects.",
+      "domain": "Relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-052",
+      "text": "Which database object is used to speed up lookups on a column?",
+      "options": [
+        "A view",
+        "A stored procedure",
+        "An index",
+        "A primary key"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "An index speeds up lookups on a column, at the cost of extra storage and write overhead.",
+      "domain": "Relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-053",
+      "text": "What does a foreign key define in a relational database?",
+      "options": [
+        "A unique value for every row",
+        "A saved query",
+        "A permission grant",
+        "A reference to the primary key of another table"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "A foreign key references the primary key of another table, defining a relationship between tables.",
+      "domain": "Relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-054",
+      "text": "Which Azure Cosmos DB API is compatible with MongoDB?",
+      "options": [
+        "Core (SQL) API",
+        "MongoDB API",
+        "Gremlin API",
+        "Table API"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "The MongoDB API in Azure Cosmos DB lets applications use MongoDB drivers and query patterns.",
+      "domain": "Non-relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-055",
+      "text": "Which Azure Cosmos DB API is compatible with Apache Cassandra?",
+      "options": [
+        "Core (SQL) API",
+        "Gremlin API",
+        "Cassandra API",
+        "MongoDB API"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "The Cassandra API in Azure Cosmos DB supports Cassandra Query Language and column-family data.",
+      "domain": "Non-relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-056",
+      "text": "Which type of Azure Blob is optimized for appending data such as log entries?",
+      "options": [
+        "Append blobs",
+        "Block blobs",
+        "Page blobs",
+        "Queue blobs"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Append blobs are optimized for appending data such as log entries; block blobs suit general binary/text, and page blobs suit disks.",
+      "domain": "Non-relational Data on Azure",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
+      "id": "dp-900-057",
+      "text": "Which service orchestrates and schedules data movement and transformation pipelines in Azure?",
+      "options": [
+        "Azure Cosmos DB",
+        "Azure Data Factory",
+        "Azure Table Storage",
+        "Azure Files"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Azure Data Factory orchestrates and schedules data movement and transformation pipelines for ingestion and processing.",
+      "domain": "Analytics Workload",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "dp-900"
+    },
+    {
       "id": "ai-901-001",
       "text": "Which responsible AI principle requires an AI solution to avoid bias and treat all groups equitably?",
       "options": [
@@ -3809,6 +4200,193 @@
       ],
       "correctOptionIndex": 2,
       "explanation": "The Foundry SDK connects a lightweight client application to an agent or model deployed in Microsoft Foundry.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-039",
+      "text": "In a Foundry chat application, which prompt is the user's own request typed at runtime?",
+      "options": [
+        "The user prompt",
+        "The system prompt",
+        "The temperature setting",
+        "The endpoint URL"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "The user prompt is the user's request typed at runtime; the system prompt sets the model's role and rules.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-040",
+      "text": "Which configuration parameter controls how many of the most likely next tokens the model samples from?",
+      "options": [
+        "top_p",
+        "temperature",
+        "max tokens",
+        "the system prompt"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "top_p (nucleus sampling) limits sampling to the smallest set of most likely tokens whose combined probability reaches the threshold.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-041",
+      "text": "A developer must choose how to serve a model: a real-time endpoint for interactive requests or a batch job for large scoring runs. What is this choice an example of?",
+      "options": [
+        "A responsible AI principle",
+        "A model deployment option",
+        "A text analysis technique",
+        "A data visualization"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Choosing how to serve a model, such as a real-time endpoint versus batch scoring, is a model deployment option.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-042",
+      "text": "Where can a developer create and test a single-agent solution before connecting a client application to it?",
+      "options": [
+        "In a storage account",
+        "In the Foundry portal",
+        "In a virtual network",
+        "In a SQL database"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "A single-agent solution is created and tested in the Foundry portal before a client application connects to it.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-043",
+      "text": "A developer builds a lightweight application that extracts the main terms from customer feedback. Which Foundry capability does this?",
+      "options": [
+        "Text analysis in Foundry",
+        "Speech synthesis",
+        "Image generation",
+        "Data warehousing"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Text analysis in Foundry includes keyword extraction for finding the main terms in text such as customer feedback.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-044",
+      "text": "A developer builds an app that answers spoken questions by using a model that processes both audio and text. Which model type is required?",
+      "options": [
+        "A keyword extraction model",
+        "A sentiment analysis model",
+        "A multimodal model",
+        "A table model"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "Responding to spoken prompts uses a deployed multimodal model that processes both audio and text.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-045",
+      "text": "A developer builds an app that detects objects in photos. Which Foundry capability supports this?",
+      "options": [
+        "Speech recognition",
+        "Vision capabilities in Foundry",
+        "Entity detection",
+        "Data warehousing"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Vision capabilities in Foundry include object detection for locating objects within images.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-046",
+      "text": "Which tool extracts fields from documents and forms in Microsoft Foundry?",
+      "options": [
+        "Azure Speech in Foundry Tools",
+        "Azure Blob Storage",
+        "Azure Cosmos DB",
+        "Azure Content Understanding in Foundry Tools"
+      ],
+      "correctOptionIndex": 3,
+      "explanation": "Azure Content Understanding in Foundry Tools extracts structured information from documents and forms.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-047",
+      "text": "A developer needs to extract spoken words and visual text from a video recording. Which Foundry capability handles audio and video content?",
+      "options": [
+        "Content Understanding",
+        "Speech synthesis",
+        "Sentiment analysis",
+        "Keyword extraction"
+      ],
+      "correctOptionIndex": 0,
+      "explanation": "Content Understanding extracts information from audio and video, including spoken words and visual text.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-048",
+      "text": "A developer wants to interact with a deployed model through a web interface without writing code. Which surface should they use?",
+      "options": [
+        "The Foundry SDK",
+        "A command-line shell",
+        "The Foundry portal",
+        "A database client"
+      ],
+      "correctOptionIndex": 2,
+      "explanation": "The Foundry portal is the web interface for deploying and interacting with models without writing code.",
+      "domain": "Microsoft Foundry",
+      "difficulty": "medium",
+      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "rightsBasis": "original-human-ai-assisted",
+      "courseId": "ai-901"
+    },
+    {
+      "id": "ai-901-049",
+      "text": "Which practice improves a generative model's output by writing clear, specific instructions and context in the prompt?",
+      "options": [
+        "Lowering the endpoint URL",
+        "Creating effective prompts",
+        "Increasing the database size",
+        "Disabling the model"
+      ],
+      "correctOptionIndex": 1,
+      "explanation": "Creating effective prompts (clear, specific instructions and context) improves a generative model's output.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",

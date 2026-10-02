@@ -74,9 +74,17 @@ Azure OpenAI, Azure AI Foundry) is not used.
 
 | Course | Items | Basis |
 |---|---|---|
-| az-900 | 140 | 133 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped to the nearest in-scope objective, 7 outline topics the legacy bank never covered |
-| dp-900 | 46 | Authored from the DP-900 skills outline (all four domains) |
-| ai-901 | 38 | Authored from the AI-901 skills outline (both domains) |
+| az-900 | 152 | 133 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus weighting-balance and missing-objective items (storage tiers, defense-in-depth) |
+| dp-900 | 57 | Authored from the DP-900 skills outline (all four domains) |
+| ai-901 | 49 | Authored from the AI-901 skills outline (both domains) |
+
+Domain weighting is aligned to the published study-guide bands:
+
+| Course | Domain weighting |
+|---|---|
+| az-900 | Cloud Concepts 26.3% (25-30), Architecture 39.5% (35-40), Management and Governance 34.2% (30-35) |
+| dp-900 | Core 28.1% (25-30), Relational 22.8% (20-25), Non-relational 19.3% (15-20), Analytics 29.8% (25-30) |
+| ai-901 | AI Concepts and Capabilities 44.9% (40-45), Microsoft Foundry 55.1% (55-60) |
 
 ### AZ-900 re-scoped slots (out-of-scope legacy topic -> nearest objective)
 
@@ -94,7 +102,8 @@ Azure OpenAI, Azure AI Foundry) is not used.
 Azure Virtual Desktop (az-900-134), sovereign regions (az-900-135), Microsoft
 Entra Domain Services (az-900-136), external identities (az-900-137), AzCopy
 (az-900-138), Azure File Sync (az-900-139), Azure Storage Explorer
-(az-900-140).
+(az-900-140). Missing-objective items added: storage tiers (az-900-155),
+defense-in-depth (az-900-156).
 
 ## Validation
 

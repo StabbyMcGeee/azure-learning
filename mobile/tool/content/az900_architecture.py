@@ -169,20 +169,6 @@ QUESTIONS = [
       "Azure Virtual Machine Scale Sets deploy and manage identical VMs and "
       "can scale the number of instances in or out automatically.",
       "medium"),
-    # az-900-019 -> AA.2 private endpoint / Azure Private Link
-    q("az-900-019",
-      "Which option gives a resource a private IP address inside a virtual "
-      "network so it is not exposed to the public internet?",
-      [
-          "private endpoint (Azure Private Link)",
-          "public endpoint",
-          "a load balancer",
-          "a network security group",
-      ],
-      0,
-      "A private endpoint, enabled by Azure Private Link, assigns a private "
-      "IP address inside a virtual network for private access to a service.",
-      "medium"),
     # az-900-020 -> AA.1 management groups
     q("az-900-020",
       "What is the purpose of Azure management groups?",
@@ -333,32 +319,6 @@ QUESTIONS = [
       "Azure Data Box is a physical device used to transfer large amounts of "
       "data to Azure when network transfer is impractical or slow.",
       "easy"),
-    # az-900-056 -> AA.2 Azure ExpressRoute
-    q("az-900-056",
-      "Which statement about Azure ExpressRoute is correct?",
-      [
-          "It provides a private connection that does not use the public internet",
-          "It is a virtual network peering option",
-          "It is a storage redundancy option",
-          "It encrypts data at rest",
-      ],
-      0,
-      "Azure ExpressRoute provides a private, dedicated connection between "
-      "on-premises and Azure that does not travel over the public internet.",
-      "medium"),
-    # az-900-061 -> AA.2 private endpoint / Azure Private Link
-    q("az-900-061",
-      "Which benefit does a private endpoint provide for a storage account?",
-      [
-          "Access through a private IP without exposure to the public internet",
-          "Faster physical shipment of hard drives",
-          "Automatic geo-replication of data",
-          "Passwordless sign-in",
-      ],
-      0,
-      "A private endpoint lets a storage account be reached through a "
-      "private IP inside a virtual network, removing public internet exposure.",
-      "hard"),
     # az-900-063 -> AA.2 private endpoint / Azure Private Link
     q("az-900-063",
       "Which Azure service enables the private endpoint connection into a "
@@ -512,19 +472,6 @@ QUESTIONS = [
       0,
       "Azure Files provides fully managed file shares accessible by multiple "
       "virtual machines over SMB or NFS.",
-      "hard"),
-    # az-900-090 -> AA.1 availability zones
-    q("az-900-090",
-      "Which characteristic describes Azure availability zones?",
-      [
-          "They are physically separate datacenters within a region",
-          "They replicate data to a different country",
-          "They are the same as resource groups",
-          "They are logical billing boundaries",
-      ],
-      0,
-      "Availability zones are physically separate datacenters within a "
-      "region that provide fault isolation and high availability.",
       "hard"),
     # az-900-091 -> AA.1 management groups (resource hierarchy)
     q("az-900-091",

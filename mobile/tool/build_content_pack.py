@@ -89,8 +89,11 @@ def load_questions():
         "az900_cloud",
         "az900_architecture",
         "az900_governance",
+        "az900_add",
         "dp900",
+        "dp900_add",
         "ai901",
+        "ai901_add",
     ):
         mod = __import__(mod_name)
         qs = getattr(mod, "QUESTIONS")
