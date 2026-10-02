@@ -24,7 +24,7 @@ void main() {
     test('inserts and retrieves questions', () async {
       final questions = QuestionBank.syntheticFixtures();
       await store.insertQuestions(questions);
-      final loaded = await store.getAllQuestions();
+      final loaded = await store.getQuestions();
       expect(loaded.length, questions.length);
       expect(loaded.first.id, questions.first.id);
     });
@@ -68,8 +68,8 @@ void main() {
         timestamp: DateTime.now(),
       ));
       await store.clearAllData();
-      expect(await store.getAllQuestions(), isEmpty);
-      expect(await store.getAllAttempts(), isEmpty);
+      expect(await store.getQuestions(), isEmpty);
+      expect(await store.getAttempts(), isEmpty);
     });
   });
 }

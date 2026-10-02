@@ -32,7 +32,7 @@ void main() {
     });
 
     test('recording an unanswered exam leaves attempts unchanged', () async {
-      final before = await store.getAllAttempts();
+      final before = await store.getAttempts();
       expect(before.length, 0);
       // Simulate no answer recorded for a question.
       expect(await store.getAttemptsFor('fixture-001'), isEmpty);

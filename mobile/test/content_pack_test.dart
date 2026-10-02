@@ -297,7 +297,7 @@ void main() {
       final success = await ContentPackLoader.loadPackFromString(store, _validPackJson);
       expect(success, isTrue);
 
-      final questions = await store.getAllQuestions();
+      final questions = await store.getQuestions();
       expect(questions.length, 2);
 
       final first = questions.firstWhere((q) => q.id == 'q-001');
@@ -330,7 +330,7 @@ void main() {
       ''';
       final success = await ContentPackLoader.loadPackFromString(store, badPack);
       expect(success, isFalse);
-      expect(await store.getAllQuestions(), isEmpty);
+      expect(await store.getQuestions(), isEmpty);
     });
 
     test('repeat loading does not duplicate questions', () async {
@@ -358,9 +358,9 @@ void main() {
       // Load the same pack again.
       await store.applyContentPack(pack);
 
-      final questions = await store.getAllQuestions();
+      final questions = await store.getQuestions();
       expect(questions.length, 2);
-      expect(await store.getAllAttempts(), hasLength(1));
+      expect(await store.getAttempts(), hasLength(1));
       expect(await store.getSessions(), hasLength(1));
     });
 
@@ -396,7 +396,7 @@ void main() {
       }
 
       expect(caught, isNotNull);
-      expect(await store.getAllQuestions(), isEmpty);
+      expect(await store.getQuestions(), isEmpty);
     });
   });
 
