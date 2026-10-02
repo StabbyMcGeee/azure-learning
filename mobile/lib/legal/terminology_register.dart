@@ -219,7 +219,6 @@ class TerminologyRegister {
     'defence-in-depth': 'defense-in-depth',
     'multi-factor authentication': 'multifactor authentication (MFA)',
     'multi factor authentication': 'multifactor authentication (MFA)',
-    'geo redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
     'geo-redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
   };
 

@@ -169,7 +169,7 @@ void main() {
         '"rightsBasis": "licensed-cc-by-4.0"',
       );
       final pack = ContentPack.parse(json);
-      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('requires a non-empty licenseRef')));
       expect(
         errors,
@@ -204,7 +204,7 @@ void main() {
       }
       ''';
       final pack = ContentPack.parse(json);
-      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      final errors = ContentPackValidator(pack).validate();
       expect(errors, isEmpty);
     });
 
@@ -214,7 +214,7 @@ void main() {
         '"packVersion": 1,\n  "lastVerifiedAt": "not-a-date"',
       );
       final pack = ContentPack.parse(json);
-      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('lastVerifiedAt')));
     });
 

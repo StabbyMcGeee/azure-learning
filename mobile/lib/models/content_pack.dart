@@ -224,16 +224,7 @@ class PackQuestion {
 class ContentPackValidator {
   final ContentPack pack;
 
-  /// Whether to run the azlegal-db-v1 terminology lint over question content.
-  ///
-  /// Terminology checking is a build-time gate and is enabled by default. It
-  /// can be disabled for tests that exercise only structural validation.
-  final bool lintTerminology;
-
-  const ContentPackValidator(
-    this.pack, {
-    this.lintTerminology = true,
-  });
+  const ContentPackValidator(this.pack);
 
   List<String> validate() {
     final errors = <String>[];
@@ -349,7 +340,7 @@ class ContentPackValidator {
         );
       }
 
-      if (lintTerminology && TerminologyRegister.isKnownCourse(q.courseId)) {
+      if (TerminologyRegister.isKnownCourse(q.courseId)) {
         final linter = TerminologyLinter(
           courseId: q.courseId,
           itemId: q.id,
@@ -360,7 +351,10 @@ class ContentPackValidator {
           explanation: q.explanation,
         );
         for (final v in violations) {
-          errors.add('$prefix: ${v.message}; expected: "${v.expected}"');
+          errors.add(
+            '$prefix (field: ${v.field}): ${v.message}; '
+            'expected: "${v.expected}"',
+          );
         }
       }
     }

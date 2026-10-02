@@ -61,15 +61,15 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 | Field              | Type   | Required | Description                                                          |
 |--------------------|--------|----------|----------------------------------------------------------------------|
 | `formatVersion`    | string | yes      | Must be exactly `azpack-v2`.                                         |
-| `packId`           | string | yes      | Stable reverse-DNS identifier for this pack.                           |
+| `packId`           | string | yes      | Stable reverse-DNS identifier for this pack.                         |
 | `packVersion`      | int    | yes      | Monotonically increasing pack revision, `>= 1`.                      |
 | `title`            | string | yes      | Human-readable title.                                                |
 | `source`           | string | yes      | Where the pack content came from (e.g. author, licensee).            |
 | `rightsBasis`      | enum   | yes      | One of `original-human`, `original-human-ai-assisted`, `licensed-cc-by-4.0`, `licensed-commercial`, `public-domain`. |
 | `licenseRef`       | string | cond     | Required when `rightsBasis` starts with `licensed-`.                  |
 | `attributionText`  | string | cond     | Required when `rightsBasis` is `licensed-cc-by-4.0`.                 |
-| `lastVerifiedAt`   | string | no       | ISO-8601 date shown in About \u0026 Legal as the content-last-verified date. |
-| `questions`        | array  | yes      | List of question objects.                                            |
+| `lastVerifiedAt`   | string | no       | ISO-8601 date shown in About & Legal as the content-last-verified date. |
+| `questions`        | array  | yes      | List of question objects.                                              |
 
 ### Per-question fields
 
@@ -96,21 +96,30 @@ screens scope their content to that selection.
 
 Before any database write the parser/validator checks:
 
+- The JSON is well-formed.
+- `formatVersion` is exactly `azpack-v2`.
+- `packVersion` is an integer `>= 1`.
+- All required pack-level and per-question string fields are present and non-empty.
+- Optional string fields (`licenseRef`, `attributionText`, `lastVerifiedAt`) are
+  strings when present; non-string values throw `FormatException`.
+- Every question has at least two options.
+- `correctOptionIndex` is within the range of the options array.
+- All question IDs are unique within the pack.
+- The pack does not exceed the question-count bound (`contentPackMaxQuestions`).
 - The `rightsBasis` value is checked against the azlegal-db-v1 permitted
   values (`original-human`, `original-human-ai-assisted`, `licensed-cc-by-4.0`,
   `licensed-commercial`, `public-domain`). Any other value rejects the pack.
 - `licensed-*` bases require a non-empty `licenseRef`; `licensed-cc-by-4.0`
   also requires a non-empty `attributionText`.
+- `lastVerifiedAt`, when present, must be a valid ISO-8601 date. It is stored
+  and displayed in About & Legal as the content-last-verified date.
+- `courseId` must be one of the registered launch-course values (`az-900`,
+  `sc-900`, `ai-901`).
 - A terminology lint runs over every question's text, options, and
   explanation against the azlegal-db-v1 register. Retired product names,
-  bare ambiguous abbreviations such as `RBAC`, and unverified course-scoped
-  terms are reported with the expected wording, and the pack is rejected.
-- `lastVerifiedAt`, when present, must be a valid ISO-8601 date. It is stored
-  and displayed in About \u0026 Legal as the content-last-verified date.
-- Every question has at least two options.
-- `correctOptionIndex` is within the range of the options array.
-- All question IDs are unique within the pack.
-- The pack does not exceed the question-count bound (`contentPackMaxQuestions`).
+  bare ambiguous abbreviations such as `RBAC`, misspellings, unverified product
+  terms, and incorrect course-scoped terms are reported with the item, field,
+  and expected wording, and the pack is rejected.
 
 Validation errors are returned as a list of strings; the pack is not applied if
 the list is non-empty.

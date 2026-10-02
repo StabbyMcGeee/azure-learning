@@ -10,7 +10,7 @@
         "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900",
         "retrievedAt": "2026-10-02",
         "skillsMeasuredAsOf": "2026-07-20",
-        "contentHash": "sha256:outline"
+        "contentHash": "0000000000000000000000000000000000000000000000000000000000000000"
       },
       "factSheetId": "fs-az900-001",
       "factSources": [
@@ -44,7 +44,7 @@
         "version": "1",
         "thresholds": {"maxRunLen": 6},
         "comparedTo": ["https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/overview"],
-        "resultHash": "sha256:placeholder",
+        "resultHash": "0000000000000000000000000000000000000000000000000000000000000000",
         "maxRunLen": 0
       },
       "rightsBasis": "original-human",
