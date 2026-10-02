@@ -227,6 +227,14 @@ class LocalStore {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
+    // Clear any previously stored content-last-verified dates before writing
+    // new ones, so About \u0026 Legal never shows a stale date after a pack
+    // revision that omits lastVerifiedAt.
+    await txn.delete(
+      'settings',
+      where: "key = 'contentLastVerifiedAt' OR key LIKE 'contentLastVerifiedAt_%'",
+    );
+
     // Record content-last-verified dates from the pack metadata. A per-course
     // date is recorded for every course present in the pack, plus a global date.
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
