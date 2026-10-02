@@ -8,6 +8,12 @@ import '../models/content_pack.dart';
 import '../models/question.dart';
 import '../models/session.dart';
 
+/// Thrown when a content pack is rejected because its version is lower than the
+/// version already recorded in the local pack ledger.
+class PackVersionTooLowException implements Exception {
+  const PackVersionTooLowException();
+}
+
 /// Local SQLite persistence for offline-first study data.
 ///
 /// Tests can inject an in-memory [Database] via [LocalStore.withDatabase].
@@ -34,7 +40,9 @@ class LocalStore {
         domain TEXT NOT NULL,
         difficulty TEXT NOT NULL,
         source TEXT,
-        rightsBasis TEXT
+        rightsBasis TEXT,
+        packId TEXT,
+        courseId TEXT
       )
     ''');
     await db.execute('''
@@ -50,6 +58,7 @@ class LocalStore {
       CREATE TABLE IF NOT EXISTS sessions(
         id TEXT PRIMARY KEY,
         mode TEXT NOT NULL,
+        courseId TEXT,
         startedAt INTEGER NOT NULL,
         finishedAt INTEGER NOT NULL,
         questionCount INTEGER NOT NULL,
@@ -57,9 +66,23 @@ class LocalStore {
         scorePercent INTEGER
       )
     ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS pack_ledger(
+        packId TEXT PRIMARY KEY,
+        version INTEGER NOT NULL,
+        appliedAt INTEGER NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS settings(
+        key TEXT PRIMARY KEY,
+        value TEXT
+      )
+    ''');
   }
 
-  /// Creates the original v1 schema without provenance columns.
+  /// Creates the original v1 schema without provenance, pack, or course
+  /// columns.
   ///
   /// This helper exists only for migration testing; production code always
   /// uses [createSchema] for new databases.
@@ -103,16 +126,40 @@ class LocalStore {
     await db.execute('ALTER TABLE questions ADD COLUMN rightsBasis TEXT');
   }
 
+  /// Migrates an existing v2 database to v3, adding pack/course identity
+  /// columns and the pack ledger and settings tables.
+  static Future<void> migrateV2ToV3(Database db) async {
+    await db.execute('ALTER TABLE questions ADD COLUMN packId TEXT');
+    await db.execute('ALTER TABLE questions ADD COLUMN courseId TEXT');
+    await db.execute('ALTER TABLE sessions ADD COLUMN courseId TEXT');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS pack_ledger(
+        packId TEXT PRIMARY KEY,
+        version INTEGER NOT NULL,
+        appliedAt INTEGER NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS settings(
+        key TEXT PRIMARY KEY,
+        value TEXT
+      )
+    ''');
+  }
+
   static Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'study_app.db');
     return openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: (db, version) async => createSchema(db),
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await migrateV1ToV2(db);
+        }
+        if (oldVersion < 3) {
+          await migrateV2ToV3(db);
         }
       },
     );
@@ -129,7 +176,9 @@ class LocalStore {
   ///
   /// Existing questions with the same id are replaced, but attempt and session
   /// history is left untouched because those rows live in separate tables.
-  /// Repeat calls with the same pack are safe.
+  /// Repeat calls with the same or a higher version are safe. A lower version
+  /// than the one recorded in the pack ledger is rejected and leaves the bank
+  /// unchanged.
   Future<void> applyContentPack(ContentPack pack) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -139,20 +188,79 @@ class LocalStore {
 
   /// Variant of [applyContentPack] that writes into an already-open
   /// [Transaction]. This is exposed for tests that want to verify rollback
-  /// behavior.
+  /// behavior. It also performs the pack-version ledger check and records the
+  /// applied version inside the same transaction.
   Future<void> applyContentPackToTransaction(
     Transaction txn,
     ContentPack pack,
   ) async {
+    final existing = await txn.query(
+      'pack_ledger',
+      where: 'packId = ?',
+      whereArgs: [pack.packId],
+      limit: 1,
+    );
+    if (existing.isNotEmpty) {
+      final existingVersion = existing.first['version'] as int;
+      if (pack.packVersion < existingVersion) {
+        throw const PackVersionTooLowException();
+      }
+    }
+
+    await txn.insert(
+      'pack_ledger',
+      {
+        'packId': pack.packId,
+        'version': pack.packVersion,
+        'appliedAt': DateTime.now().millisecondsSinceEpoch,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
     final batch = txn.batch();
     for (final q in pack.questions) {
       batch.insert(
         'questions',
-        q.toQuestion().toMap(),
+        q.toQuestion(packId: pack.packId).toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
     await batch.commit(noResult: true);
+  }
+
+  /// Removes every question introduced by [packId] and deletes the ledger
+  /// entry for that pack.
+  ///
+  /// Attempts and sessions are not touched, and questions from other packs
+  /// remain in the bank.
+  Future<void> withdrawPack(String packId) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete(
+        'questions',
+        where: 'packId = ?',
+        whereArgs: [packId],
+      );
+      await txn.delete(
+        'pack_ledger',
+        where: 'packId = ?',
+        whereArgs: [packId],
+      );
+    });
+  }
+
+  /// Returns the version last recorded for [packId], or null if the pack has
+  /// never been applied or has been withdrawn.
+  Future<int?> getAppliedPackVersion(String packId) async {
+    final db = await database;
+    final rows = await db.query(
+      'pack_ledger',
+      where: 'packId = ?',
+      whereArgs: [packId],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    return rows.first['version'] as int?;
   }
 
   Future<void> insertQuestions(List<Question> questions) async {
@@ -165,11 +273,21 @@ class LocalStore {
     await batch.commit(noResult: true);
   }
 
-  Future<List<Question>> getAllQuestions() async {
+  /// All questions, optionally filtered to a single course.
+  Future<List<Question>> getQuestions({String? courseId}) async {
     final db = await database;
-    final rows = await db.query('questions');
+    final rows = courseId == null
+        ? await db.query('questions')
+        : await db.query(
+            'questions',
+            where: 'courseId = ?',
+            whereArgs: [courseId],
+          );
     return rows.map(Question.fromMap).toList();
   }
+
+  /// Alias for [getQuestions] without a course filter.
+  Future<List<Question>> getAllQuestions() => getQuestions();
 
   Future<Question?> getQuestion(String id) async {
     final db = await database;
@@ -181,6 +299,42 @@ class LocalStore {
     );
     if (rows.isEmpty) return null;
     return Question.fromMap(rows.first);
+  }
+
+  /// Returns the distinct course identifiers currently present in the bank,
+  /// in ascending order.
+  Future<List<String>> getCourses() async {
+    final db = await database;
+    final rows = await db.rawQuery(
+      "SELECT DISTINCT courseId FROM questions "
+      "WHERE courseId IS NOT NULL AND courseId != '' "
+      "ORDER BY courseId",
+    );
+    return rows.map((r) => r['courseId'] as String).toList();
+  }
+
+  /// Returns the learner-selected course, or null when no course is selected.
+  Future<String?> getSelectedCourseId() async {
+    final db = await database;
+    final rows = await db.query(
+      'settings',
+      where: "key = 'selectedCourseId'",
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    final value = rows.first['value'] as String?;
+    if (value == null || value.isEmpty) return null;
+    return value;
+  }
+
+  /// Stores or clears the learner-selected course.
+  Future<void> setSelectedCourseId(String? courseId) async {
+    final db = await database;
+    await db.insert(
+      'settings',
+      {'key': 'selectedCourseId', 'value': courseId ?? ''},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> recordAttempt(Attempt attempt) async {
@@ -199,11 +353,25 @@ class LocalStore {
     return rows.map(Attempt.fromMap).toList();
   }
 
-  Future<List<Attempt>> getAllAttempts() async {
+  /// All recorded attempts, optionally filtered to a single course by joining
+  /// with the current question bank.
+  Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
-    final rows = await db.query('attempts', orderBy: 'timestamp DESC');
+    final rows = courseId == null
+        ? await db.query('attempts', orderBy: 'timestamp DESC')
+        : await db.rawQuery(
+            '''
+            SELECT a.* FROM attempts a
+            INNER JOIN questions q ON q.id = a.questionId
+            WHERE q.courseId = ?
+            ORDER BY a.timestamp DESC
+            ''',
+            [courseId],
+          );
     return rows.map(Attempt.fromMap).toList();
   }
+
+  Future<List<Attempt>> getAllAttempts() => getAttempts();
 
   Future<void> saveSession(StudySession session) async {
     final db = await database;
@@ -214,22 +382,33 @@ class LocalStore {
     );
   }
 
-  Future<List<StudySession>> getSessions({String? mode}) async {
+  Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
-    final rows = mode == null
+    final conditions = <String>[];
+    final whereArgs = <Object?>[];
+    if (mode != null) {
+      conditions.add('mode = ?');
+      whereArgs.add(mode);
+    }
+    if (courseId != null) {
+      conditions.add('courseId = ?');
+      whereArgs.add(courseId);
+    }
+    final rows = conditions.isEmpty
         ? await db.query('sessions', orderBy: 'finishedAt DESC')
         : await db.query(
             'sessions',
-            where: 'mode = ?',
-            whereArgs: [mode],
+            where: conditions.join(' AND '),
+            whereArgs: whereArgs,
             orderBy: 'finishedAt DESC',
           );
     return rows.map(StudySession.fromMap).toList();
   }
 
-  /// Build review items for questions that are due now or have never been seen.
-  Future<List<ReviewItem>> getDueReviewItems() async {
-    final questions = await getAllQuestions();
+  /// Build review items for questions that are due now or have never been seen,
+  /// optionally scoped to a single course.
+  Future<List<ReviewItem>> getDueReviewItems({String? courseId}) async {
+    final questions = await getQuestions(courseId: courseId);
     if (questions.isEmpty) return const [];
 
     final now = DateTime.now();
@@ -286,5 +465,7 @@ class LocalStore {
     await db.delete('questions');
     await db.delete('attempts');
     await db.delete('sessions');
+    await db.delete('pack_ledger');
+    await db.delete('settings');
   }
 }

@@ -29,7 +29,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
   }
 
   Future<void> _load() async {
-    final due = await _store.getDueReviewItems();
+    final courseId = await _store.getSelectedCourseId();
+    final due = await _store.getDueReviewItems(courseId: courseId);
     if (mounted) {
       setState(() {
         _due = due;

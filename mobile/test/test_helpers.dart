@@ -48,6 +48,8 @@ class FakeLocalStore extends LocalStore {
   final List<Question> _questions = [];
   final List<Attempt> _attempts = [];
   final List<StudySession> _sessions = [];
+  final Map<String, int> _packVersions = {};
+  String? _selectedCourseId;
 
   FakeLocalStore([List<Question>? questions]) {
     if (questions != null) _questions.addAll(questions);
@@ -55,9 +57,14 @@ class FakeLocalStore extends LocalStore {
 
   @override
   Future<void> applyContentPack(ContentPack pack) async {
+    final existing = _packVersions[pack.packId];
+    if (existing != null && pack.packVersion < existing) {
+      throw const PackVersionTooLowException();
+    }
+    _packVersions[pack.packId] = pack.packVersion;
     for (final q in pack.questions) {
       _questions.removeWhere((existing) => existing.id == q.id);
-      _questions.add(q.toQuestion());
+      _questions.add(q.toQuestion(packId: pack.packId));
     }
   }
 
@@ -68,6 +75,15 @@ class FakeLocalStore extends LocalStore {
   ) async => applyContentPack(pack);
 
   @override
+  Future<void> withdrawPack(String packId) async {
+    _packVersions.remove(packId);
+    _questions.removeWhere((q) => q.packId == packId);
+  }
+
+  @override
+  Future<int?> getAppliedPackVersion(String packId) async => _packVersions[packId];
+
+  @override
   Future<void> close() async {}
 
   @override
@@ -76,7 +92,16 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
-  Future<List<Question>> getAllQuestions() async => List.unmodifiable(_questions);
+  Future<List<Question>> getQuestions({String? courseId}) async {
+    var result = List<Question>.from(_questions);
+    if (courseId != null) {
+      result = result.where((q) => q.courseId == courseId).toList();
+    }
+    return List.unmodifiable(result);
+  }
+
+  @override
+  Future<List<Question>> getAllQuestions() => getQuestions();
 
   @override
   Future<Question?> getQuestion(String id) async {
@@ -85,6 +110,26 @@ class FakeLocalStore extends LocalStore {
     } on StateError {
       return null;
     }
+  }
+
+  @override
+  Future<List<String>> getCourses() async {
+    final ids = _questions
+        .map((q) => q.courseId)
+        .where((c) => c != null && c.isNotEmpty)
+        .cast<String>()
+        .toSet()
+        .toList();
+    ids.sort();
+    return ids;
+  }
+
+  @override
+  Future<String?> getSelectedCourseId() async => _selectedCourseId;
+
+  @override
+  Future<void> setSelectedCourseId(String? courseId) async {
+    _selectedCourseId = courseId;
   }
 
   @override
@@ -99,28 +144,41 @@ class FakeLocalStore extends LocalStore {
           .toList();
 
   @override
-  Future<List<Attempt>> getAllAttempts() async =>
-      List.unmodifiable(_attempts.reversed.toList());
+  Future<List<Attempt>> getAttempts({String? courseId}) async {
+    var result = List<Attempt>.from(_attempts);
+    if (courseId != null) {
+      final courseQuestionIds =
+          _questions.where((q) => q.courseId == courseId).map((q) => q.id).toSet();
+      result = result.where((a) => courseQuestionIds.contains(a.questionId)).toList();
+    }
+    return List.unmodifiable(result.reversed.toList());
+  }
 
   @override
-  Future<void> saveSession(StudySession session) async =>
-      _sessions.add(session);
+  Future<List<Attempt>> getAllAttempts() => getAttempts();
 
   @override
-  Future<List<StudySession>> getSessions({String? mode}) async {
+  Future<void> saveSession(StudySession session) async => _sessions.add(session);
+
+  @override
+  Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     var result = List<StudySession>.from(_sessions);
     if (mode != null) {
       result = result.where((s) => s.mode == mode).toList();
+    }
+    if (courseId != null) {
+      result = result.where((s) => s.courseId == courseId).toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);
   }
 
   @override
-  Future<List<ReviewItem>> getDueReviewItems() async {
+  Future<List<ReviewItem>> getDueReviewItems({String? courseId}) async {
     final now = DateTime.now();
     final List<ReviewItem> due = [];
-    for (final q in _questions) {
+    final questions = await getQuestions(courseId: courseId);
+    for (final q in questions) {
       final attempts = (await getAttemptsFor(q.id)).reversed.toList();
       if (attempts.isEmpty) {
         due.add(ReviewItem(question: q, nextReview: now, consecutiveCorrect: 0));
@@ -165,5 +223,7 @@ class FakeLocalStore extends LocalStore {
     _questions.clear();
     _attempts.clear();
     _sessions.clear();
+    _packVersions.clear();
+    _selectedCourseId = null;
   }
 }

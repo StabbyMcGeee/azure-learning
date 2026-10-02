@@ -2,6 +2,7 @@
 class StudySession {
   final String id;
   final String mode; // 'practice' | 'exam'
+  final String? courseId;
   final DateTime startedAt;
   final DateTime finishedAt;
   final int questionCount;
@@ -11,6 +12,7 @@ class StudySession {
   const StudySession({
     required this.id,
     required this.mode,
+    this.courseId,
     required this.startedAt,
     required this.finishedAt,
     required this.questionCount,
@@ -21,6 +23,7 @@ class StudySession {
   Map<String, dynamic> toMap() => {
         'id': id,
         'mode': mode,
+        'courseId': courseId,
         'startedAt': startedAt.millisecondsSinceEpoch,
         'finishedAt': finishedAt.millisecondsSinceEpoch,
         'questionCount': questionCount,
@@ -31,6 +34,7 @@ class StudySession {
   factory StudySession.fromMap(Map<String, dynamic> map) => StudySession(
         id: map['id'] as String,
         mode: map['mode'] as String,
+        courseId: map['courseId'] as String?,
         startedAt: DateTime.fromMillisecondsSinceEpoch(map['startedAt'] as int),
         finishedAt:
             DateTime.fromMillisecondsSinceEpoch(map['finishedAt'] as int),

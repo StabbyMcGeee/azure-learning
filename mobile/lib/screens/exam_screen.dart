@@ -38,7 +38,8 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 
   Future<void> _load() async {
-    final questions = await _store.getAllQuestions();
+    final courseId = await _store.getSelectedCourseId();
+    final questions = await _store.getQuestions(courseId: courseId);
     final selected = _pickExamSet(questions, _examSize);
     if (mounted) {
       setState(() {
@@ -189,10 +190,12 @@ class _ExamScreenState extends State<ExamScreen> {
       }
       // Unanswered items are wrong but not persisted.
     }
+    final courseId = await _store.getSelectedCourseId();
     final sessionId = 'exam-${now.millisecondsSinceEpoch}';
     await _store.saveSession(StudySession(
       id: sessionId,
       mode: 'exam',
+      courseId: courseId,
       startedAt: now.subtract(const Duration(minutes: 1)),
       finishedAt: now,
       questionCount: _questions.length,

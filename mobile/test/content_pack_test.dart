@@ -15,7 +15,7 @@ import 'test_helpers.dart';
 
 const String _validPackJson = '''
 {
-  "formatVersion": "azpack-v1",
+  "formatVersion": "azpack-v2",
   "packId": "com.example.test.synthetic",
   "packVersion": 1,
   "title": "Synthetic test pack",
@@ -30,7 +30,8 @@ const String _validPackJson = '''
       "domain": "Domain A",
       "difficulty": "easy",
       "source": "Per-question fixture",
-      "rightsBasis": "per-question-synthetic"
+      "rightsBasis": "per-question-synthetic",
+      "courseId": "course-test"
     },
     {
       "id": "q-002",
@@ -41,7 +42,8 @@ const String _validPackJson = '''
       "domain": "Domain B",
       "difficulty": "medium",
       "source": "Per-question fixture",
-      "rightsBasis": "per-question-synthetic"
+      "rightsBasis": "per-question-synthetic",
+      "courseId": "course-test"
     }
   ]
 }
@@ -53,7 +55,7 @@ void main() {
   group('ContentPack parsing', () {
     test('parses a valid synthetic pack', () {
       final pack = ContentPack.parse(_validPackJson);
-      expect(pack.formatVersion, 'azpack-v1');
+      expect(pack.formatVersion, 'azpack-v2');
       expect(pack.packId, 'com.example.test.synthetic');
       expect(pack.packVersion, 1);
       expect(pack.questions.length, 2);
@@ -83,7 +85,7 @@ void main() {
     });
 
     test('rejects unsupported formatVersion', () {
-      final json = _validPackJson.replaceFirst('azpack-v1', 'azpack-v2');
+      final json = _validPackJson.replaceFirst('azpack-v2', 'azpack-v1');
       final pack = ContentPack.parse(json);
       final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('Unsupported formatVersion')));
@@ -140,9 +142,19 @@ void main() {
       expect(errors, contains(contains('missing or empty rightsBasis')));
     });
 
+    test('rejects missing per-question courseId', () {
+      final json = _validPackJson.replaceFirst(
+        '"courseId": "course-test"',
+        '"courseId": ""',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('missing or empty courseId')));
+    });
+
     test('rejects empty question list beyond max bound', () {
       final pack = ContentPack(
-        formatVersion: 'azpack-v1',
+        formatVersion: 'azpack-v2',
         packId: 'big-pack',
         packVersion: 1,
         title: 'Big',
@@ -159,6 +171,7 @@ void main() {
             difficulty: 'easy',
             source: 'synthetic',
             rightsBasis: 'synthetic',
+            courseId: 'course-test',
           ),
         ),
       );

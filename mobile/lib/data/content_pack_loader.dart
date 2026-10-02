@@ -37,20 +37,25 @@ class ContentPackLoader {
   /// Parses, validates, and applies a pack from a raw JSON string.
   ///
   /// Returns `true` on success, `false` when the pack is invalid.
-  static Future<bool> loadPackFromString(LocalStore store, String jsonString) {
+  static Future<bool> loadPackFromString(LocalStore store, String jsonString) async {
     late final ContentPack pack;
     try {
       pack = ContentPack.parse(jsonString);
     } on FormatException {
-      return Future.value(false);
+      return false;
     }
 
     final errors = ContentPackValidator(pack).validate();
     if (errors.isNotEmpty) {
-      return Future.value(false);
+      return false;
     }
 
-    return store.applyContentPack(pack).then((_) => true);
+    try {
+      await store.applyContentPack(pack);
+      return true;
+    } on PackVersionTooLowException {
+      return false;
+    }
   }
 
   /// Parses a pack without applying it, returning validation errors.

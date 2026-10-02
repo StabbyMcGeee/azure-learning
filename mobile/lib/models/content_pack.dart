@@ -7,7 +7,7 @@ import 'question.dart';
 /// The mobile app only accepts packs that declare this exact version. Bump it
 /// only when the schema makes an incompatible change and ship a matching
 /// migration path.
-const String contentPackFormatVersion = 'azpack-v1';
+const String contentPackFormatVersion = 'azpack-v2';
 
 /// Maximum number of questions a single pack may contain.
 ///
@@ -113,6 +113,7 @@ class PackQuestion {
   final String difficulty;
   final String source;
   final String rightsBasis;
+  final String courseId;
 
   const PackQuestion({
     required this.id,
@@ -124,6 +125,7 @@ class PackQuestion {
     required this.difficulty,
     required this.source,
     required this.rightsBasis,
+    required this.courseId,
   });
 
   factory PackQuestion.fromJson(Map<String, dynamic> json) {
@@ -133,6 +135,7 @@ class PackQuestion {
     final difficulty = ContentPack._requireString(json, 'difficulty');
     final source = ContentPack._requireString(json, 'source');
     final rightsBasis = ContentPack._requireString(json, 'rightsBasis');
+    final courseId = ContentPack._requireString(json, 'courseId');
 
     final rawOptions = json['options'];
     if (rawOptions is! List<dynamic>) {
@@ -162,10 +165,11 @@ class PackQuestion {
       difficulty: difficulty,
       source: source,
       rightsBasis: rightsBasis,
+      courseId: courseId,
     );
   }
 
-  Question toQuestion() => Question(
+  Question toQuestion({required String packId}) => Question(
         id: id,
         text: text,
         options: options,
@@ -175,6 +179,8 @@ class PackQuestion {
         difficulty: difficulty,
         source: source,
         rightsBasis: rightsBasis,
+        packId: packId,
+        courseId: courseId,
       );
 }
 
@@ -267,6 +273,10 @@ class ContentPackValidator {
 
       if (q.rightsBasis.trim().isEmpty) {
         errors.add('$prefix: missing or empty rightsBasis');
+      }
+
+      if (q.courseId.trim().isEmpty) {
+        errors.add('$prefix: missing or empty courseId');
       }
     }
   }

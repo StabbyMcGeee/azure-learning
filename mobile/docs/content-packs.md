@@ -1,7 +1,7 @@
 # Offline content packs
 
 The mobile app uses a bounded, versioned offline content-pack format called
-**azpack-v1**. A pack is a single JSON file that carries both pack-level and
+**azpack-v2**. A pack is a single JSON file that carries both pack-level and
 per-question provenance metadata. The app parses, validates, and applies packs
 atomically to its SQLite question bank. Missing or invalid packs leave the bank
 empty and preserve all user attempt/session history.
@@ -20,14 +20,14 @@ assets/content-pack.json
 
 If the asset is absent, malformed, unsupported, or invalid, the loader returns
 `false` and the app keeps the current empty production bank. No error is shown
-to the user. To ship a pack, place the prepared JSON file at that path and add
-it to the `assets` section of `pubspec.yaml`.
+to the user. To ship a pack, place the prepared JSON file at that path and make
+sure it is listed in the `assets` section of `pubspec.yaml`.
 
-## Pack format (`azpack-v1`)
+## Pack format (`azpack-v2`)
 
 ```json
 {
-  "formatVersion": "azpack-v1",
+  "formatVersion": "azpack-v2",
   "packId": "com.example.studyapp.az900.v1",
   "packVersion": 1,
   "title": "Example AZ-900 Study Pack",
@@ -48,7 +48,8 @@ it to the `assets` section of `pubspec.yaml`.
       "domain": "Cloud Concepts",
       "difficulty": "easy",
       "source": "Original human-authored content",
-      "rightsBasis": "original"
+      "rightsBasis": "original",
+      "courseId": "az-900"
     }
   ]
 }
@@ -58,7 +59,7 @@ it to the `assets` section of `pubspec.yaml`.
 
 | Field            | Type   | Required | Description                                                          |
 |------------------|--------|----------|----------------------------------------------------------------------|
-| `formatVersion`  | string | yes      | Must be exactly `azpack-v1`.                                         |
+| `formatVersion`  | string | yes      | Must be exactly `azpack-v2`.                                         |
 | `packId`         | string | yes      | Stable reverse-DNS identifier for this pack.                         |
 | `packVersion`    | int    | yes      | Monotonically increasing pack revision, `>= 1`.                      |
 | `title`          | string | yes      | Human-readable title.                                                |
@@ -79,13 +80,18 @@ it to the `assets` section of `pubspec.yaml`.
 | `difficulty`          | string  | yes      | Difficulty label.                                                              |
 | `source`              | string  | yes      | Per-question source; can differ from pack-level source.                        |
 | `rightsBasis`         | string  | yes      | Per-question rights basis; can differ from pack-level rightsBasis.             |
+| `courseId`            | string  | yes      | Course identifier this question belongs to; supplied by the pack.              |
+
+The `courseId` is never hardcoded in the app. A learner can select any course
+present in the loaded packs, and study, practice, exam, review, and progress
+screens scope their content to that selection.
 
 ## Validation
 
 Before any database write the parser/validator checks:
 
 - The JSON is well-formed.
-- `formatVersion` is exactly `azpack-v1`.
+- `formatVersion` is exactly `azpack-v2`.
 - `packVersion` is an integer `>= 1`.
 - All required pack-level and per-question string fields are present and non-empty.
 - Every question has at least two options.
@@ -95,6 +101,22 @@ Before any database write the parser/validator checks:
 
 Validation errors are returned as a list of strings; the pack is not applied if
 the list is non-empty.
+
+## Pack version ledger
+
+The database keeps a `pack_ledger` table recording the latest applied version of
+each `packId`. The loader rejects any pack whose `packVersion` is lower than the
+one already recorded. Equal and higher versions are accepted, making repeat
+loads and upgrades safe. The ledger entry is written inside the same transaction
+as the question rows, so a failed write never leaves a stale ledger behind.
+
+## Per-pack withdrawal
+
+A pack can be withdrawn by `packId`. This deletes every question row that
+carries that `packId` and removes the ledger entry for the pack. Attempts and
+sessions are not touched, and questions from other packs remain in the bank.
+After withdrawal, the withdrawn pack can be re-applied at any version because its
+ledger entry has been cleared.
 
 ## Atomic application and repeat safety
 
@@ -115,14 +137,34 @@ ALTER TABLE questions ADD COLUMN source TEXT;
 ALTER TABLE questions ADD COLUMN rightsBasis TEXT;
 ```
 
-Existing rows receive `NULL` provenance. The migration runs automatically when a
-v1 database is opened at version 2.
+The v3 schema, introduced for course and pack identity, adds:
+
+```sql
+ALTER TABLE questions ADD COLUMN packId TEXT;
+ALTER TABLE questions ADD COLUMN courseId TEXT;
+ALTER TABLE sessions ADD COLUMN courseId TEXT;
+
+CREATE TABLE pack_ledger(
+  packId TEXT PRIMARY KEY,
+  version INTEGER NOT NULL,
+  appliedAt INTEGER NOT NULL
+);
+
+CREATE TABLE settings(
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+```
+
+Existing rows receive `NULL` pack/course identity. The migrations run
+automatically when an older database is opened at version 3.
 
 ## How to prepare a future human-authored or licensed pack
 
 1. Produce or license original questions.
-2. Record, for every question, the source author/licensor and the rights basis.
-3. Build a JSON file matching the `azpack-v1` schema above.
+2. Record, for every question, the source author/licensor, the rights basis,
+   and a stable `courseId` supplied by the pack.
+3. Build a JSON file matching the `azpack-v2` schema above.
 4. Validate the file locally:
    - Use `ContentPackLoader.dryRun(jsonString)` in a Dart script or test.
    - Or run the mobile tests, which exercise the validator with synthetic fixtures.

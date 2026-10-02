@@ -16,6 +16,8 @@ class Question {
   final String difficulty;
   final String? source;
   final String? rightsBasis;
+  final String? packId;
+  final String? courseId;
 
   const Question({
     required this.id,
@@ -27,6 +29,8 @@ class Question {
     required this.difficulty,
     this.source,
     this.rightsBasis,
+    this.packId,
+    this.courseId,
   });
 
   Map<String, dynamic> toMap() => {
@@ -39,6 +43,8 @@ class Question {
         'difficulty': difficulty,
         'source': source,
         'rightsBasis': rightsBasis,
+        'packId': packId,
+        'courseId': courseId,
       };
 
   factory Question.fromMap(Map<String, dynamic> map) {
@@ -53,6 +59,8 @@ class Question {
       difficulty: map['difficulty'] as String,
       source: map['source'] as String?,
       rightsBasis: map['rightsBasis'] as String?,
+      packId: map['packId'] as String?,
+      courseId: map['courseId'] as String?,
     );
   }
 

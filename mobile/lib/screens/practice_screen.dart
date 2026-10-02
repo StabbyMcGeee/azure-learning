@@ -34,7 +34,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
   }
 
   Future<void> _load() async {
-    final questions = await _store.getAllQuestions();
+    final courseId = await _store.getSelectedCourseId();
+    final questions = await _store.getQuestions(courseId: courseId);
     if (mounted) {
       setState(() {
         _questions = questions;
