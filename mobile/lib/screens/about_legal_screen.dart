@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class AboutLegalScreen extends StatefulWidget {
 
 class _AboutLegalScreenState extends State<AboutLegalScreen> {
   String? _lastVerifiedAt;
-  int _licenseCount = 0;
   bool _loaded = false;
 
   @override
@@ -34,15 +32,9 @@ class _AboutLegalScreenState extends State<AboutLegalScreen> {
       courseId: courseId,
     );
 
-    var count = 0;
-    await for (final _ in LicenseRegistry.licenses) {
-      count++;
-    }
-
     if (mounted) {
       setState(() {
         _lastVerifiedAt = lastVerified;
-        _licenseCount = count;
         _loaded = true;
       });
     }
@@ -93,7 +85,7 @@ class _AboutLegalScreenState extends State<AboutLegalScreen> {
                 FilledButton.icon(
                   onPressed: () => _showLicenses(context),
                   icon: const Icon(Icons.description),
-                  label: Text('View third-party licenses ($_licenseCount)'),
+                  label: const Text('View third-party licenses'),
                 ),
               ],
             )

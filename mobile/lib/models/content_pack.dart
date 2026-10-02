@@ -68,9 +68,9 @@ class ContentPack {
     final title = _requireString(json, 'title');
     final source = _requireString(json, 'source');
     final rightsBasis = _requireString(json, 'rightsBasis');
-    final licenseRef = json['licenseRef'] as String?;
-    final attributionText = json['attributionText'] as String?;
-    final lastVerifiedAt = json['lastVerifiedAt'] as String?;
+    final licenseRef = _optionalString(json, 'licenseRef');
+    final attributionText = _optionalString(json, 'attributionText');
+    final lastVerifiedAt = _optionalString(json, 'lastVerifiedAt');
 
     final rawQuestions = json['questions'];
     if (rawQuestions is! List<dynamic>) {
@@ -104,6 +104,15 @@ class ContentPack {
     final value = json[key];
     if (value is! String) {
       throw FormatException('Missing or invalid required string field "$key"');
+    }
+    return value;
+  }
+
+  static String? _optionalString(Map<String, dynamic> json, String key) {
+    final value = json[key];
+    if (value == null) return null;
+    if (value is! String) {
+      throw FormatException('Field "$key" must be a string when present');
     }
     return value;
   }
@@ -154,8 +163,8 @@ class PackQuestion {
     final difficulty = ContentPack._requireString(json, 'difficulty');
     final source = ContentPack._requireString(json, 'source');
     final rightsBasis = ContentPack._requireString(json, 'rightsBasis');
-    final licenseRef = json['licenseRef'] as String?;
-    final attributionText = json['attributionText'] as String?;
+    final licenseRef = ContentPack._optionalString(json, 'licenseRef');
+    final attributionText = ContentPack._optionalString(json, 'attributionText');
     final courseId = ContentPack._requireString(json, 'courseId');
 
     final rawOptions = json['options'];
@@ -359,9 +368,18 @@ class ContentPackValidator {
 }
 
 bool _isIsoDate(String value) {
+  // Require a full ISO-8601 calendar date (YYYY-MM-DD), not a partial or
+  // lenient value that DateTime.parse would otherwise accept (e.g. "2026" or
+  // "2026-02-31", which rolls over to 2026-03-03).
+  if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value)) return false;
   try {
-    DateTime.parse(value);
-    return true;
+    final parsed = DateTime.parse(value);
+    final year = int.parse(value.substring(0, 4));
+    final month = int.parse(value.substring(5, 7));
+    final day = int.parse(value.substring(8, 10));
+    return parsed.year == year &&
+        parsed.month == month &&
+        parsed.day == day;
   } on FormatException {
     return false;
   }

@@ -268,9 +268,18 @@ class EvidenceRegisterValidator {
   }
 
   static bool _isIsoDate(String value) {
+    // Require a full ISO-8601 calendar date (YYYY-MM-DD); reject partial or
+    // lenient values such as "2026" or "2026-02-31" that DateTime.parse might
+    // otherwise accept (the latter rolls over to 2026-03-03).
+    if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value)) return false;
     try {
-      DateTime.parse(value);
-      return true;
+      final parsed = DateTime.parse(value);
+      final year = int.parse(value.substring(0, 4));
+      final month = int.parse(value.substring(5, 7));
+      final day = int.parse(value.substring(8, 10));
+      return parsed.year == year &&
+          parsed.month == month &&
+          parsed.day == day;
     } on FormatException {
       return false;
     }

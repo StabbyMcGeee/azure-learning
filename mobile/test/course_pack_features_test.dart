@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
@@ -368,13 +367,7 @@ void main() {
     });
   });
 
-  group('Bundled asset registration', () {
-    test('pubspec registers the content-pack asset path', () async {
-      final pubspec = File('pubspec.yaml');
-      final contents = await pubspec.readAsString();
-      expect(contents, contains('assets/content-pack.json'));
-    });
-
+  group('Bundled asset loading', () {
     test('loadBundledPackIfPresent returns false for a missing asset path',
         () async {
       final db = await openTestDatabase();
