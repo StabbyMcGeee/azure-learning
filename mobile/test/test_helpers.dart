@@ -63,6 +63,12 @@ class FakeLocalStore extends LocalStore {
       throw const PackVersionTooLowException();
     }
     _packVersions[pack.packId] = pack.packVersion;
+
+    // Clear stale content-last-verified dates before writing new ones.
+    _settings.removeWhere(
+      (key, _) => key == 'contentLastVerifiedAt' || key.startsWith('contentLastVerifiedAt_'),
+    );
+
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
       _settings['contentLastVerifiedAt'] = pack.lastVerifiedAt;
       final courseIds = pack.questions
