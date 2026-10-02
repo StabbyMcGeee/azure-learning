@@ -19,10 +19,12 @@ terminology rules from azlegal-db-v1 section 2:
   - ambiguous abbreviations (bare "RBAC") are course-qualified
 """
 
+import hashlib
 import json
 import os
 import re
 import sys
+from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONTENT_DIR = os.path.join(HERE, "content")
@@ -176,12 +178,59 @@ def _lint_field(qid, course, field, value, errors):
             )
 
 
+def _spread_options(q):
+    """Deterministically reorder options so the correct answer is spread
+    across positions, and update correctOptionIndex.
+
+    The authoring source keeps the correct answer first for readability; this
+    step ensures the shipped pack does not expose a fixed answer position. It
+    uses a stable SHA-256 hash of the item id, so regeneration is reproducible
+    and does not depend on process-local hash randomization.
+    """
+    options = q.get("options")
+    if not isinstance(options, list) or len(options) < 2:
+        return q
+    ci = q.get("correctOptionIndex")
+    if not isinstance(ci, int) or not (0 <= ci < len(options)):
+        return q
+    qid = str(q.get("id", ""))
+    seed = int(hashlib.sha256(qid.encode("utf-8")).hexdigest(), 16)
+    target = seed % len(options)
+    correct = options[ci]
+    rest = [o for i, o in enumerate(options) if i != ci]
+    new_options = rest[:target] + [correct] + rest[target:]
+    out = dict(q)
+    out["options"] = new_options
+    out["correctOptionIndex"] = target
+    return out
+
+
+def _check_position_spread(questions, errors):
+    """Fail the build if the answer key is positionally biased."""
+    if not questions:
+        return
+    c = Counter(q["correctOptionIndex"] for q in questions)
+    total = len(questions)
+    pos, cnt = c.most_common(1)[0]
+    share = cnt / total
+    if share > 0.60:
+        errors.append(
+            f"answer key positional bias: correctOptionIndex distribution "
+            f"{dict(sorted(c.items()))}; position {pos} holds {share:.0%} of keys"
+        )
+
+
 def main():
     questions = load_questions()
     errors = []
 
     if not questions:
         errors.append("no questions loaded")
+
+    # Spread the correct answer across option positions before validation so
+    # the shipped pack never exposes a fixed answer position.
+    questions = [_spread_options(q) for q in questions]
+    _check_position_spread(questions, errors)
 
     seen_ids = set()
     for i, q in enumerate(questions):
