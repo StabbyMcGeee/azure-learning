@@ -8,7 +8,7 @@ import sys
 import time
 import tkinter as tk
 import webbrowser
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from tkinter import filedialog, font as tkfont, messagebox, ttk
 
 APP_DIR = (
@@ -17,6 +17,23 @@ APP_DIR = (
     else os.path.dirname(os.path.abspath(__file__))
 )
 DB_PATH = os.path.join(APP_DIR, "azure_learning.db")
+
+
+FONT_FAMILY = "Segoe UI"
+
+
+def _choose_font_family(root):
+    """Pick the first available UI font; fall back to the Tk default font on Linux."""
+    available = set(tkfont.families(root=root))
+    for candidate in (FONT_FAMILY, "Noto Sans", "DejaVu Sans", "Liberation Sans", "Arial", "sans-serif"):
+        if candidate in available:
+            return candidate
+    return "TkDefaultFont"
+
+
+def utc_now():
+    """Return a timezone-naive UTC datetime (drop +00:00 for backwards compatibility)."""
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 
 AZURE_BLUE = "#0A84FF"
 AZURE_LIGHT = "#8FD3FF"
@@ -37,23 +54,23 @@ ERROR_SURFACE = "#401C29"
 
 QUESTION_TYPE_LABELS = {
     "all": "Alle Fragentypen",
-    "single": "Single Choice",
-    "multi": "Multiple Choice",
+    "single": "Einfachauswahl",
+    "multi": "Mehrfachauswahl",
     "true_false": "Ja / Nein",
-    "ordering": "Drag & Drop / Reihenfolge",
-    "drag_drop": "Drag & Drop",
-    "build_list": "Build List",
+    "ordering": "Ziehen & Ablegen / Reihenfolge",
+    "drag_drop": "Ziehen & Ablegen",
+    "build_list": "Liste aufbauen",
     "matching": "Zuordnung",
-    "hot_area": "Hot Area",
-    "active_screen": "Active Screen",
+    "hot_area": "Hotspot",
+    "active_screen": "Aktiver Bereich",
     "case": "Fallstudie",
 }
 
 DOMAIN_LABELS = {
     "all": "Alle Prüfungsbereiche",
-    "cloud": "Cloud Concepts",
-    "architecture": "Azure Architecture and Services",
-    "governance": "Azure Management and Governance",
+    "cloud": "Cloud-Konzepte",
+    "architecture": "Azure-Architektur und -Dienste",
+    "governance": "Azure-Verwaltung und Governance",
 }
 
 DOMAIN_UI_LABELS = {
@@ -98,7 +115,7 @@ QUESTION_TYPE_DESCRIPTIONS = {
     "single": "Eine beste Antwort aus mehreren Optionen auswählen.",
     "multi": "Mehrere zutreffende Antworten erkennen und auswählen.",
     "true_false": "Eine Aussage anhand der Azure-Grundlagen bewerten.",
-    "ordering": "Schritte oder Konzepte per Drag & Drop richtig sortieren.",
+    "ordering": "Schritte oder Konzepte per Ziehen & Ablegen richtig sortieren.",
     "drag_drop": "Elemente mit der Maus in die geforderte Reihenfolge ziehen.",
     "build_list": "Eine gültige Bereitstellungs- oder Prozessliste aufbauen.",
     "matching": "Azure-Dienste, Eigenschaften und Szenarien zuordnen.",
@@ -2184,11 +2201,11 @@ class DragOrderList(tk.Frame):
     def _make_row(self, text, index):
         cursor = "arrow" if self.locked else "fleur"
         row = tk.Frame(self.list_frame, bg=SURFACE, highlightthickness=1, highlightbackground=AZURE_BORDER, cursor=cursor)
-        handle = tk.Label(row, text="⠿⠿", bg=SURFACE, fg=AZURE_LIGHT, font=("Segoe UI", 11, "bold"), width=3, cursor=cursor)
+        handle = tk.Label(row, text="⠿⠿", bg=SURFACE, fg=AZURE_LIGHT, font=(FONT_FAMILY, 11, "bold"), width=3, cursor=cursor)
         handle.pack(side="left", padx=(10, 2), pady=9)
-        idx_label = tk.Label(row, text=str(index + 1), bg=SURFACE, fg=MUTED, font=("Segoe UI", 10, "bold"), width=2, cursor=cursor)
+        idx_label = tk.Label(row, text=str(index + 1), bg=SURFACE, fg=MUTED, font=(FONT_FAMILY, 10, "bold"), width=2, cursor=cursor)
         idx_label.pack(side="left")
-        label = tk.Label(row, text=text, bg=SURFACE, fg=INK, font=("Segoe UI", 10), anchor="w", justify="left", wraplength=800, cursor=cursor)
+        label = tk.Label(row, text=text, bg=SURFACE, fg=INK, font=(FONT_FAMILY, 10), anchor="w", justify="left", wraplength=800, cursor=cursor)
         label.pack(side="left", fill="x", expand=True, padx=(8, 10), pady=9)
         row.item_text = text
         if not self.locked:
@@ -2215,7 +2232,7 @@ class DragOrderList(tk.Frame):
                 child.configure(bg=SURFACE_SELECTED)
         width = self.list_frame.winfo_width() or 800
         self.ghost = tk.Label(
-            self.list_frame, text=f"⠿⠿  {text}", bg=AZURE_BLUE, fg=TEXT_ON_ACCENT, font=("Segoe UI", 10, "bold"),
+            self.list_frame, text=f"⠿⠿  {text}", bg=AZURE_BLUE, fg=TEXT_ON_ACCENT, font=(FONT_FAMILY, 10, "bold"),
             anchor="w", padx=10, pady=9,
         )
         rel_y = event.y_root - self.list_frame.winfo_rooty()
@@ -2282,17 +2299,17 @@ class DragBuildList(tk.Frame):
 
         pool_col = tk.Frame(columns, bg=WHITE)
         pool_col.pack(side="left", fill="both", expand=True, padx=(0, 8))
-        tk.Label(pool_col, text="Verfügbare Schritte (nicht jeder wird benötigt)", font=("Segoe UI", 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 4))
+        tk.Label(pool_col, text="Verfügbare Schritte (nicht jeder wird benötigt)", font=(FONT_FAMILY, 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 4))
         self.pool_frame = tk.Frame(pool_col, bg=SURFACE, highlightthickness=1, highlightbackground=AZURE_BORDER, height=220)
         self.pool_frame.pack(fill="both", expand=True)
 
         target_col = tk.Frame(columns, bg=WHITE)
         target_col.pack(side="left", fill="both", expand=True, padx=(8, 0))
-        tk.Label(target_col, text="Ihre Reihenfolge", font=("Segoe UI", 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 4))
+        tk.Label(target_col, text="Ihre Reihenfolge", font=(FONT_FAMILY, 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 4))
         self.target_frame = tk.Frame(target_col, bg=SURFACE_ACCENT, highlightthickness=2, highlightbackground=AZURE_BLUE, height=220)
         self.target_frame.pack(fill="both", expand=True)
 
-        self.empty_hint = tk.Label(self.target_frame, text="Elemente per Drag & Drop hierher ziehen", bg=SURFACE_ACCENT, fg=MUTED, font=("Segoe UI", 10, "italic"))
+        self.empty_hint = tk.Label(self.target_frame, text="Elemente per Ziehen & Ablegen hierher ziehen", bg=SURFACE_ACCENT, fg=MUTED, font=(FONT_FAMILY, 10, "italic"))
 
         self._render()
 
@@ -2338,10 +2355,10 @@ class DragBuildList(tk.Frame):
         row = tk.Frame(parent, bg=bg, highlightthickness=1, highlightbackground=AZURE_BORDER, cursor=cursor)
         widgets = [row]
         if index is not None:
-            idx_label = tk.Label(row, text=str(index + 1), bg=bg, fg=AZURE_BLUE, font=("Segoe UI", 10, "bold"), width=2, cursor=cursor)
+            idx_label = tk.Label(row, text=str(index + 1), bg=bg, fg=AZURE_BLUE, font=(FONT_FAMILY, 10, "bold"), width=2, cursor=cursor)
             idx_label.pack(side="left", padx=(6, 2), pady=6)
             widgets.append(idx_label)
-        label = tk.Label(row, text=text, bg=bg, fg=INK, font=("Segoe UI", 11), anchor="w", justify="left", wraplength=400, cursor=cursor)
+        label = tk.Label(row, text=text, bg=bg, fg=INK, font=(FONT_FAMILY, 11), anchor="w", justify="left", wraplength=400, cursor=cursor)
         label.pack(side="left", fill="x", expand=True, padx=(4, 6), pady=6)
         widgets.append(label)
         row.item_text = text
@@ -2358,7 +2375,7 @@ class DragBuildList(tk.Frame):
             return
         self.drag_item = text
         self.drag_source = source
-        self.ghost = tk.Label(self, text=text, bg=AZURE_BLUE, fg=TEXT_ON_ACCENT, font=("Segoe UI", 11, "bold"), anchor="w", padx=8, pady=6, wraplength=340)
+        self.ghost = tk.Label(self, text=text, bg=AZURE_BLUE, fg=TEXT_ON_ACCENT, font=(FONT_FAMILY, 11, "bold"), anchor="w", padx=8, pady=6, wraplength=340)
         self.ghost.place(x=event.x_root - self.winfo_rootx() - 60, y=event.y_root - self.winfo_rooty() - 14)
         self.ghost.lift()
 
@@ -2450,12 +2467,16 @@ class AzureLearningApp:
 
         self.db = self._init_db()
         self.questions = self._load_questions()
+        global FONT_FAMILY
+        FONT_FAMILY = _choose_font_family(self.root)
         self.current_learn_question = None
         self.current_weak_question = None
         self.current_exam_questions = []
         self.exam_index = 0
         self.exam_answers = {}
         self.exam_marked = set()
+        self.exam_touched = set()
+        self.exam_initial_answers = {}
         self.exam_deadline = None
         self.exam_timer_id = None
         self.selected_question_map = {}
@@ -2474,6 +2495,8 @@ class AzureLearningApp:
         self.today_plan_index = 0
         self.exam_review_questions = []
         self.exam_review_index = 0
+        self.due_queue_entries = []
+        self.due_queue_index = 0
 
         self._configure_accessible_fonts()
         self._build_theme()
@@ -2489,7 +2512,7 @@ class AzureLearningApp:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                datetime.utcnow().isoformat(timespec="seconds"),
+                utc_now().isoformat(timespec="seconds"),
                 result["correct"],
                 result["total"],
                 result["score"],
@@ -2592,6 +2615,9 @@ class AzureLearningApp:
             )
             """
         )
+        session_columns = [row[1] for row in conn.execute("PRAGMA table_info(exam_sessions)").fetchall()]
+        if "touched_json" not in session_columns:
+            conn.execute("ALTER TABLE exam_sessions ADD COLUMN touched_json TEXT")
         conn.execute(
             """
             CREATE TABLE IF NOT EXISTS review_schedule (
@@ -2707,19 +2733,19 @@ class AzureLearningApp:
             pass
         style.configure("TFrame", background=AZURE_PALE)
         style.configure("TLabel", background=AZURE_PALE, foreground=INK)
-        style.configure("TButton", font=("Segoe UI", 12, "bold"), foreground=INK, background=SURFACE_RAISED, padding=(12, 7))
+        style.configure("TButton", font=(FONT_FAMILY, 12, "bold"), foreground=INK, background=SURFACE_RAISED, padding=(12, 7))
         style.map("TButton", background=[("active", SURFACE_SELECTED), ("pressed", SURFACE_ACCENT)])
-        style.configure("Header.TLabel", font=("Segoe UI", 20, "bold"), foreground=INK)
-        style.configure("Section.TLabel", font=("Segoe UI", 13, "bold"), foreground=AZURE_NAVY)
-        style.configure("Body.TLabel", font=("Segoe UI", 11), foreground=MUTED)
-        style.configure("Primary.TButton", font=("Segoe UI", 12, "bold"), foreground=TEXT_ON_ACCENT, background=AZURE_BLUE, padding=(16, 9))
+        style.configure("Header.TLabel", font=(FONT_FAMILY, 20, "bold"), foreground=INK)
+        style.configure("Section.TLabel", font=(FONT_FAMILY, 13, "bold"), foreground=AZURE_NAVY)
+        style.configure("Body.TLabel", font=(FONT_FAMILY, 11), foreground=MUTED)
+        style.configure("Primary.TButton", font=(FONT_FAMILY, 12, "bold"), foreground=TEXT_ON_ACCENT, background=AZURE_BLUE, padding=(16, 9))
         style.map("Primary.TButton", background=[("active", "#2494FF"), ("pressed", "#006BC7")])
-        style.configure("Accent.TButton", font=("Segoe UI", 12, "bold"), foreground=INK, background=SURFACE_RAISED, padding=(14, 8))
+        style.configure("Accent.TButton", font=(FONT_FAMILY, 12, "bold"), foreground=INK, background=SURFACE_RAISED, padding=(14, 8))
         style.map("Accent.TButton", background=[("active", SURFACE_SELECTED), ("pressed", SURFACE_ACCENT)])
         style.configure("TNotebook", background=AZURE_PALE, borderwidth=0)
-        style.configure("TNotebook.Tab", font=("Segoe UI", 12, "bold"), padding=(18, 10), foreground=MUTED, background=SURFACE)
+        style.configure("TNotebook.Tab", font=(FONT_FAMILY, 12, "bold"), padding=(18, 10), foreground=MUTED, background=SURFACE)
         style.map("TNotebook.Tab", background=[("selected", WHITE), ("active", SURFACE_RAISED)], foreground=[("selected", AZURE_NAVY)])
-        style.configure("TCombobox", font=("Segoe UI", 12), padding=6, foreground=INK, fieldbackground=SURFACE, background=SURFACE_RAISED)
+        style.configure("TCombobox", font=(FONT_FAMILY, 12), padding=6, foreground=INK, fieldbackground=SURFACE, background=SURFACE_RAISED)
         style.map(
             "TCombobox",
             foreground=[("readonly", INK), ("disabled", MUTED)],
@@ -2727,8 +2753,8 @@ class AzureLearningApp:
             background=[("readonly", SURFACE_RAISED), ("disabled", SURFACE_ACCENT)],
         )
         style.configure("TScrollbar", background=SURFACE_RAISED, troughcolor=AZURE_PALE, arrowcolor=INK)
-        style.configure("TRadiobutton", font=("Segoe UI", 12), padding=(2, 5), foreground=INK, background=WHITE)
-        style.configure("TCheckbutton", font=("Segoe UI", 12), padding=(2, 5), foreground=INK, background=WHITE)
+        style.configure("TRadiobutton", font=(FONT_FAMILY, 12), padding=(2, 5), foreground=INK, background=WHITE)
+        style.configure("TCheckbutton", font=(FONT_FAMILY, 12), padding=(2, 5), foreground=INK, background=WHITE)
         style.configure("Card.TFrame", background=WHITE)
 
     def _configure_accessible_fonts(self):
@@ -2743,13 +2769,19 @@ class AzureLearningApp:
             "TkSmallCaptionFont": 11,
         }.items():
             try:
-                tkfont.nametofont(name).configure(family="Segoe UI", size=size)
+                tkfont.nametofont(name).configure(family=FONT_FAMILY, size=size)
             except tk.TclError:
                 continue
 
     def _build_ui(self):
         self.main = tk.Frame(self.root, bg=AZURE_PALE, padx=14, pady=14)
         self.main.pack(fill="both", expand=True)
+
+        self.menubar = tk.Menu(self.root)
+        help_menu = tk.Menu(self.menubar, tearoff=0)
+        help_menu.add_command(label="Über / Haftungsausschluss", command=self._show_about)
+        self.menubar.add_cascade(label="Hilfe", menu=help_menu)
+        self.root.config(menu=self.menubar)
 
         self.notebook = ttk.Notebook(self.main)
         self.notebook.pack(fill="both", expand=True)
@@ -2761,7 +2793,7 @@ class AzureLearningApp:
         self.review_tab = tk.Frame(self.notebook, bg=AZURE_PALE)
         self.stats_tab = tk.Frame(self.notebook, bg=AZURE_PALE)
 
-        self.notebook.add(self.dashboard_tab, text="Dashboard")
+        self.notebook.add(self.dashboard_tab, text="Übersicht")
         self.notebook.add(self.learn_tab, text="Lernen")
         self.notebook.add(self.types_tab, text="Fragentypen")
         self.notebook.add(self.exam_tab, text="AZ-900 Prüfungssimulation")
@@ -2814,6 +2846,40 @@ class AzureLearningApp:
         canvas.yview_scroll(units, "units")
         return "break"
 
+    def _show_about(self):
+        about = tk.Toplevel(self.root)
+        about.title("Über Azure Learning")
+        about.configure(bg=AZURE_PALE)
+        about.geometry("620x360")
+        about.transient(self.root)
+        about.grab_set()
+        frame = tk.Frame(about, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
+        frame.pack(fill="both", expand=True, padx=16, pady=16)
+        tk.Label(
+            frame,
+            text="Azure Learning",
+            font=(FONT_FAMILY, 16, "bold"),
+            bg=WHITE,
+            fg=AZURE_NAVY,
+        ).pack(anchor="w", padx=14, pady=(14, 8))
+        about_text = (
+            "Azure Learning ist ein unabhängiges Lernprojekt und steht in keiner Verbindung zu Microsoft. "
+            "Die AZ-900-Fragen sind original formuliert und dienen ausschließlich der persönlichen Vorbereitung.\n\n"
+            "Alle Lernfortschritte und Daten bleiben lokal auf diesem Rechner. "
+            "Es werden keine Daten an Microsoft oder andere Dienste übermittelt.\n\n"
+            "Der geschätzte Prüfungsscore ist keine offizielle Microsoft-Zertifizierungsaussage."
+        )
+        tk.Label(
+            frame,
+            text=about_text,
+            font=(FONT_FAMILY, 10),
+            bg=WHITE,
+            fg=INK,
+            wraplength=560,
+            justify="left",
+        ).pack(anchor="w", padx=14, pady=(0, 12))
+        ttk.Button(frame, text="Schließen", command=about.destroy).pack(anchor="e", padx=14, pady=(0, 14))
+
     def _build_dashboard_tab(self):
         self.dashboard_tab.configure(bg=AZURE_PALE)
         self.dashboard_canvas, dashboard_page = self._build_scrollable_page(self.dashboard_tab)
@@ -2822,9 +2888,9 @@ class AzureLearningApp:
         hero.create_rectangle(0, 0, 1600, 150, fill=AZURE_BLUE, outline="")
         for x, y, r in [(1040, 45, 52), (1115, 90, 42), (1195, 38, 34), (1265, 92, 56)]:
             hero.create_oval(x-r, y-r, x+r, y+r, fill="#2B8DD8", outline="")
-        hero.create_text(28, 42, text="Azure Learning", anchor="w", font=("Segoe UI", 27, "bold"), fill=TEXT_ON_ACCENT)
-        hero.create_text(30, 86, text="AZ-900 Fundamentals · Lerne mit der Terminologie von Microsoft", anchor="w", font=("Segoe UI", 12), fill="#D7F0FF")
-        hero.create_text(30, 120, text="Üben  •  Verstehen  •  Wiederholen  •  Sicher antreten", anchor="w", font=("Segoe UI", 11, "bold"), fill=TEXT_ON_ACCENT)
+        hero.create_text(28, 42, text="Azure Learning", anchor="w", font=(FONT_FAMILY, 27, "bold"), fill=TEXT_ON_ACCENT)
+        hero.create_text(30, 86, text="AZ-900 Fundamentals · Lerne mit der Terminologie von Microsoft", anchor="w", font=(FONT_FAMILY, 12), fill="#D7F0FF")
+        hero.create_text(30, 120, text="Üben  •  Verstehen  •  Wiederholen  •  Sicher antreten", anchor="w", font=(FONT_FAMILY, 11, "bold"), fill=TEXT_ON_ACCENT)
 
         top = tk.Frame(dashboard_page, bg=AZURE_PALE)
         top.pack(fill="x", padx=18, pady=(18, 14))
@@ -2842,9 +2908,9 @@ class AzureLearningApp:
             frame = tk.Frame(top, width=205, height=122, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             frame.pack_propagate(False)
             tk.Frame(frame, bg=card_accents[key], height=4).pack(fill="x", side="top")
-            tk.Label(frame, text=title, font=("Segoe UI", 11, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", padx=14, pady=(16, 6))
+            tk.Label(frame, text=title, font=(FONT_FAMILY, 11, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", padx=14, pady=(16, 6))
             var = tk.StringVar(value="0")
-            label = tk.Label(frame, textvariable=var, font=("Segoe UI", 20, "bold"), fg=AZURE_NAVY, bg=WHITE)
+            label = tk.Label(frame, textvariable=var, font=(FONT_FAMILY, 20, "bold"), fg=AZURE_NAVY, bg=WHITE)
             label.pack(anchor="w", padx=14)
             self.dashboard_cards.append((key, var))
             self.dashboard_card_frames.append(frame)
@@ -2852,9 +2918,9 @@ class AzureLearningApp:
 
         self.status_box = tk.Frame(dashboard_page, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
         self.status_box.pack(fill="x", padx=18, pady=(4, 8))
-        tk.Label(self.status_box, text="Aktueller Fokus", font=("Segoe UI", 11, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 4))
+        tk.Label(self.status_box, text="Aktueller Fokus", font=(FONT_FAMILY, 11, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 4))
         self.focus_var = tk.StringVar(value="AZ-900-Grundlagen")
-        self.focus_label = tk.Label(self.status_box, textvariable=self.focus_var, font=("Segoe UI", 11), bg=WHITE, fg=MUTED, wraplength=1080, justify="left")
+        self.focus_label = tk.Label(self.status_box, textvariable=self.focus_var, font=(FONT_FAMILY, 11), bg=WHITE, fg=MUTED, wraplength=1080, justify="left")
         self.focus_label.pack(anchor="w", padx=16, pady=(0, 12))
         self.status_box.bind(
             "<Configure>",
@@ -2877,11 +2943,11 @@ class AzureLearningApp:
         self.dashboard_summary.pack(fill="both", expand=True, padx=18, pady=(2, 12))
         summary_header = tk.Frame(self.dashboard_summary, bg=WHITE)
         summary_header.pack(fill="x", padx=16, pady=(14, 8))
-        tk.Label(summary_header, text="Dein Lernfortschritt", font=("Segoe UI", 13, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
+        tk.Label(summary_header, text="Dein Lernfortschritt", font=(FONT_FAMILY, 13, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
         tk.Label(
             summary_header,
             text="Lerne gezielt, wiederhole regelmäßig und verfolge deine Entwicklung.",
-            font=("Segoe UI", 11),
+            font=(FONT_FAMILY, 11),
             bg=WHITE,
             fg=MUTED,
         ).pack(side="right")
@@ -2894,7 +2960,7 @@ class AzureLearningApp:
             bg=AZURE_PALE,
             fg=MUTED,
             anchor="w",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(fill="x", padx=18, pady=(0, 10))
 
     def _layout_dashboard_cards(self, event):
@@ -2967,27 +3033,27 @@ class AzureLearningApp:
         self.exam_header = tk.Frame(self.exam_tab, bg=AZURE_PALE)
         self.exam_header.pack(fill="x", padx=14, pady=(16, 10))
         self.exam_timer_var = tk.StringVar(value="45:00")
-        tk.Label(self.exam_header, text="AZ-900 Prüfungssimulation", font=("Segoe UI", 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
-        tk.Label(self.exam_header, textvariable=self.exam_timer_var, font=("Segoe UI", 16, "bold"), fg=AZURE_BLUE, bg=AZURE_PALE).pack(side="right")
+        tk.Label(self.exam_header, text="AZ-900 Prüfungssimulation", font=(FONT_FAMILY, 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
+        tk.Label(self.exam_header, textvariable=self.exam_timer_var, font=(FONT_FAMILY, 16, "bold"), fg=AZURE_BLUE, bg=AZURE_PALE).pack(side="right")
 
         self.exam_canvas, self.exam_content = self._build_scrollable_page(self.exam_tab)
 
         self.exam_intro = tk.Frame(self.exam_content, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
         self.exam_intro.pack(fill="both", expand=True, padx=12, pady=12)
-        tk.Label(self.exam_intro, text="AZ-900 Prüfungssimulation", font=("Segoe UI", 18, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(14, 8))
+        tk.Label(self.exam_intro, text="AZ-900 Prüfungssimulation", font=(FONT_FAMILY, 18, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(14, 8))
         tk.Label(
             self.exam_intro,
             text=(
                 "Original formulierte Assessment-Simulation — keine Microsoft-Livefragen und kein Exam-Dump. "
                 "Die Fragen sind bewusst szenariobasiert und verwenden plausible Distraktoren statt reiner Learn-Wiederholung.\n\n"
                 "45 Minuten · 40 Fragen · alle unterstützten Interaktionstypen · Zurück/Überspringen/Markieren · "
-                "Review vor Abgabe · keine Sofortlösungen."
+                "Überprüfung vor Abgabe · keine Sofortlösungen."
             ),
             bg=WHITE,
             fg=MUTED,
             justify="left",
             wraplength=900,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=16, pady=(0, 16))
         buttons = tk.Frame(self.exam_intro, bg=WHITE)
         buttons.pack(anchor="w", padx=16, pady=(0, 16))
@@ -3003,7 +3069,7 @@ class AzureLearningApp:
 
         catalog_row = tk.Frame(self.exam_intro, bg=WHITE)
         catalog_row.pack(fill="x", padx=16, pady=(4, 18))
-        tk.Label(catalog_row, text="Prüfungssimulationen:", font=("Segoe UI", 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 5))
+        tk.Label(catalog_row, text="Prüfungssimulationen:", font=(FONT_FAMILY, 10, "bold"), fg=MUTED, bg=WHITE).pack(anchor="w", pady=(0, 5))
         catalog_badges = tk.Frame(catalog_row, bg=WHITE)
         catalog_badges.pack(fill="x")
         for index, exam in enumerate(EXAM_CATALOG):
@@ -3020,7 +3086,7 @@ class AzureLearningApp:
             tk.Label(
                 badge,
                 text=label_text,
-                font=("Segoe UI", 10, "bold"),
+                font=(FONT_FAMILY, 10, "bold"),
                 fg=TEXT_ON_ACCENT if is_active else MUTED,
                 bg=AZURE_BLUE if is_active else AZURE_PALE,
                 justify="center",
@@ -3042,8 +3108,8 @@ class AzureLearningApp:
         types_scrollbar.pack(side="right", fill="y")
         self.types_canvas = types_canvas
 
-        tk.Label(self.types_scroll_frame, text="Nach Fragentyp üben", font=("Segoe UI", 20, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(anchor="w", padx=24, pady=(24, 6))
-        tk.Label(self.types_scroll_frame, text="Jeder Fragentyp trainiert eine andere Denkweise. Die Prüfungssimulation kombiniert alle Typen.", font=("Segoe UI", 11), fg=MUTED, bg=AZURE_PALE).pack(anchor="w", padx=24, pady=(0, 18))
+        tk.Label(self.types_scroll_frame, text="Nach Fragentyp üben", font=(FONT_FAMILY, 20, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(anchor="w", padx=24, pady=(24, 6))
+        tk.Label(self.types_scroll_frame, text="Jeder Fragentyp trainiert eine andere Denkweise. Die Prüfungssimulation kombiniert alle Typen.", font=(FONT_FAMILY, 11), fg=MUTED, bg=AZURE_PALE).pack(anchor="w", padx=24, pady=(0, 18))
         grid = tk.Frame(self.types_scroll_frame, bg=AZURE_PALE)
         grid.pack(fill="x", padx=24, pady=8)
         self.type_cards_grid = grid
@@ -3052,13 +3118,13 @@ class AzureLearningApp:
         for index, type_key in enumerate(type_keys):
             card = tk.Frame(grid, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             tk.Frame(card, bg=AZURE_BLUE, height=4).pack(fill="x", side="top")
-            tk.Label(card, text=QUESTION_TYPE_LABELS[type_key], font=("Segoe UI", 14, "bold"), fg=AZURE_NAVY, bg=WHITE).pack(anchor="w", padx=16, pady=(16, 5))
+            tk.Label(card, text=QUESTION_TYPE_LABELS[type_key], font=(FONT_FAMILY, 14, "bold"), fg=AZURE_NAVY, bg=WHITE).pack(anchor="w", padx=16, pady=(16, 5))
             count = sum(question["type"] == type_key for question in self.questions)
-            tk.Label(card, text=f"{count} Fragen verfügbar", font=("Segoe UI", 10), fg=MUTED, bg=WHITE).pack(anchor="w", padx=16, pady=(0, 12))
+            tk.Label(card, text=f"{count} Fragen verfügbar", font=(FONT_FAMILY, 10), fg=MUTED, bg=WHITE).pack(anchor="w", padx=16, pady=(0, 12))
             description = tk.Label(
                 card,
                 text=QUESTION_TYPE_DESCRIPTIONS.get(type_key, ""),
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
                 fg=MUTED,
                 bg=WHITE,
                 justify="left",
@@ -3069,7 +3135,7 @@ class AzureLearningApp:
             sample_label = tk.Label(
                 card,
                 text=f"Beispiel: {sample[:150]}{'…' if len(sample) > 150 else ''}",
-                font=("Segoe UI", 10, "italic"),
+                font=(FONT_FAMILY, 10, "italic"),
                 fg=MUTED,
                 bg=WHITE,
                 justify="left",
@@ -3099,7 +3165,7 @@ class AzureLearningApp:
             text="Wähle oben einen Fragentyp, um hier direkt eine echte Aufgabe zu bearbeiten.",
             bg=AZURE_PALE,
             fg=MUTED,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=8, pady=8)
 
     def _layout_type_cards(self, available_width):
@@ -3161,7 +3227,7 @@ class AzureLearningApp:
         self.review_canvas, review_page = self._build_scrollable_page(self.review_tab)
         self.review_top = tk.Frame(review_page, bg=AZURE_PALE)
         self.review_top.pack(fill="x", padx=14, pady=(14, 10))
-        tk.Label(self.review_top, text="Wiederholung / Intervalllernen", font=("Segoe UI", 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
+        tk.Label(self.review_top, text="Wiederholung / Intervalllernen", font=(FONT_FAMILY, 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
 
         self.review_lists_row = tk.Frame(review_page, bg=AZURE_PALE, height=340)
         self.review_lists_row.grid_propagate(False)
@@ -3175,14 +3241,14 @@ class AzureLearningApp:
         due_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 6))
         due_header = tk.Frame(due_panel, bg=WHITE)
         due_header.pack(fill="x", padx=12, pady=(10, 4))
-        tk.Label(due_header, text="Fällig zur Wiederholung", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
+        tk.Label(due_header, text="Fällig zur Wiederholung", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
         self.due_count_var = tk.StringVar(value="0 fällig")
-        tk.Label(due_header, textvariable=self.due_count_var, font=("Segoe UI", 10, "bold"), bg=WHITE, fg=MUTED).pack(side="right")
+        tk.Label(due_header, textvariable=self.due_count_var, font=(FONT_FAMILY, 10, "bold"), bg=WHITE, fg=MUTED).pack(side="right")
         tk.Label(
             due_panel,
             text="Leitner-Intervalllernen: richtig beantwortete Fragen kommen seltener, "
                  "falsch beantwortete kommen morgen sofort wieder.",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             bg=WHITE,
             fg=MUTED,
             wraplength=440,
@@ -3196,11 +3262,11 @@ class AzureLearningApp:
         weak_panel.grid(row=0, column=1, sticky="nsew", padx=(6, 0))
         weak_header = tk.Frame(weak_panel, bg=WHITE)
         weak_header.pack(fill="x", padx=12, pady=(10, 4))
-        tk.Label(weak_header, text="Häufig falsch beantwortet", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
+        tk.Label(weak_header, text="Häufig falsch beantwortet", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(side="left")
         tk.Label(
             weak_panel,
             text="Sortiert nach letztem Ergebnis (falsch zuerst) und Anzahl Fehlversuche.",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             bg=WHITE,
             fg=MUTED,
             wraplength=440,
@@ -3242,7 +3308,7 @@ class AzureLearningApp:
                 justify="left",
                 anchor="w",
                 wraplength=390,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(fill="x", padx=12, pady=16)
             return
         for entry in entries:
@@ -3256,7 +3322,7 @@ class AzureLearningApp:
                 text=entry["meta"],
                 bg=WHITE,
                 fg=entry["accent"],
-                font=("Segoe UI", 10, "bold"),
+                font=(FONT_FAMILY, 10, "bold"),
                 anchor="w",
                 cursor="hand2",
             ).pack(fill="x")
@@ -3265,7 +3331,7 @@ class AzureLearningApp:
                 text=entry["prompt"],
                 bg=WHITE,
                 fg=INK,
-                font=("Segoe UI", 11),
+                font=(FONT_FAMILY, 11),
                 justify="left",
                 anchor="w",
                 wraplength=430,
@@ -3304,7 +3370,7 @@ class AzureLearningApp:
 
         header = tk.Frame(self.stats_scroll_frame, bg=AZURE_PALE)
         header.pack(fill="x", padx=4, pady=(0, 10))
-        tk.Label(header, text="Statistik — echte Prüfungsleistung", font=("Segoe UI", 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
+        tk.Label(header, text="Statistik — echte Prüfungsleistung", font=(FONT_FAMILY, 18, "bold"), fg=AZURE_NAVY, bg=AZURE_PALE).pack(side="left")
         ttk.Button(header, text="Aktualisieren", command=self._refresh_stats_tab).pack(side="right")
 
         self.stats_score_panel = tk.Frame(self.stats_scroll_frame, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
@@ -3327,19 +3393,19 @@ class AzureLearningApp:
     def _stats_bar(self, parent, label, ratio, extra_text="", good_threshold=0.7):
         row = tk.Frame(parent, bg=WHITE)
         row.pack(fill="x", padx=16, pady=4)
-        tk.Label(row, text=label, font=("Segoe UI", 10), bg=WHITE, fg=INK, width=34, anchor="w", justify="left").pack(side="left")
+        tk.Label(row, text=label, font=(FONT_FAMILY, 10), bg=WHITE, fg=INK, width=34, anchor="w", justify="left").pack(side="left")
         bar_bg = tk.Canvas(row, width=260, height=14, bg=SURFACE_RAISED, highlightthickness=0)
         bar_bg.pack(side="left", padx=(4, 8))
         color = "#1E8E5A" if ratio >= good_threshold else "#D97706" if ratio >= 0.5 else "#C0392B"
         bar_bg.create_rectangle(0, 0, max(2, 260 * min(1.0, ratio)), 14, fill=color, outline="")
-        tk.Label(row, text=f"{round(ratio * 100)}%{extra_text}", font=("Segoe UI", 10, "bold"), bg=WHITE, fg=AZURE_NAVY, width=18, anchor="w").pack(side="left")
+        tk.Label(row, text=f"{round(ratio * 100)}%{extra_text}", font=(FONT_FAMILY, 10, "bold"), bg=WHITE, fg=AZURE_NAVY, width=18, anchor="w").pack(side="left")
 
     def _refresh_stats_tab(self):
         for panel in (self.stats_score_panel, self.stats_domain_panel, self.stats_type_panel, self.stats_difficulty_panel, self.stats_sr_panel):
             self._clear_frame(panel)
 
         # --- Scaled score history ---
-        tk.Label(self.stats_score_panel, text="Geschätzter Prüfungsscore (100–1000, Bestehensgrenze 700)", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 4))
+        tk.Label(self.stats_score_panel, text="Geschätzter Prüfungsscore (100–1000, Bestehensgrenze 700)", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 4))
         runs = self.db.execute(
             """
             SELECT completed_at, scaled_score, passed, score, correct, total
@@ -3350,7 +3416,7 @@ class AzureLearningApp:
             """
         ).fetchall()
         if not runs:
-            tk.Label(self.stats_score_panel, text="Noch keine abgeschlossene Prüfungssimulation. Starte eine Prüfungssimulation, um echte Statistiken zu sehen.", font=("Segoe UI", 10), bg=WHITE, fg=MUTED, wraplength=900, justify="left").pack(anchor="w", padx=16, pady=(0, 12))
+            tk.Label(self.stats_score_panel, text="Noch keine abgeschlossene Prüfungssimulation. Starte eine Prüfungssimulation, um echte Statistiken zu sehen.", font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED, wraplength=900, justify="left").pack(anchor="w", padx=16, pady=(0, 12))
         else:
             scaled_values = [r["scaled_score"] for r in runs]
             best = max(scaled_values)
@@ -3365,7 +3431,7 @@ class AzureLearningApp:
                 f"Durchschnitt: {average}/1000",
                 f"Bestanden: {pass_count}/{len(runs)}",
             ):
-                tk.Label(summary_row, text=text, font=("Segoe UI", 10, "bold"), bg=SURFACE, fg=AZURE_NAVY, padx=10, pady=6).pack(side="left", padx=(0, 8))
+                tk.Label(summary_row, text=text, font=(FONT_FAMILY, 10, "bold"), bg=SURFACE, fg=AZURE_NAVY, padx=10, pady=6).pack(side="left", padx=(0, 8))
             list_frame = tk.Frame(self.stats_score_panel, bg=WHITE)
             list_frame.pack(fill="x", padx=16, pady=(0, 14))
             for run in runs:
@@ -3374,13 +3440,13 @@ class AzureLearningApp:
                 color = "#1E8E5A" if run["passed"] else "#C0392B"
                 line = tk.Frame(list_frame, bg=WHITE)
                 line.pack(fill="x", pady=1)
-                tk.Label(line, text=timestamp, font=("Segoe UI", 10), bg=WHITE, fg=MUTED, width=18, anchor="w").pack(side="left")
-                tk.Label(line, text=f"{run['scaled_score']}/1000", font=("Segoe UI", 10, "bold"), bg=WHITE, fg=AZURE_NAVY, width=10, anchor="w").pack(side="left")
-                tk.Label(line, text=mark, font=("Segoe UI", 10, "bold"), bg=WHITE, fg=color, width=16, anchor="w").pack(side="left")
-                tk.Label(line, text=f"(Rohwert: {round(run['score'], 1)}%, {run['correct']}/{run['total']})", font=("Segoe UI", 10), bg=WHITE, fg=MUTED).pack(side="left")
+                tk.Label(line, text=timestamp, font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED, width=18, anchor="w").pack(side="left")
+                tk.Label(line, text=f"{run['scaled_score']}/1000", font=(FONT_FAMILY, 10, "bold"), bg=WHITE, fg=AZURE_NAVY, width=10, anchor="w").pack(side="left")
+                tk.Label(line, text=mark, font=(FONT_FAMILY, 10, "bold"), bg=WHITE, fg=color, width=16, anchor="w").pack(side="left")
+                tk.Label(line, text=f"(Rohwert: {round(run['score'], 1)}%, {run['correct']}/{run['total']})", font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED).pack(side="left")
 
         # --- Domain accuracy vs blueprint target ---
-        tk.Label(self.stats_domain_panel, text="Domänen-Genauigkeit vs. Blueprint-Zielgewichtung", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
+        tk.Label(self.stats_domain_panel, text="Domänen-Genauigkeit vs. Blueprint-Zielgewichtung", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
         domain_labels = {"cloud": "Describe cloud concepts", "architecture": "Describe Azure architecture and services", "governance": "Describe Azure management and governance"}
         any_domain_data = False
         for category, weight in EXAM_DOMAIN_WEIGHTS.items():
@@ -3400,11 +3466,11 @@ class AzureLearningApp:
                 any_domain_data = True
             self._stats_bar(self.stats_domain_panel, domain_labels[category], ratio, extra)
         if not any_domain_data:
-            tk.Label(self.stats_domain_panel, text="Noch keine Übungsdaten pro Domäne vorhanden.", font=("Segoe UI", 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
+            tk.Label(self.stats_domain_panel, text="Noch keine Übungsdaten pro Domäne vorhanden.", font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
         tk.Frame(self.stats_domain_panel, bg=WHITE, height=8).pack()
 
         # --- Question-type accuracy ---
-        tk.Label(self.stats_type_panel, text="Genauigkeit nach Fragentyp", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
+        tk.Label(self.stats_type_panel, text="Genauigkeit nach Fragentyp", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
         type_rows = self.db.execute(
             """
             SELECT q.type AS qtype, COUNT(*) AS total, SUM(CASE WHEN a.correct = 1 THEN 1 ELSE 0 END) AS correct
@@ -3414,7 +3480,7 @@ class AzureLearningApp:
             """
         ).fetchall()
         if not type_rows:
-            tk.Label(self.stats_type_panel, text="Noch keine Übungsdaten vorhanden.", font=("Segoe UI", 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
+            tk.Label(self.stats_type_panel, text="Noch keine Übungsdaten vorhanden.", font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
         else:
             for row in type_rows:
                 ratio = (row["correct"] / row["total"]) if row["total"] else 0.0
@@ -3422,7 +3488,7 @@ class AzureLearningApp:
         tk.Frame(self.stats_type_panel, bg=WHITE, height=8).pack()
 
         # --- Difficulty accuracy ---
-        tk.Label(self.stats_difficulty_panel, text="Genauigkeit nach Schwierigkeitsgrad", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
+        tk.Label(self.stats_difficulty_panel, text="Genauigkeit nach Schwierigkeitsgrad", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
         difficulty_rows = self.db.execute(
             """
             SELECT q.difficulty AS diff, COUNT(*) AS total, SUM(CASE WHEN a.correct = 1 THEN 1 ELSE 0 END) AS correct
@@ -3433,7 +3499,7 @@ class AzureLearningApp:
         ).fetchall()
         difficulty_labels = {1: "Leicht", 2: "Mittel", 3: "Schwer"}
         if not difficulty_rows:
-            tk.Label(self.stats_difficulty_panel, text="Noch keine Übungsdaten vorhanden.", font=("Segoe UI", 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
+            tk.Label(self.stats_difficulty_panel, text="Noch keine Übungsdaten vorhanden.", font=(FONT_FAMILY, 10), bg=WHITE, fg=MUTED).pack(anchor="w", padx=16, pady=(0, 8))
         else:
             for row in difficulty_rows:
                 ratio = (row["correct"] / row["total"]) if row["total"] else 0.0
@@ -3442,7 +3508,7 @@ class AzureLearningApp:
         tk.Frame(self.stats_difficulty_panel, bg=WHITE, height=8).pack()
 
         # --- Spaced repetition summary ---
-        tk.Label(self.stats_sr_panel, text="Übersicht Intervalllernen", font=("Segoe UI", 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
+        tk.Label(self.stats_sr_panel, text="Übersicht Intervalllernen", font=(FONT_FAMILY, 12, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=16, pady=(12, 6))
         sr = self._sr_summary()
         sr_row = tk.Frame(self.stats_sr_panel, bg=WHITE)
         sr_row.pack(fill="x", padx=16, pady=(0, 6))
@@ -3452,7 +3518,7 @@ class AzureLearningApp:
             f"Gemeistert (Box 6): {sr['mastered']}",
             f"Insgesamt geplant: {sr['scheduled']}",
         ):
-            tk.Label(sr_row, text=text, font=("Segoe UI", 10, "bold"), bg=SURFACE, fg=AZURE_NAVY, padx=10, pady=6).pack(side="left", padx=(0, 8))
+            tk.Label(sr_row, text=text, font=(FONT_FAMILY, 10, "bold"), bg=SURFACE, fg=AZURE_NAVY, padx=10, pady=6).pack(side="left", padx=(0, 8))
         link_row = tk.Frame(self.stats_sr_panel, bg=WHITE)
         link_row.pack(fill="x", padx=16, pady=(4, 14))
         ttk.Button(link_row, text="Zur Wiederholung wechseln", command=self.open_review_tab).pack(anchor="w")
@@ -3533,7 +3599,7 @@ class AzureLearningApp:
 
         self.focus_var.set("AZ-900-Grundlagen — Cloud, Architektur und Governance nach dem Stand Juli 2026")
         self.autosave_var.set(
-            f"Autosave aktiv · Fortschritt wird automatisch gespeichert in: {DB_PATH}"
+            f"Automatische Speicherung aktiv · Fortschritt wird automatisch gespeichert in: {DB_PATH}"
         )
 
         run_summary = self.db.execute(
@@ -3577,16 +3643,16 @@ class AzureLearningApp:
         for title, value, detail in summary_cards:
             card = tk.Frame(highlights, bg=SURFACE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             card.pack(side="left", fill="both", expand=True, padx=(0, 8))
-            tk.Label(card, text=title, bg=SURFACE, fg=MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=12, pady=(10, 3))
-            tk.Label(card, text=value, bg=SURFACE, fg=AZURE_NAVY, font=("Segoe UI", 14, "bold")).pack(anchor="w", padx=12)
-            tk.Label(card, text=detail, bg=SURFACE, fg=MUTED, font=("Segoe UI", 10), wraplength=280, justify="left").pack(anchor="w", padx=12, pady=(3, 10))
+            tk.Label(card, text=title, bg=SURFACE, fg=MUTED, font=(FONT_FAMILY, 10, "bold")).pack(anchor="w", padx=12, pady=(10, 3))
+            tk.Label(card, text=value, bg=SURFACE, fg=AZURE_NAVY, font=(FONT_FAMILY, 14, "bold")).pack(anchor="w", padx=12)
+            tk.Label(card, text=detail, bg=SURFACE, fg=MUTED, font=(FONT_FAMILY, 10), wraplength=280, justify="left").pack(anchor="w", padx=12, pady=(3, 10))
 
         today_plan = self._build_today_plan(limit=6)
         plan_card = tk.Frame(self.dashboard_summary_content, bg=SURFACE, highlightthickness=1, highlightbackground=AZURE_BORDER)
         plan_card.pack(fill="x", pady=(0, 12))
         plan_header = tk.Frame(plan_card, bg=SURFACE)
         plan_header.pack(fill="x", padx=12, pady=(10, 4))
-        tk.Label(plan_header, text="Dein Plan für heute", bg=SURFACE, fg=AZURE_NAVY, font=("Segoe UI", 11, "bold")).pack(side="left")
+        tk.Label(plan_header, text="Dein Plan für heute", bg=SURFACE, fg=AZURE_NAVY, font=(FONT_FAMILY, 11, "bold")).pack(side="left")
         ttk.Button(plan_header, text="Plan starten", command=self.start_today_plan, style="Accent.TButton").pack(side="right")
         plan_preview = "\n".join(
             f"• {entry['reason']}: {entry['question']['prompt'][:120]}{'…' if len(entry['question']['prompt']) > 120 else ''}"
@@ -3597,7 +3663,7 @@ class AzureLearningApp:
             text=plan_preview or "Starte den Lernmodus, um deinen ersten persönlichen Plan zu erstellen.",
             bg=SURFACE,
             fg=INK,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             justify="left",
             anchor="w",
             wraplength=1030,
@@ -3609,7 +3675,7 @@ class AzureLearningApp:
             add="+",
         )
 
-        tk.Label(self.dashboard_summary_content, text="Fortschritt nach Prüfungsbereich", bg=WHITE, fg=AZURE_NAVY, font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(0, 6))
+        tk.Label(self.dashboard_summary_content, text="Fortschritt nach Prüfungsbereich", bg=WHITE, fg=AZURE_NAVY, font=(FONT_FAMILY, 10, "bold")).pack(anchor="w", pady=(0, 6))
         domains = tk.Frame(self.dashboard_summary_content, bg=WHITE)
         domains.pack(fill="x")
         for category, label, target in (
@@ -3630,9 +3696,9 @@ class AzureLearningApp:
             domain_accuracy = round(row["correct"] / total * 100, 1) if total else 0.0
             domain = tk.Frame(domains, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             domain.pack(side="left", fill="both", expand=True, padx=(0, 8))
-            tk.Label(domain, text=label, bg=WHITE, fg=MUTED, font=("Segoe UI", 10, "bold"), wraplength=280, justify="left").pack(anchor="w", padx=10, pady=(8, 3))
-            tk.Label(domain, text=f"{domain_accuracy}%", bg=WHITE, fg=AZURE_NAVY, font=("Segoe UI", 13, "bold")).pack(anchor="w", padx=10)
-            tk.Label(domain, text=f"{row['correct']}/{total} Antworten · Blueprint {target}", bg=WHITE, fg=MUTED, font=("Segoe UI", 10)).pack(anchor="w", padx=10, pady=(2, 8))
+            tk.Label(domain, text=label, bg=WHITE, fg=MUTED, font=(FONT_FAMILY, 10, "bold"), wraplength=280, justify="left").pack(anchor="w", padx=10, pady=(8, 3))
+            tk.Label(domain, text=f"{domain_accuracy}%", bg=WHITE, fg=AZURE_NAVY, font=(FONT_FAMILY, 13, "bold")).pack(anchor="w", padx=10)
+            tk.Label(domain, text=f"{row['correct']}/{total} Antworten · Blueprint {target}", bg=WHITE, fg=MUTED, font=(FONT_FAMILY, 10)).pack(anchor="w", padx=10, pady=(2, 8))
 
     def _calculate_streak(self):
         rows = self.db.execute("SELECT study_day FROM study_dates ORDER BY study_day DESC").fetchall()
@@ -3658,7 +3724,7 @@ class AzureLearningApp:
     def _record_attempt(self, question_id, correct, mode="learn", score=0):
         self.db.execute(
             "INSERT INTO attempts (question_id, correct, mode, answered_at, score) VALUES (?, ?, ?, ?, ?)",
-            (question_id, 1 if correct else 0, mode, datetime.utcnow().isoformat(timespec="seconds"), int(score)),
+            (question_id, 1 if correct else 0, mode, utc_now().isoformat(timespec="seconds"), int(score)),
         )
         self.db.commit()
         self._record_study_day()
@@ -3705,7 +3771,7 @@ class AzureLearningApp:
                 next_review,
                 1 if correct else 0,
                 reviewed_count,
-                datetime.utcnow().isoformat(timespec="seconds"),
+                utc_now().isoformat(timespec="seconds"),
             ),
         )
         self.db.commit()
@@ -3843,7 +3909,7 @@ class AzureLearningApp:
 
         header = tk.Frame(frame, bg=WHITE)
         header.pack(fill="x", padx=16, pady=(16, 10))
-        type_label = tk.Label(header, text=QUESTION_TYPE_LABELS.get(question["type"], question["type"]), font=("Segoe UI", 10, "bold"), fg=AZURE_BLUE, bg=WHITE)
+        type_label = tk.Label(header, text=QUESTION_TYPE_LABELS.get(question["type"], question["type"]), font=(FONT_FAMILY, 10, "bold"), fg=AZURE_BLUE, bg=WHITE)
         type_label.pack(anchor="w")
         if mode == "exam":
             mode_label = "PRÜFUNGSSIMULATION · keine Sofortlösung"
@@ -3860,6 +3926,11 @@ class AzureLearningApp:
                 f"PRÜFUNGSNACHBEREITUNG · Frage {self.exam_review_index + 1} von "
                 f"{len(self.exam_review_questions)}"
             )
+        elif mode == "due_review":
+            mode_label = (
+                f"FÄLLIGE WIEDERHOLUNG · Frage {self.due_queue_index + 1} von "
+                f"{len(self.due_queue_entries)}"
+            )
         else:
             mode_label = "LERNEN · Erklärung nach Abgabe"
         difficulty = question.get("difficulty", 1)
@@ -3867,7 +3938,7 @@ class AzureLearningApp:
         tk.Label(
             header,
             text=f"{DOMAIN_LABELS.get(question['category'], question['category'])}  ·  {mode_label}  ·  {difficulty_text}",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             fg=MUTED,
             bg=WHITE,
         ).pack(anchor="w", pady=(4, 0))
@@ -3875,7 +3946,7 @@ class AzureLearningApp:
         prompt_label = tk.Label(
             frame,
             text=question["prompt"],
-            font=("Segoe UI", 14, "bold"),
+            font=(FONT_FAMILY, 14, "bold"),
             bg=WHITE,
             fg=INK,
             wraplength=1060,
@@ -3917,7 +3988,7 @@ class AzureLearningApp:
                 canvas.create_rectangle(0, 0, 900, 210, fill=SURFACE, outline="")
                 if qtype == "active_screen":
                     canvas.create_rectangle(0, 0, 900, 38, fill=AZURE_NAVY, outline="")
-                    canvas.create_text(18, 19, text="Azure portal · Ansicht", anchor="w", fill=TEXT_ON_ACCENT, font=("Segoe UI", 10, "bold"))
+                    canvas.create_text(18, 19, text="Azure portal · Ansicht", anchor="w", fill=TEXT_ON_ACCENT, font=(FONT_FAMILY, 10, "bold"))
                 columns = 2
                 width = 420
                 height = 62
@@ -3929,8 +4000,8 @@ class AzureLearningApp:
                     y2 = y1 + height
                     selected_fill = SURFACE_SELECTED if selected.get() == option else WHITE
                     canvas.create_rectangle(x1, y1, x2, y2, fill=selected_fill, outline=AZURE_BLUE, width=2 if selected.get() == option else 1)
-                    canvas.create_text(x1 + 14, y1 + 15, text=f"{index + 1}", anchor="w", fill=AZURE_BLUE, font=("Segoe UI", 10, "bold"))
-                    canvas.create_text(x1 + 46, y1 + 31, text=option, anchor="w", fill=INK, font=("Segoe UI", 10), width=350)
+                    canvas.create_text(x1 + 14, y1 + 15, text=f"{index + 1}", anchor="w", fill=AZURE_BLUE, font=(FONT_FAMILY, 10, "bold"))
+                    canvas.create_text(x1 + 46, y1 + 31, text=option, anchor="w", fill=INK, font=(FONT_FAMILY, 10), width=350)
                     hitboxes[option] = (x1, y1, x2, y2)
 
             def choose_target(event):
@@ -3948,7 +4019,7 @@ class AzureLearningApp:
                 text="Klicke im simulierten Azure-Bereich auf die beste Auswahl.",
                 bg=WHITE,
                 fg=MUTED,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(anchor="w")
             answer_vars["selection"] = selected
         elif qtype == "multi":
@@ -3967,7 +4038,7 @@ class AzureLearningApp:
                 text="⠿⠿ anfassen und mit gedrückter Maustaste an die gewünschte Position ziehen.",
                 bg=WHITE,
                 fg=MUTED,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(anchor="w", pady=(0, 6))
             drag_widget = DragOrderList(answer_area, order)
             drag_widget.pack(anchor="w", fill="x", expand=False)
@@ -3987,7 +4058,7 @@ class AzureLearningApp:
                 text="Ziehen Sie die passenden Schritte in die richtige Reihenfolge nach rechts. Nicht jeder Eintrag im Pool wird benötigt.",
                 bg=WHITE,
                 fg=MUTED,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(anchor="w", pady=(0, 6))
             build_widget = DragBuildList(answer_area, pool_initial, target_initial)
             build_widget.pack(fill="both", expand=True)
@@ -4002,7 +4073,7 @@ class AzureLearningApp:
             for left in left_items:
                 row = tk.Frame(answer_area, bg=WHITE)
                 row.pack(fill="x", pady=4)
-                tk.Label(row, text=left, bg=WHITE, fg=AZURE_NAVY, font=("Segoe UI", 10, "bold"), width=34, anchor="w").pack(side="left")
+                tk.Label(row, text=left, bg=WHITE, fg=AZURE_NAVY, font=(FONT_FAMILY, 10, "bold"), width=34, anchor="w").pack(side="left")
                 var = tk.StringVar(value=existing.get(left, "") if isinstance(existing, dict) else "")
                 menu = ttk.Combobox(row, values=shuffled_right, textvariable=var, state="readonly", width=34)
                 menu.pack(side="left", padx=(10, 0))
@@ -4020,8 +4091,8 @@ class AzureLearningApp:
                     )
                     if value
                 )
-                tk.Label(case_card, text=group_label, bg=SURFACE_ACCENT, fg=AZURE_LIGHT, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=12, pady=(10, 4))
-                tk.Label(case_card, text=case_text, bg=SURFACE_ACCENT, fg=INK, justify="left", anchor="w", wraplength=940, font=("Segoe UI", 10)).pack(anchor="w", padx=12, pady=(0, 10))
+                tk.Label(case_card, text=group_label, bg=SURFACE_ACCENT, fg=AZURE_LIGHT, font=(FONT_FAMILY, 10, "bold")).pack(anchor="w", padx=12, pady=(10, 4))
+                tk.Label(case_card, text=case_text, bg=SURFACE_ACCENT, fg=INK, justify="left", anchor="w", wraplength=940, font=(FONT_FAMILY, 10)).pack(anchor="w", padx=12, pady=(0, 10))
             for option in question.get("options", []):
                 existing = self.exam_answers.get(question["id"], []) if mode == "exam" else []
                 var = tk.BooleanVar(value=option in existing)
@@ -4083,6 +4154,10 @@ class AzureLearningApp:
         if question["type"] in ("ordering", "drag_drop", "build_list"):
             return bool(selected)
         return selected != ""
+
+    def _is_exam_question_answered(self, question):
+        qid = question["id"]
+        return qid in self.exam_touched and self._has_answer(question, self.exam_answers.get(qid))
 
     def _evaluate_answer(self, question, selected):
         qtype = question["type"]
@@ -4244,14 +4319,14 @@ class AzureLearningApp:
             text=title,
             bg=status_bg,
             fg=status_border,
-            font=("Segoe UI", 14, "bold"),
+            font=(FONT_FAMILY, 14, "bold"),
         ).pack(anchor="w")
         tk.Label(
             status_content,
             text=status_text,
             bg=status_bg,
             fg=INK,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             justify="left",
             anchor="w",
             wraplength=900,
@@ -4265,7 +4340,7 @@ class AzureLearningApp:
                 text=title,
                 bg=SURFACE,
                 fg=accent,
-                font=("Segoe UI", 10, "bold"),
+                font=(FONT_FAMILY, 10, "bold"),
             ).pack(anchor="w", padx=12, pady=(10, 4))
             tk.Label(
                 section,
@@ -4275,7 +4350,7 @@ class AzureLearningApp:
                 justify="left",
                 anchor="w",
                 wraplength=890,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(anchor="w", padx=12, pady=(0, 10))
 
         if selected is not None:
@@ -4303,6 +4378,9 @@ class AzureLearningApp:
         elif self.current_question_mode == "exam_review":
             ttk.Button(actions, text="Nächste Prüfungsfrage", command=self._next_exam_review_question, style="Primary.TButton").pack(side="left")
             ttk.Button(actions, text="Microsoft Learn öffnen", command=lambda: webbrowser.open(question["source"]), style="Accent.TButton").pack(side="left", padx=(8, 0))
+        elif self.current_question_mode == "due_review":
+            ttk.Button(actions, text="Nächste fällige Frage", command=self._next_due_review_question, style="Primary.TButton").pack(side="left")
+            ttk.Button(actions, text="Microsoft Learn öffnen", command=lambda: webbrowser.open(question["source"]), style="Accent.TButton").pack(side="left", padx=(8, 0))
         elif self.current_question_mode == "weak":
             ttk.Button(actions, text="Nächste Schwachstelle", command=self.load_weak_question, style="Primary.TButton").pack(side="left")
             ttk.Button(actions, text="Microsoft Learn öffnen", command=lambda: webbrowser.open(question["source"]), style="Accent.TButton").pack(side="left", padx=(8, 0))
@@ -4313,6 +4391,27 @@ class AzureLearningApp:
 
     def open_learn_tab(self):
         self.notebook.select(self.learn_tab)
+
+    def _render_learn_empty(self):
+        self._clear_frame(self.learn_content)
+        card = tk.Frame(self.learn_content, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
+        card.pack(fill="both", expand=True, padx=12, pady=12)
+        tk.Label(
+            card,
+            text="Keine Fragen für die gewählten Filter",
+            font=(FONT_FAMILY, 14, "bold"),
+            bg=WHITE,
+            fg=AZURE_NAVY,
+        ).pack(anchor="w", padx=16, pady=(16, 8))
+        tk.Label(
+            card,
+            text="Passe Prüfungsbereich, Fragentyp oder Schwierigkeit an, um passende Fragen zu finden.",
+            font=(FONT_FAMILY, 10),
+            bg=WHITE,
+            fg=MUTED,
+            wraplength=800,
+            justify="left",
+        ).pack(anchor="w", padx=16, pady=(0, 16))
 
     def load_next_learn_question(self):
         topic = self._get_selected_topic()
@@ -4325,7 +4424,10 @@ class AzureLearningApp:
             and (difficulty == "all" or str(q.get("difficulty", 1)) == difficulty)
         ]
         if not pool:
+            self._render_learn_empty()
+            self.learn_next_button.state(["disabled"])
             return
+        self.learn_next_button.state(["!disabled"])
         if len(pool) > 1 and self.last_learn_question_id:
             alternatives = [question for question in pool if question["id"] != self.last_learn_question_id]
             pool = alternatives or pool
@@ -4391,26 +4493,31 @@ class AzureLearningApp:
                     )
             self._render_review_queue(self.weak_review_queue, weak_entries, "")
 
-    def _select_due_review_question(self, event):
-        return
-
     def load_due_review_question(self):
         due_ids = self._fetch_due_review_questions()
         if not due_ids:
-            messagebox.showinfo("Spaced Repetition", "Aktuell ist nichts zur Wiederholung fällig. Beantworte weitere Fragen, um den Plan zu füllen.")
+            messagebox.showinfo("Wiederholung", "Aktuell ist nichts zur Wiederholung fällig. Beantworte weitere Fragen, um den Plan zu füllen.")
             return
-        question = self._get_question_by_id(due_ids[0])
-        if question:
-            self.current_weak_question = question
-            self._render_question_widget(self.review_question_frame, question, mode="weak")
+        self.due_queue_entries = [self._get_question_by_id(qid) for qid in due_ids]
+        self.due_queue_index = 0
+        self._render_question_widget(self.review_question_frame, self.due_queue_entries[0], mode="due_review")
 
-    def _select_weak_question(self, event):
-        return
+    def _next_due_review_question(self):
+        self.due_queue_index += 1
+        if self.due_queue_index >= len(self.due_queue_entries):
+            messagebox.showinfo("Wiederholung abgeschlossen", "Du hast alle fälligen Wiederholungen bearbeitet.")
+            self._refresh_weak_areas()
+            return
+        self._render_question_widget(
+            self.review_question_frame,
+            self.due_queue_entries[self.due_queue_index],
+            mode="due_review",
+        )
 
     def load_weak_question(self):
         weak_ids = self._fetch_weak_questions()
         if not weak_ids:
-            messagebox.showinfo("Weak areas", "No weak questions are recorded yet. Complete a few practice attempts first.")
+            messagebox.showinfo("Schwachstellen", "Noch keine Schwachstellen gespeichert. Beantworte zuerst einige Fragen, um welche zu ermitteln.")
             return
         question = self._get_question_by_id(weak_ids[0])
         if question:
@@ -4440,7 +4547,7 @@ class AzureLearningApp:
             exam_runs.append(run)
         progress = {
             "format_version": 1,
-            "exported_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+            "exported_at": utc_now().isoformat(timespec="seconds") + "Z",
             "question_bank_size": len(self.questions),
             "attempts": [dict(row) for row in self.db.execute("SELECT * FROM attempts ORDER BY id").fetchall()],
             "exam_runs": exam_runs,
@@ -4473,6 +4580,8 @@ class AzureLearningApp:
         self.exam_index = 0
         self.exam_answers = {}
         self.exam_marked = set()
+        self.exam_touched = set()
+        self.exam_initial_answers = {}
         self.exam_review_active = False
         self.exam_deadline = time.time() + 45 * 60
         self._clear_exam_session()
@@ -4485,16 +4594,17 @@ class AzureLearningApp:
         self.db.execute(
             """
             INSERT OR REPLACE INTO exam_sessions
-                (id, question_ids_json, answers_json, marked_json, exam_index, deadline, saved_at)
-            VALUES (1, ?, ?, ?, ?, ?, ?)
+                (id, question_ids_json, answers_json, marked_json, touched_json, exam_index, deadline, saved_at)
+            VALUES (1, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 json.dumps([question["id"] for question in self.exam_questions]),
                 json.dumps(self.exam_answers, ensure_ascii=False),
                 json.dumps(sorted(self.exam_marked)),
+                json.dumps(sorted(self.exam_touched)),
                 self.exam_index,
                 self.exam_deadline,
-                datetime.utcnow().isoformat(timespec="seconds"),
+                utc_now().isoformat(timespec="seconds"),
             ),
         )
         self.db.commit()
@@ -4532,6 +4642,8 @@ class AzureLearningApp:
         self.exam_questions = [question_map[question_id] for question_id in question_ids]
         self.exam_answers = json.loads(row["answers_json"] or "{}")
         self.exam_marked = set(json.loads(row["marked_json"] or "[]"))
+        self.exam_touched = set(json.loads(row["touched_json"] or "[]"))
+        self.exam_initial_answers = {}
         self.exam_index = min(max(0, row["exam_index"]), len(self.exam_questions) - 1)
         self.exam_deadline = row["deadline"]
         self.exam_review_active = False
@@ -4664,12 +4776,17 @@ class AzureLearningApp:
         self.exam_review_active = False
         q = self.exam_questions[self.exam_index]
         self._clear_frame(self.exam_content)
+        answered_count = sum(1 for question in self.exam_questions if self._is_exam_question_answered(question))
         self.exam_timer_var.set(
-            f"Question {self.exam_index + 1}/{len(self.exam_questions)}  |  "
+            f"Frage {self.exam_index + 1}/{len(self.exam_questions)}  |  "
+            f"Beantwortet {answered_count}/{len(self.exam_questions)}  |  "
             f"{max(0, int(self.exam_deadline - time.time())) // 60:02d}:"
             f"{max(0, int(self.exam_deadline - time.time())) % 60:02d}"
         )
         self._render_question_widget(self.exam_content, q, mode="exam")
+        # Capture the untouched default for complex interaction types so skipped
+        # questions can be distinguished from deliberately answered ones.
+        self.exam_initial_answers.setdefault(q["id"], self._extract_selection(q, self.current_answer_vars))
         navigation = tk.Frame(self.exam_content, bg=AZURE_PALE)
         navigation.pack(fill="x", padx=8, pady=(0, 8))
         actions = tk.Frame(navigation, bg=AZURE_PALE)
@@ -4677,7 +4794,7 @@ class AzureLearningApp:
         ttk.Button(actions, text="Überprüfen / abgeben", command=self._confirm_finish_exam, style="Accent.TButton").pack(side="right")
         unanswered = [
             question for question in self.exam_questions
-            if not self._has_answer(question, self.exam_answers.get(question["id"]))
+            if not self._is_exam_question_answered(question)
         ]
         if unanswered:
             ttk.Button(
@@ -4696,15 +4813,25 @@ class AzureLearningApp:
             ).pack(side="right", padx=(6, 0))
         question_buttons = tk.Frame(navigation, bg=AZURE_PALE)
         question_buttons.pack(fill="x")
-        tk.Label(question_buttons, text="Fragen:", bg=AZURE_PALE, fg=MUTED, font=("Segoe UI", 10, "bold")).grid(row=0, column=0, padx=(0, 8), pady=2, sticky="nw")
+        counter_label = tk.Label(
+            question_buttons,
+            text=f"Fragen ({answered_count}/{len(self.exam_questions)} beantwortet):",
+            bg=AZURE_PALE, fg=MUTED, font=(FONT_FAMILY, 10, "bold"),
+        )
+        counter_label.grid(row=0, column=0, padx=(0, 8), pady=2, sticky="nw")
         for index, question in enumerate(self.exam_questions):
+            is_answered = self._is_exam_question_answered(question)
             label = str(index + 1)
             if question["id"] in self.exam_marked:
                 label += "!"
-            button = ttk.Button(
+            button = tk.Button(
                 question_buttons,
                 text=label,
                 width=4,
+                bg=SUCCESS_SURFACE if is_answered else ERROR_SURFACE,
+                fg="#8DE6B0" if is_answered else "#FFB8C5",
+                activebackground=SURFACE_SELECTED,
+                relief="flat",
                 command=lambda target=index: self._jump_exam_question(target),
             )
             button.grid(row=index // 10, column=index % 10 + 1, padx=2, pady=2, sticky="w")
@@ -4768,20 +4895,21 @@ class AzureLearningApp:
             result["total"] += 1
             if correct:
                 result["correct"] += 1
-            if not self._has_answer(question, answer):
+            is_answered = self._is_exam_question_answered(question)
+            if not is_answered:
                 unanswered_questions.append(question)
             if not correct:
                 missed_questions.append(
                     {
                         "question": question,
                         "selected": selected,
-                        "answered": self._has_answer(question, answer),
+                        "answered": is_answered,
                     }
                 )
-            # Only answered exam items become attempts and affect the spaced-
-            # repetition schedule. Unanswered items still count as wrong for
-            # scoring but must not be persisted as answered attempts.
-            if self._has_answer(question, answer):
+            # Only touched, answered exam items become attempts and affect the
+            # spaced-repetition schedule. Skipped or untouched defaults still
+            # count as wrong for scoring but must not be persisted.
+            if is_answered:
                 self._record_attempt(question["id"], correct, mode="exam", score=100 if correct else 0)
         score = round((correct_count / total) * 100, 1) if total else 0.0
         scaled_score, passed = compute_scaled_score(domain_results)
@@ -4821,8 +4949,8 @@ class AzureLearningApp:
         score_color = "#107C10" if result["score"] >= 80 else "#A4262C" if result["score"] < 70 else AZURE_NAVY
         card = tk.Frame(outer, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
         card.pack(fill="x", pady=(0, 10))
-        tk.Label(card, text="Prüfungsergebnis", font=("Segoe UI", 20, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=18, pady=(16, 4))
-        tk.Label(card, text=f"{result['correct']}/{result['total']} richtig · {result['score']}% Rohwert", font=("Segoe UI", 14), bg=WHITE, fg=score_color).pack(anchor="w", padx=18, pady=(0, 2))
+        tk.Label(card, text="Prüfungsergebnis", font=(FONT_FAMILY, 20, "bold"), bg=WHITE, fg=AZURE_NAVY).pack(anchor="w", padx=18, pady=(16, 4))
+        tk.Label(card, text=f"{result['correct']}/{result['total']} richtig · {result['score']}% Rohwert", font=(FONT_FAMILY, 14), bg=WHITE, fg=score_color).pack(anchor="w", padx=18, pady=(0, 2))
         scaled = result.get("scaled_score", 100)
         passed = result.get("passed", False)
         scaled_color = "#107C10" if passed else "#A4262C"
@@ -4830,7 +4958,7 @@ class AzureLearningApp:
         scaled_score_label = tk.Label(
             card,
             text=f"Geschätzter Score: {scaled}/1000 — {pass_label} (Bestehensgrenze: {EXAM_PASS_SCALED_SCORE})",
-            font=("Segoe UI", 18, "bold"),
+            font=(FONT_FAMILY, 18, "bold"),
             bg=WHITE,
             fg=scaled_color,
             justify="left",
@@ -4853,7 +4981,7 @@ class AzureLearningApp:
             fg=MUTED,
             wraplength=980,
             justify="left",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=18, pady=(0, 14))
 
         summary = tk.Frame(outer, bg=AZURE_PALE)
@@ -4864,12 +4992,12 @@ class AzureLearningApp:
             percent = round(stats["correct"] / stats["total"] * 100, 1) if stats["total"] else 0
             tile = tk.Frame(summary, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             tile.pack(side="left", fill="both", expand=True, padx=4)
-            tk.Label(tile, text=label, bg=WHITE, fg=MUTED, wraplength=250, justify="left", font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=10, pady=(10, 4))
-            tk.Label(tile, text=f"{stats['correct']}/{stats['total']} · {percent}%", bg=WHITE, fg=AZURE_NAVY, font=("Segoe UI", 14, "bold")).pack(anchor="w", padx=10, pady=(0, 10))
+            tk.Label(tile, text=label, bg=WHITE, fg=MUTED, wraplength=250, justify="left", font=(FONT_FAMILY, 10, "bold")).pack(anchor="w", padx=10, pady=(10, 4))
+            tk.Label(tile, text=f"{stats['correct']}/{stats['total']} · {percent}%", bg=WHITE, fg=AZURE_NAVY, font=(FONT_FAMILY, 14, "bold")).pack(anchor="w", padx=10, pady=(0, 10))
 
         lower = tk.Frame(outer, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
         lower.pack(fill="both", expand=True)
-        tk.Label(lower, text="Überprüfung", bg=WHITE, fg=AZURE_NAVY, font=("Segoe UI", 13, "bold")).pack(anchor="w", padx=14, pady=(12, 4))
+        tk.Label(lower, text="Überprüfung", bg=WHITE, fg=AZURE_NAVY, font=(FONT_FAMILY, 13, "bold")).pack(anchor="w", padx=14, pady=(12, 4))
         type_summary = []
         for question_type, stats in sorted(result["types"].items()):
             percent = round(stats["correct"] / stats["total"] * 100, 1) if stats["total"] else 0
@@ -4885,7 +5013,7 @@ class AzureLearningApp:
             justify="left",
             anchor="w",
             wraplength=980,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=14, pady=(0, 6))
         tk.Label(
             lower,
@@ -4893,7 +5021,7 @@ class AzureLearningApp:
                  f"Fehlfragen: {len(result['missed'])}",
             bg=WHITE,
             fg=MUTED,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=14, pady=(0, 8))
         if result["unanswered"] or result["marked_questions"]:
             review_actions = tk.Frame(lower, bg=WHITE)
@@ -4917,12 +5045,12 @@ class AzureLearningApp:
             text="Geführte Fehlfragen-Analyse",
             bg=WHITE,
             fg=AZURE_NAVY,
-            font=("Segoe UI", 11, "bold"),
+            font=(FONT_FAMILY, 11, "bold"),
         ).pack(anchor="w", padx=14, pady=(4, 4))
         review_list = tk.Listbox(
             lower,
             height=4,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             activestyle="none",
             bg=WHITE,
             fg=INK,
@@ -4950,7 +5078,7 @@ class AzureLearningApp:
                 text="Es gibt keine Fehlfragen zu analysieren.",
                 bg=SURFACE,
                 fg=MUTED,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
             ).pack(anchor="w", padx=12, pady=12)
 
         actions = tk.Frame(outer, bg=AZURE_PALE)
@@ -4984,21 +5112,21 @@ class AzureLearningApp:
             text=f"Fehlfrage {index + 1} von {len(missed)}",
             bg=SURFACE,
             fg="#A4262C",
-            font=("Segoe UI", 11, "bold"),
+            font=(FONT_FAMILY, 11, "bold"),
         ).pack(side="left")
         tk.Label(
             header,
             text=QUESTION_TYPE_LABELS.get(question["type"], question["type"]),
             bg=SURFACE,
             fg=MUTED,
-            font=("Segoe UI", 10, "bold"),
+            font=(FONT_FAMILY, 10, "bold"),
         ).pack(side="right")
         tk.Label(
             self.exam_guided_review_frame,
             text=question["prompt"],
             bg=SURFACE,
             fg=INK,
-            font=("Segoe UI", 11, "bold"),
+            font=(FONT_FAMILY, 11, "bold"),
             justify="left",
             anchor="w",
             wraplength=980,
@@ -5007,13 +5135,13 @@ class AzureLearningApp:
         def section(title, body, color=AZURE_BLUE):
             block = tk.Frame(self.exam_guided_review_frame, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
             block.pack(fill="x", padx=12, pady=(0, 6))
-            tk.Label(block, text=title, bg=WHITE, fg=color, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=10, pady=(7, 2))
+            tk.Label(block, text=title, bg=WHITE, fg=color, font=(FONT_FAMILY, 10, "bold")).pack(anchor="w", padx=10, pady=(7, 2))
             tk.Label(
                 block,
                 text=body,
                 bg=WHITE,
                 fg=INK,
-                font=("Segoe UI", 10),
+                font=(FONT_FAMILY, 10),
                 justify="left",
                 anchor="w",
                 wraplength=940,
@@ -5060,7 +5188,7 @@ class AzureLearningApp:
             textvariable=schedule_status,
             bg=SURFACE,
             fg=MUTED,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(side="left", padx=(8, 0))
 
         def schedule_for_today():
@@ -5084,7 +5212,7 @@ class AzureLearningApp:
         if row:
             self.db.execute(
                 "UPDATE review_schedule SET next_review = ?, updated_at = ? WHERE question_id = ?",
-                (today, datetime.utcnow().isoformat(timespec="seconds"), question_id),
+                (today, utc_now().isoformat(timespec="seconds"), question_id),
             )
         else:
             self.db.execute(
@@ -5093,7 +5221,7 @@ class AzureLearningApp:
                     (question_id, box, interval_days, next_review, last_result, reviewed_count, updated_at)
                 VALUES (?, 1, 1, ?, 0, 0, ?)
                 """,
-                (question_id, today, datetime.utcnow().isoformat(timespec="seconds")),
+                (question_id, today, utc_now().isoformat(timespec="seconds")),
             )
         self.db.commit()
         self._refresh_dashboard()
@@ -5138,6 +5266,9 @@ class AzureLearningApp:
         question = self.exam_questions[self.exam_index]
         selected = self._extract_selection(question, self.current_answer_vars)
         self.exam_answers[question["id"]] = selected
+        initial = self.exam_initial_answers.get(question["id"])
+        if question["id"] not in self.exam_touched and selected != initial:
+            self.exam_touched.add(question["id"])
         self._save_exam_session()
         return selected
 
@@ -5158,10 +5289,6 @@ class AzureLearningApp:
         if self.exam_index > 0:
             self.exam_index -= 1
             self._render_exam_question()
-
-    def _exam_skip_or_mark(self):
-        self._toggle_exam_mark()
-        self._exam_skip()
 
     def _toggle_exam_mark(self):
         if not self.exam_questions:
@@ -5197,7 +5324,7 @@ class AzureLearningApp:
         outer.pack(fill="both", expand=True, padx=12, pady=12)
         unanswered = [
             question for question in self.exam_questions
-            if not self._has_answer(question, self.exam_answers.get(question["id"]))
+            if not self._is_exam_question_answered(question)
         ]
         marked = [
             question for question in self.exam_questions
@@ -5212,7 +5339,7 @@ class AzureLearningApp:
             text="Simulation überprüfen",
             bg=WHITE,
             fg=AZURE_NAVY,
-            font=("Segoe UI", 20, "bold"),
+            font=(FONT_FAMILY, 20, "bold"),
         ).pack(anchor="w", padx=18, pady=(16, 4))
         tk.Label(
             card,
@@ -5220,7 +5347,7 @@ class AzureLearningApp:
                  f"{len(unanswered)} unbeantwortet · {len(marked)} markiert",
             bg=WHITE,
             fg=MUTED,
-            font=("Segoe UI", 11),
+            font=(FONT_FAMILY, 11),
         ).pack(anchor="w", padx=18, pady=(0, 6))
         tk.Label(
             card,
@@ -5230,7 +5357,7 @@ class AzureLearningApp:
             fg=INK,
             wraplength=980,
             justify="left",
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=18, pady=(0, 14))
 
         review = tk.Frame(outer, bg=WHITE, highlightthickness=1, highlightbackground=AZURE_BORDER)
@@ -5240,19 +5367,19 @@ class AzureLearningApp:
             text="Fragenübersicht",
             bg=WHITE,
             fg=AZURE_NAVY,
-            font=("Segoe UI", 13, "bold"),
+            font=(FONT_FAMILY, 13, "bold"),
         ).pack(anchor="w", padx=14, pady=(12, 6))
         tk.Label(
             review,
             text="Rot = unbeantwortet   ·   Gelb = markiert   ·   Grün = beantwortet",
             bg=WHITE,
             fg=MUTED,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
         ).pack(anchor="w", padx=14, pady=(0, 6))
         listbox = tk.Listbox(
             review,
             height=16,
-            font=("Segoe UI", 10),
+            font=(FONT_FAMILY, 10),
             activestyle="none",
             bg=WHITE,
             fg=INK,
@@ -5262,8 +5389,8 @@ class AzureLearningApp:
         listbox.pack(fill="both", expand=True, padx=14, pady=(0, 8))
         for index, question in enumerate(self.exam_questions):
             status = []
-            has_answer = self._has_answer(question, self.exam_answers.get(question["id"]))
-            if has_answer:
+            is_answered = self._is_exam_question_answered(question)
+            if is_answered:
                 status.append("beantwortet")
             else:
                 status.append("unbeantwortet")
@@ -5275,7 +5402,7 @@ class AzureLearningApp:
                 f"{QUESTION_TYPE_LABELS.get(question['type'], question['type'])} · "
                 f"{question['prompt'][:90]}",
             )
-            if not has_answer:
+            if not is_answered:
                 listbox.itemconfig(index, background=ERROR_SURFACE, foreground="#FFB8C5")
             elif question["id"] in self.exam_marked:
                 listbox.itemconfig(index, background="#403514", foreground="#FFE08A")
@@ -5314,7 +5441,7 @@ class AzureLearningApp:
         self._clear_frame(self.exam_content)
         frame = tk.Frame(self.exam_content, bg=AZURE_PALE)
         frame.pack(fill="both", expand=True)
-        tk.Label(frame, text="Simulation abgeschlossen", font=("Segoe UI", 16, "bold"), bg=AZURE_PALE, fg=AZURE_NAVY).pack(padx=12, pady=12, anchor="w")
+        tk.Label(frame, text="Simulation abgeschlossen", font=(FONT_FAMILY, 16, "bold"), bg=AZURE_PALE, fg=AZURE_NAVY).pack(padx=12, pady=12, anchor="w")
         ttk.Button(frame, text="Prüfung starten", command=self.start_exam, style="Primary.TButton").pack(anchor="w", padx=12, pady=(0, 10))
 
 

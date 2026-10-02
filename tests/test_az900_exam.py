@@ -47,6 +47,8 @@ def _run_finish_exam(app, questions, answers):
     """Finish an exam without requiring live widget state."""
     app.exam_questions = questions
     app.exam_answers = answers
+    app.exam_touched = set(answers.keys())
+    app.exam_initial_answers = {}
     app.exam_marked = set()
     app.exam_review_active = True
     app.exam_timer_id = None
@@ -98,7 +100,7 @@ def test_blank_exam_records_no_attempts_or_reviews(app):
 
 
 def test_partial_exam_records_attempts_only_for_answered_items(app):
-    """Only answered questions become attempts/schedule rows; blanks do not."""
+    """Only touched, answered questions become attempts/schedule rows; blanks do not."""
     questions = _single_choice_questions(app, 3)
     answers = {
         questions[0]["id"]: questions[0]["answer"],  # correct
@@ -120,3 +122,71 @@ def test_partial_exam_records_attempts_only_for_answered_items(app):
     ).fetchone()["c"]
     assert attempts == 2
     assert reviews == 2
+
+
+def test_untouched_ordering_drag_drop_exam_records_no_attempts(app):
+    """Untouched ordering/drag-drop defaults must not count as answered attempts."""
+    ordering = [q for q in app.questions if q["type"] == "ordering"][:2]
+    drag_drop = [q for q in app.questions if q["type"] == "drag_drop"][:2]
+    questions = ordering + drag_drop
+
+    app.exam_questions = questions
+    # Provide deliberately wrong non-empty defaults as if the widget had never
+    # been interacted with.
+    app.exam_answers = {
+        q["id"]: ([q["options"][-1]] + q["options"][:-1]) for q in questions
+    }
+    app.exam_touched = set()
+    app.exam_initial_answers = {}
+    app.exam_marked = set()
+    app.exam_review_active = True
+    app.exam_timer_id = None
+    app._finish_exam()
+
+    result = app.last_exam_result
+    assert result["total"] == len(questions)
+    assert len(result["unanswered"]) == len(questions)
+
+    attempts = app.db.execute("SELECT COUNT(*) AS c FROM attempts").fetchone()["c"]
+    reviews = app.db.execute("SELECT COUNT(*) AS c FROM review_schedule").fetchone()["c"]
+    assert attempts == 0
+    assert reviews == 0
+
+    # If the same answers are explicitly marked as touched, they should persist.
+    _run_finish_exam(app, questions, app.exam_answers)
+    attempts = app.db.execute("SELECT COUNT(*) AS c FROM attempts").fetchone()["c"]
+    assert attempts == len(questions)
+
+
+def test_untouched_ordering_drag_drop_exam_records_no_attempts(app):
+    """Untouched ordering/drag-drop defaults must not count as answered attempts."""
+    ordering = [q for q in app.questions if q["type"] == "ordering"][:2]
+    drag_drop = [q for q in app.questions if q["type"] == "drag_drop"][:2]
+    questions = ordering + drag_drop
+
+    app.exam_questions = questions
+    # Provide deliberately wrong non-empty defaults as if the widget had never
+    # been interacted with.
+    app.exam_answers = {
+        q["id"]: ([q["options"][-1]] + q["options"][:-1]) for q in questions
+    }
+    app.exam_touched = set()
+    app.exam_initial_answers = {}
+    app.exam_marked = set()
+    app.exam_review_active = True
+    app.exam_timer_id = None
+    app._finish_exam()
+
+    result = app.last_exam_result
+    assert result["total"] == len(questions)
+    assert len(result["unanswered"]) == len(questions)
+
+    attempts = app.db.execute("SELECT COUNT(*) AS c FROM attempts").fetchone()["c"]
+    reviews = app.db.execute("SELECT COUNT(*) AS c FROM review_schedule").fetchone()["c"]
+    assert attempts == 0
+    assert reviews == 0
+
+    # If the same answers are explicitly marked as touched, they should persist.
+    _run_finish_exam(app, questions, app.exam_answers)
+    attempts = app.db.execute("SELECT COUNT(*) AS c FROM attempts").fetchone()["c"]
+    assert attempts == len(questions)
