@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../legal/rights_basis.dart';
 import '../legal/terminology_lint.dart';
+import '../legal/terminology_register.dart';
 import 'question.dart';
 
 /// Offline content pack format version identifier.
@@ -332,9 +333,14 @@ class ContentPackValidator {
 
       if (q.courseId.trim().isEmpty) {
         errors.add('$prefix: missing or empty courseId');
+      } else if (!TerminologyRegister.isKnownCourse(q.courseId)) {
+        errors.add(
+          '$prefix: courseId "${q.courseId}" is not a registered course; '
+          'permitted values are: ${TerminologyRegister.allCourses.join(', ')}',
+        );
       }
 
-      if (lintTerminology) {
+      if (lintTerminology && TerminologyRegister.isKnownCourse(q.courseId)) {
         final linter = TerminologyLinter(
           courseId: q.courseId,
           itemId: q.id,

@@ -22,7 +22,7 @@
       "difficulty": "easy",
       "source": "Synthetic fixture for testing",
       "rightsBasis": "original-human",
-      "courseId": "demo-course"
+      "courseId": "az-900"
     },
     {
       "id": "demo-002",
@@ -39,7 +39,7 @@
       "difficulty": "easy",
       "source": "Synthetic fixture for testing",
       "rightsBasis": "original-human",
-      "courseId": "demo-course"
+      "courseId": "az-900"
     }
   ]
 }

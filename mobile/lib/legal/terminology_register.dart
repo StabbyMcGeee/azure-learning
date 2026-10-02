@@ -8,6 +8,11 @@ class TerminologyRegister {
 
   static const List<String> allCourses = ['az-900', 'sc-900', 'ai-901'];
 
+  /// Returns true when [courseId] is one of the launch courses covered by the
+  /// register. The pack validator uses this to reject unknown/typo courseIds
+  /// instead of silently skipping terminology checks.
+  static bool isKnownCourse(String courseId) => allCourses.contains(courseId);
+
   /// Verified exact terms grouped by the courses where they are current.
   ///
   /// A term only needs to appear in the list for the course it is used in.
@@ -208,6 +213,47 @@ class TerminologyRegister {
     ],
   };
 
+  /// Common misspellings or incorrect variants of official terms, mapped to
+  /// the exact expected wording. The linter reports the expected value.
+  static const Map<String, String> knownMisspellings = {
+    'defence-in-depth': 'defense-in-depth',
+    'multi-factor authentication': 'multifactor authentication (MFA)',
+    'multi factor authentication': 'multifactor authentication (MFA)',
+    'geo redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
+    'geo-redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
+  };
+
+  /// Substrings that strongly suggest a Microsoft/Azure product or feature
+  /// name. The linter only flags unverified *product* terms; generic concepts
+  /// like "elasticity" or "CapEx" are not treated as product terms.
+  static const List<String> productTermMarkers = [
+    'azure',
+    'microsoft',
+    'entra',
+    'defender',
+    'purview',
+    'sentinel',
+    'foundry',
+    'intune',
+    'fabric',
+    'power',
+    'sharepoint',
+    'exchange',
+    'teams',
+    'dynamics',
+    'sql',
+    'cosmos',
+    'synapse',
+    'blob',
+    'files',
+    'queues',
+    'tables',
+    'key vault',
+    'firewall',
+    'ddos',
+    'waf',
+  ];
+
   /// Ambiguous abbreviations and the exact qualified phrase each course requires.
   ///
   /// The linter accepts a bare abbreviation only when the course-qualified
@@ -248,25 +294,28 @@ class TerminologyRegister {
       replacement: 'deprecated/not in outline (do not use)',
       courses: allCourses,
     ),
+    // These AI-901 study-resource terms are stale only within the ai-901
+    // course context; they may still be legitimate words in AZ-900/SC-900
+    // scenarios, so the linter scopes them to ai-901 only.
     RetiredTerm(
       pattern: 'LUIS',
       replacement: 'do not use retired AI-901 study-resource wording',
-      courses: allCourses,
+      courses: ['ai-901'],
     ),
     RetiredTerm(
       pattern: 'Language Understanding',
       replacement: 'do not use retired AI-901 study-resource wording',
-      courses: allCourses,
+      courses: ['ai-901'],
     ),
     RetiredTerm(
       pattern: 'Anomaly Detector',
       replacement: 'do not use retired AI-901 study-resource wording',
-      courses: allCourses,
+      courses: ['ai-901'],
     ),
     RetiredTerm(
       pattern: 'Azure Bot Service',
       replacement: 'do not use retired AI-901 study-resource wording',
-      courses: allCourses,
+      courses: ['ai-901'],
     ),
     RetiredTerm(
       pattern: 'Form Recognizer',

@@ -104,16 +104,82 @@ void main() {
       expect(violations, isEmpty);
     });
 
-    test('reports every violation rather than stopping at the first', () {
+    test('reports known misspellings of official terms', () {
       final linter = TerminologyLinter(
         courseId: 'az-900',
-        itemId: 'az900-bad',
+        itemId: 'az900-004',
       );
       final violations = linter.lint(
-        text: 'Azure AD and RBAC manage geo redundant zones.',
-        options: const ['Azure AD', 'RBAC'],
+        text: 'Use defence-in-depth and multi-factor authentication.',
+        options: const ['MFA', 'RBAC'],
       );
-      expect(violations.length, greaterThanOrEqualTo(3));
+      final misspellings = violations
+          .where((v) => v.message.contains('Incorrect spelling'))
+          .toList();
+      expect(misspellings, hasLength(2));
+      expect(
+        misspellings.map((v) => v.expected),
+        containsAll([
+          'defense-in-depth',
+          'multifactor authentication (MFA)',
+        ]),
+      );
+    });
+
+    test('reports unverified product terms not in the register', () {
+      final linter = TerminologyLinter(
+        courseId: 'az-900',
+        itemId: 'az900-zzz',
+      );
+      final violations = linter.lint(
+        text: 'Deploy to the Azure Frobnicator service.',
+        options: const ['Azure Frobnicator'],
+      );
+      final unverified = violations
+          .where((v) => v.message.contains('Unverified product term'))
+          .toList();
+      expect(unverified, isNotEmpty);
+      expect(
+        unverified.first.message,
+        contains('Azure Frobnicator'),
+      );
+    });
+
+    test('allows current Azure product terms that are in the register', () {
+      final linter = TerminologyLinter(
+        courseId: 'az-900',
+        itemId: 'az900-018',
+      );
+      final violations = linter.lint(
+        text: 'Azure Virtual Machines run guest operating systems.',
+        options: const ['Azure Virtual Machines'],
+      );
+      expect(violations, isEmpty);
+    });
+
+    test('does not flag retired AI-901 terms in AZ-900 content', () {
+      final linter = TerminologyLinter(
+        courseId: 'az-900',
+        itemId: 'az900-ai',
+      );
+      final violations = linter.lint(
+        text: 'LUIS and Anomaly Detector are not in this course.',
+        options: const ['Language Understanding', 'Anomaly Detector'],
+      );
+      expect(violations, isEmpty);
+    });
+
+    test('flags retired AI-901 terms inside ai-901 content', () {
+      final linter = TerminologyLinter(
+        courseId: 'ai-901',
+        itemId: 'ai901-001',
+      );
+      final violations = linter.lint(
+        text: 'Use LUIS to build language understanding.',
+        options: const ['LUIS'],
+      );
+      expect(violations, isNotEmpty);
+      expect(violations.first.message, contains('LUIS'));
     });
   });
 }

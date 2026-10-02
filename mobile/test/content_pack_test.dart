@@ -31,7 +31,7 @@ const String _validPackJson = '''
       "difficulty": "easy",
       "source": "Per-question fixture",
       "rightsBasis": "original-human",
-      "courseId": "course-test"
+      "courseId": "az-900"
     },
     {
       "id": "q-002",
@@ -43,7 +43,7 @@ const String _validPackJson = '''
       "difficulty": "medium",
       "source": "Per-question fixture",
       "rightsBasis": "original-human",
-      "courseId": "course-test"
+      "courseId": "az-900"
     }
   ]
 }
@@ -144,7 +144,7 @@ void main() {
 
     test('rejects missing per-question courseId', () {
       final json = _validPackJson.replaceFirst(
-        '"courseId": "course-test"',
+        '"courseId": "az-900"',
         '"courseId": ""',
       );
       final pack = ContentPack.parse(json);
@@ -198,7 +198,7 @@ void main() {
             "difficulty": "easy",
             "source": "Per-question fixture",
             "rightsBasis": "original-human",
-            "courseId": "course-test"
+            "courseId": "az-900"
           }
         ]
       }
@@ -268,6 +268,16 @@ void main() {
       );
       final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('RBAC')));
+    });
+
+    test('rejects an unknown courseId', () {
+      final json = _validPackJson.replaceFirst(
+        '"courseId": "az-900"',
+        '"courseId": "unknown-course"',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('not a registered course')));
     });
   });
 

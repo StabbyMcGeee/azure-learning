@@ -67,7 +67,7 @@ void main() {
       final pack = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       await store.applyContentPack(pack);
@@ -75,30 +75,30 @@ void main() {
       final question = await store.getQuestion('q-a1');
       expect(question, isNotNull);
       expect(question!.packId, 'pack-a');
-      expect(question.courseId, 'course-A');
+      expect(question.courseId, 'az-900');
     });
 
     test('banks for different courses are disjoint', () async {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1', 'q-a2'],
       ));
       final packB = ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       ));
       await store.applyContentPack(packA);
       await store.applyContentPack(packB);
 
       final courses = await store.getCourses();
-      expect(courses, ['course-A', 'course-B']);
+      expect(courses, ['az-900', 'sc-900']);
 
-      final aQuestions = await store.getQuestions(courseId: 'course-A');
-      final bQuestions = await store.getQuestions(courseId: 'course-B');
+      final aQuestions = await store.getQuestions(courseId: 'az-900');
+      final bQuestions = await store.getQuestions(courseId: 'sc-900');
       expect(aQuestions.map((q) => q.id), containsAll(['q-a1', 'q-a2']));
       expect(bQuestions.map((q) => q.id), ['q-b1']);
       expect(
@@ -111,13 +111,13 @@ void main() {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       final packB = ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       ));
       await store.applyContentPack(packA);
@@ -138,7 +138,7 @@ void main() {
       await store.saveSession(StudySession(
         id: 's-a',
         mode: 'exam',
-        courseId: 'course-A',
+        courseId: 'az-900',
         startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
         finishedAt: DateTime.now(),
         questionCount: 1,
@@ -148,7 +148,7 @@ void main() {
       await store.saveSession(StudySession(
         id: 's-b',
         mode: 'exam',
-        courseId: 'course-B',
+        courseId: 'sc-900',
         startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
         finishedAt: DateTime.now(),
         questionCount: 1,
@@ -156,13 +156,13 @@ void main() {
         scorePercent: 0,
       ));
 
-      final aAttempts = await store.getAttempts(courseId: 'course-A');
-      final bAttempts = await store.getAttempts(courseId: 'course-B');
+      final aAttempts = await store.getAttempts(courseId: 'az-900');
+      final bAttempts = await store.getAttempts(courseId: 'sc-900');
       expect(aAttempts.map((a) => a.questionId), ['q-a1']);
       expect(bAttempts.map((a) => a.questionId), ['q-b1']);
 
-      final aSessions = await store.getSessions(courseId: 'course-A');
-      final bSessions = await store.getSessions(courseId: 'course-B');
+      final aSessions = await store.getSessions(courseId: 'az-900');
+      final bSessions = await store.getSessions(courseId: 'sc-900');
       expect(aSessions.map((s) => s.id), ['s-a']);
       expect(bSessions.map((s) => s.id), ['s-b']);
     });
@@ -171,28 +171,28 @@ void main() {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       final packB = ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       ));
       await store.applyContentPack(packA);
       await store.applyContentPack(packB);
 
-      final aDue = await store.getDueReviewItems(courseId: 'course-A');
-      final bDue = await store.getDueReviewItems(courseId: 'course-B');
+      final aDue = await store.getDueReviewItems(courseId: 'az-900');
+      final bDue = await store.getDueReviewItems(courseId: 'sc-900');
       expect(aDue.map((i) => i.question.id), ['q-a1']);
       expect(bDue.map((i) => i.question.id), ['q-b1']);
     });
 
     test('selected course is persisted', () async {
       expect(await store.getSelectedCourseId(), isNull);
-      await store.setSelectedCourseId('course-A');
-      expect(await store.getSelectedCourseId(), 'course-A');
+      await store.setSelectedCourseId('az-900');
+      expect(await store.getSelectedCourseId(), 'az-900');
       await store.setSelectedCourseId(null);
       expect(await store.getSelectedCourseId(), isNull);
     });
@@ -214,7 +214,7 @@ void main() {
       final pack = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       await store.applyContentPack(pack);
@@ -225,13 +225,13 @@ void main() {
       final v1 = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       final v2Json = _packJson(
         packId: 'pack-a',
         packVersion: 2,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1', 'q-a2'],
       );
       final v2 = ContentPack.parse(v2Json);
@@ -248,7 +248,7 @@ void main() {
       final pack = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       await store.applyContentPack(pack);
@@ -261,13 +261,13 @@ void main() {
       final v2Json = _packJson(
         packId: 'pack-a',
         packVersion: 2,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1', 'q-a2'],
       );
       final v1Json = _packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       );
 
@@ -301,13 +301,13 @@ void main() {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       final packB = ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       ));
       await store.applyContentPack(packA);
@@ -328,7 +328,7 @@ void main() {
       await store.saveSession(StudySession(
         id: 's-1',
         mode: 'exam',
-        courseId: 'course-A',
+        courseId: 'az-900',
         startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
         finishedAt: DateTime.now(),
         questionCount: 1,
@@ -341,7 +341,7 @@ void main() {
       expect(await store.getAppliedPackVersion('pack-a'), isNull);
       final remaining = await store.getAllQuestions();
       expect(remaining.map((q) => q.id), ['q-b1']);
-      expect(await store.getCourses(), ['course-B']);
+      expect(await store.getCourses(), ['sc-900']);
 
       // Learner history is intact.
       expect(await store.getAllAttempts(), hasLength(2));
@@ -351,14 +351,14 @@ void main() {
       // that the ledger entry has been removed.
       await store.applyContentPack(packA);
       expect(await store.getAppliedPackVersion('pack-a'), 1);
-      expect(await store.getQuestions(courseId: 'course-A'), hasLength(1));
+      expect(await store.getQuestions(courseId: 'az-900'), hasLength(1));
     });
 
     test('withdrawing an unknown pack is a no-op', () async {
       final pack = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
       await store.applyContentPack(pack);
