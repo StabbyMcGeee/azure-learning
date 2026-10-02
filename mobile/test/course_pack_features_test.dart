@@ -43,10 +43,6 @@ String _packJson({
   ''';
 }
 
-String jsonEncodeListOfMaps(List<Map<String, Object?>> list) => jsonEncode(list);
-
-String jsonEncodeList(List<String> list) => jsonEncode(list);
-
 void main() {
   setUpAll(initTestDatabase);
 

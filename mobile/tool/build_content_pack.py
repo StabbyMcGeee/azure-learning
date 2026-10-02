@@ -2,19 +2,19 @@
 """Build and validate the production content pack for the Azure Learning app.
 
 Reads the per-course question lists under ``tool/content/``, validates them
-against the azpack-v2 schema plus the azlegal-db-v1 rights-basis enum and
-terminology rules, then writes the merged pack to
+against the azpack-v2 schema plus the rights-basis enum and terminology rules
+declared below, then writes the merged pack to
 ``mobile/assets/content-pack.json``.
 
 The generated JSON is the shipped artifact. The Python modules under
 ``tool/content/`` are the reviewable authoring source.
 
 Validation mirrors ``ContentPackValidator`` from the mobile app and the
-terminology rules from azlegal-db-v1 section 2:
+terminology rules in ``RETIRED_TERMS`` below:
   - formatVersion, packId, packVersion, title, source, rightsBasis required
   - every question has id/text/>=2 options/in-range correctOptionIndex/
     domain/difficulty/source/rightsBasis/courseId
-  - rightsBasis is one of the azlegal-db-v1 permitted values
+  - rightsBasis is one of PERMITTED_RIGHTS_BASES below
   - retired/non-exam wording does not appear (course-scoped)
   - ambiguous abbreviations (bare "RBAC") are course-qualified
 """

@@ -4,11 +4,13 @@ The mobile app uses a bounded, versioned offline content-pack format called
 **azpack-v2**. A pack is a single JSON file that carries both pack-level and
 per-question provenance metadata. The app parses, validates, and applies packs
 atomically to its SQLite question bank. Missing or invalid packs leave the bank
-empty and preserve all user attempt/session history.
+unchanged and preserve all user attempt/session history.
 
 > **Important:** Provenance metadata is required, but it does **not** by itself
-> prove that a question is rights-cleared. Real curriculum must be human-authored
-> or commercially licensed and reviewed by the project before it is shipped.
+> prove that a question is rights-cleared. Curriculum must carry a recorded
+> rights basis — original AI-fleet-authored material with the captain as the
+> human reviewer, or commercially licensed content — and a qualified human legal
+> review is still required before paid sale.
 
 ## Where packs are loaded from
 
@@ -19,7 +21,7 @@ assets/content-pack.json
 ```
 
 If the asset is absent, malformed, unsupported, or invalid, the loader returns
-`false` and the app keeps the current empty production bank. No error is shown
+`false` and the app keeps the bank it already has. No error is shown
 to the user. To ship a pack, place the prepared JSON file at that path and make
 sure it is listed in the `assets` section of `pubspec.yaml`.
 
@@ -31,8 +33,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
   "packId": "com.example.studyapp.az900.v1",
   "packVersion": 1,
   "title": "Example AZ-900 Study Pack",
-  "source": "Original human-authored content",
-  "rightsBasis": "original-human",
+  "source": "Original AI-fleet-authored content; publisher review PENDING",
+  "rightsBasis": "original-human-ai-assisted",
   "lastVerifiedAt": "2026-10-02",
   "questions": [
     {
@@ -48,8 +50,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
       "explanation": "Elasticity is the ability to scale resources up or down and pay for what you use.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original human-authored content",
-      "rightsBasis": "original-human",
+      "source": "Original AI-fleet-authored content; publisher review PENDING",
+      "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     }
   ]
@@ -173,7 +175,7 @@ CREATE TABLE settings(
 Existing rows receive `NULL` pack/course identity. The migrations run
 automatically when an older database is opened at version 3.
 
-## How to prepare a future human-authored or licensed pack
+## How to prepare a future pack
 
 1. Produce or license original questions.
 2. Record, for every question, the source author/licensor, the rights basis,

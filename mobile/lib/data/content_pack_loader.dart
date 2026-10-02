@@ -6,7 +6,7 @@ import 'local_store.dart';
 /// Loads bounded, versioned offline content packs into a [LocalStore].
 ///
 /// The loader is defensive: malformed, unsupported, or missing packs are
-/// ignored so the app always falls back to the current empty question bank and
+/// ignored so the app always starts with the bank it already has, including
 /// preserved user history.
 class ContentPackLoader {
   static const String defaultAssetPath = 'assets/content-pack.json';

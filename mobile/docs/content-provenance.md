@@ -5,6 +5,12 @@ pack shipped at `assets/content-pack.json`. It is a reviewer-facing record; it
 does **not** by itself prove rights clearance. A qualified human (the captain,
 as publisher) reviews and attests before sale, per the settled authoring route.
 
+No external rights database backs this record. The rights-basis enum and the
+terminology register it relies on are the ones declared in
+`tool/build_content_pack.py` (`PERMITTED_RIGHTS_BASES` and `RETIRED_TERMS`);
+the full rights audit lives outside this repository and is not duplicated
+into it.
+
 The pack is generated from the authoring sources under `tool/content/` by
 `tool/build_content_pack.py`. Edit the authoring sources, then regenerate:
 
@@ -17,7 +23,8 @@ python3 tool/build_content_pack.py
 - Content is authored by the AI fleet (firstmate + crew) as fresh originals.
 - The captain supplies substantive human review/authorship; there are no
   in-house or freelance human authors.
-- This is the accepted weaker-ownership route recorded in `data/captain.md`.
+- This is the accepted weaker-ownership route recorded in
+  `archive/handoff/product-scope-and-content-rights-2026-10.md`.
 
 **Review status: PENDING.** The captain's substantive human review has **not**
 yet been performed. It must happen before paid sale. The per-item `source`
@@ -25,9 +32,9 @@ field records the review as pending, not as done.
 
 **Rights basis per item:** `original-human-ai-assisted` (the human publisher
 makes the substantive expressive choices through review; the AI fleet drafts).
-This is one of the permitted values in the azlegal-db-v1 evidence schema
-(section 3.1). Every question in the pack carries this value in its
-`rightsBasis` field.
+This is one of the permitted values in `PERMITTED_RIGHTS_BASES`
+(`tool/build_content_pack.py`). Every question in the pack carries this value in
+its `rightsBasis` field.
 
 ## Source discipline
 
@@ -38,8 +45,9 @@ Each item was authored from, and only from:
 
 No legacy desktop question text, no recalled exam item, and no vendor bank was
 read or reused. The legacy 133-question bank was used only as a coverage index
-via `data/azrights-rewrite-map-v1/report.md` (metadata only: id, category,
-type, difficulty, source URL).
+(metadata only: id, category, type, difficulty, source URL); the resulting
+slot-to-objective mapping is recorded in the coverage tables below and in the
+`tool/content/` module docstrings.
 
 ## Outline snapshots (authoritative exam wording)
 
@@ -54,8 +62,9 @@ staged after launch and is not part of this pack.
 
 ## Terminology preserved verbatim
 
-Exact official Azure terminology is preserved per the azlegal-db-v1
-terminology register. Notable verbatim terms used in this pack include:
+Exact official Azure terminology is preserved per the terminology register in
+`tool/build_content_pack.py` (`RETIRED_TERMS`). Notable verbatim terms used in
+this pack include:
 
 - `Microsoft Entra Conditional Access`
 - `region pairs` (never "regional pairs" or "paired regions")

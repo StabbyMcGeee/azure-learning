@@ -1,6 +1,6 @@
 """AZ-900 architecture-and-services replacement items (fresh originals).
 
-Covers the 49 architecture-category legacy slots plus the 7 outline topics the
+Covers the 45 architecture-category legacy slots plus the 7 outline topics the
 legacy bank never covered (Azure Virtual Desktop, sovereign regions, Microsoft
 Entra Domain Services, external identities, AzCopy, Azure File Sync, Azure
 Storage Explorer). Legacy wording was not read or reused.

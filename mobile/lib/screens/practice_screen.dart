@@ -60,9 +60,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
       return const EmptyState(
         icon: Icons.quiz,
         title: 'No practice questions yet',
-        message:
-            'Load rights-cleared questions to start practicing. '
-            'No legacy desktop questions are imported.',
+        message: 'No practice questions are available. The bundled course '
+            'content could not be loaded.',
       );
     }
     final question = _questions[_index];

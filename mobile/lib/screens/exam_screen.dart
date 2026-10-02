@@ -81,8 +81,8 @@ class _ExamScreenState extends State<ExamScreen> {
       return const EmptyState(
         icon: Icons.assignment,
         title: 'No exam questions available',
-        message:
-            'Rights-cleared questions must be loaded before an exam can run.',
+        message: 'No exam content is available. The bundled course content '
+            'could not be loaded.',
       );
     }
     final question = _questions[_index];

@@ -10,7 +10,7 @@ Future<void> main() async {
   final store = LocalStore();
   // If a content pack is bundled at assets/content-pack.json, load it.
   // The loader never throws: a missing/invalid pack, or any storage failure,
-  // leaves the bank empty and the app still starts. The try/catch is a
+  // leaves the bank unchanged and the app still starts. The try/catch is a
   // belt-and-suspenders guard so an unexpected error cannot block first paint.
   try {
     await ContentPackLoader.loadBundledPackIfPresent(store);
