@@ -7,6 +7,7 @@ import '../models/attempt.dart';
 import '../models/content_pack.dart';
 import '../models/question.dart';
 import '../models/session.dart';
+import '../models/study_status.dart';
 
 /// Thrown when a content pack is rejected because its version is lower than the
 /// version already recorded in the local pack ledger.
@@ -109,13 +110,22 @@ class LocalStore {
     }
   }
 
-  /// Creates the current (v3) schema for a fresh database.
+  /// Creates the current (v4) schema for a fresh database.
   static Future<void> createSchema(Database db) async {
     await _createTable(db, 'questions', _questionsV3Columns);
     await _createTable(db, 'attempts', _attemptsColumns);
     await _createTable(db, 'sessions', _sessionsV3Columns);
     await _createTable(db, 'pack_ledger', _packLedgerColumns);
     await _createTable(db, 'settings', _settingsColumns);
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS study_status(
+        courseId TEXT NOT NULL,
+        questionId TEXT NOT NULL,
+        status TEXT NOT NULL,
+        updatedAt INTEGER NOT NULL,
+        PRIMARY KEY (courseId, questionId)
+      )
+    ''');
   }
 
   /// Creates the original v1 schema without provenance, pack, or course
@@ -155,12 +165,26 @@ class LocalStore {
     await _createTable(db, 'settings', _settingsColumns);
   }
 
+  /// Migrates an existing v3 database to v4, adding the per-course study
+  /// status table.
+  static Future<void> migrateV3ToV4(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS study_status(
+        courseId TEXT NOT NULL,
+        questionId TEXT NOT NULL,
+        status TEXT NOT NULL,
+        updatedAt INTEGER NOT NULL,
+        PRIMARY KEY (courseId, questionId)
+      )
+    ''');
+  }
+
   static Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'study_app.db');
     return openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: (db, version) async => createSchema(db),
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
@@ -168,6 +192,9 @@ class LocalStore {
         }
         if (oldVersion < 3) {
           await migrateV2ToV3(db);
+        }
+        if (oldVersion < 4) {
+          await migrateV3ToV4(db);
         }
       },
     );
@@ -417,6 +444,67 @@ class LocalStore {
     );
   }
 
+  /// Persist the learner's study status for a single question.
+  Future<void> saveStudyStatus({
+    required String courseId,
+    required String questionId,
+    required StudyMaterialStatus status,
+    DateTime? updatedAt,
+  }) async {
+    final db = await database;
+    final record = StudyStatusRecord(
+      courseId: courseId,
+      questionId: questionId,
+      status: status,
+      updatedAt: updatedAt ?? DateTime.now(),
+    );
+    await db.insert(
+      'study_status',
+      record.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  /// Load all study statuses for a course, keyed by question id.
+  Future<Map<String, StudyMaterialStatus>> getStudyStatusesForCourse(
+      String courseId) async {
+    final db = await database;
+    final rows = await db.query(
+      'study_status',
+      where: 'courseId = ?',
+      whereArgs: [courseId],
+    );
+    return {
+      for (final row in rows)
+        row['questionId'] as String:
+            StudyMaterialStatusX.fromStorage(row['status'] as String),
+    };
+  }
+
+  /// Compute coverage for a course from the currently loaded question bank.
+  Future<StudyProgress> getStudyProgress(String courseId) async {
+    final questions = await getQuestions(courseId: courseId);
+    final statuses = await getStudyStatusesForCourse(courseId);
+
+    int seen = 0;
+    int needsReview = 0;
+    for (final q in questions) {
+      final status = statuses[q.id];
+      if (status == StudyMaterialStatus.seen) {
+        seen++;
+      } else if (status == StudyMaterialStatus.needsReview) {
+        seen++;
+        needsReview++;
+      }
+    }
+    return StudyProgress(
+      courseId: courseId,
+      total: questions.length,
+      seen: seen,
+      needsReview: needsReview,
+    );
+  }
+
   Future<void> recordAttempt(Attempt attempt) async {
     final db = await database;
     await db.insert('attempts', attempt.toMap());
@@ -552,5 +640,6 @@ class LocalStore {
     await db.delete('sessions');
     await db.delete('pack_ledger');
     await db.delete('settings');
+    await db.delete('study_status');
   }
 }

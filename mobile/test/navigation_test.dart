@@ -23,7 +23,7 @@ void main() {
       await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
       await tester.tap(find.text('Study'));
       await tester.pumpAndSettle();
-      expect(find.text('Study material is empty'), findsOneWidget);
+      expect(find.text('No study material yet'), findsOneWidget);
     });
 
     testWidgets('tapping Practice navigates to practice screen', (tester) async {

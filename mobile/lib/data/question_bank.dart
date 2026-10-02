@@ -26,6 +26,7 @@ class QuestionBank {
           explanation: 'Elasticity is the ability to scale resources up or down '
               'and pay for what you use.',
           domain: 'Cloud Concepts',
+          courseId: 'AZ-900',
           difficulty: 'easy',
         ),
         Question(
@@ -41,6 +42,7 @@ class QuestionBank {
           explanation: 'CapEx is upfront spending on physical assets such as '
               'server hardware.',
           domain: 'Cloud Concepts',
+          courseId: 'AZ-900',
           difficulty: 'easy',
         ),
         Question(
@@ -56,6 +58,7 @@ class QuestionBank {
           correctOptionIndex: 2,
           explanation: 'SaaS delivers fully managed applications.',
           domain: 'Cloud Architecture',
+          courseId: 'AZ-900',
           difficulty: 'medium',
         ),
       ];

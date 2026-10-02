@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/about_legal_screen.dart';
+import '../screens/course_study_screen.dart';
 import '../screens/dashboard_screen.dart';
 import '../screens/exam_result_screen.dart';
 import '../screens/exam_screen.dart';
@@ -12,6 +13,7 @@ import '../screens/study_screen.dart';
 class AppRouter {
   static const String dashboard = '/';
   static const String study = '/study';
+  static const String courseStudy = '/study/course';
   static const String practice = '/practice';
   static const String exam = '/exam';
   static const String examResult = '/exam/result';
@@ -26,6 +28,13 @@ class AppRouter {
     }
     if (name == study) {
       return MaterialPageRoute(builder: (_) => const StudyScreen());
+    }
+    if (name == courseStudy) {
+      final args = settings.arguments as Map<String, dynamic>?;
+      final courseId = args?['courseId'] as String? ?? '';
+      return MaterialPageRoute(
+        builder: (_) => CourseStudyScreen(courseId: courseId),
+      );
     }
     if (name == practice) {
       return MaterialPageRoute(builder: (_) => const PracticeScreen());

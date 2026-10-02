@@ -8,6 +8,7 @@ import 'package:study_app/models/attempt.dart';
 import 'package:study_app/models/content_pack.dart';
 import 'package:study_app/models/question.dart';
 import 'package:study_app/models/session.dart';
+import 'package:study_app/models/study_status.dart';
 
 /// Initializes the FFI sqlite implementation used by unit/integration tests on
 /// desktop/WSL Linux where the mobile sqflite implementation is unavailable.
@@ -51,6 +52,7 @@ class FakeLocalStore extends LocalStore {
   final Map<String, int> _packVersions = {};
   final Map<String, String?> _settings = {};
   String? _selectedCourseId;
+  final Map<String, Map<String, StudyMaterialStatus>> _studyStatuses = {};
 
   FakeLocalStore([List<Question>? questions]) {
     if (questions != null) _questions.addAll(questions);
@@ -196,6 +198,48 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
+  Future<void> saveStudyStatus({
+    required String courseId,
+    required String questionId,
+    required StudyMaterialStatus status,
+    DateTime? updatedAt,
+  }) async {
+    _studyStatuses.putIfAbsent(courseId, () => {});
+    _studyStatuses[courseId]![questionId] = status;
+  }
+
+  @override
+  Future<Map<String, StudyMaterialStatus>> getStudyStatusesForCourse(
+      String courseId) async {
+    final statuses = _studyStatuses[courseId];
+    if (statuses == null) return const {};
+    return Map.unmodifiable(statuses);
+  }
+
+  @override
+  Future<StudyProgress> getStudyProgress(String courseId) async {
+    final questions = _questions.where((q) => q.courseId == courseId).toList();
+    final statuses = _studyStatuses[courseId] ?? const {};
+    int seen = 0;
+    int needsReview = 0;
+    for (final q in questions) {
+      final status = statuses[q.id];
+      if (status == StudyMaterialStatus.seen) {
+        seen++;
+      } else if (status == StudyMaterialStatus.needsReview) {
+        seen++;
+        needsReview++;
+      }
+    }
+    return StudyProgress(
+      courseId: courseId,
+      total: questions.length,
+      seen: seen,
+      needsReview: needsReview,
+    );
+  }
+
+  @override
   Future<List<ReviewItem>> getDueReviewItems({String? courseId}) async {
     final now = DateTime.now();
     final List<ReviewItem> due = [];
@@ -256,5 +300,6 @@ class FakeLocalStore extends LocalStore {
     _packVersions.clear();
     _settings.clear();
     _selectedCourseId = null;
+    _studyStatuses.clear();
   }
 }
