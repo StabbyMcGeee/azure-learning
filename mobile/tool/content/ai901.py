@@ -387,16 +387,4 @@ QUESTIONS = [
        "A multimodal model can interpret visual input in prompts, such as "
        "reasoning about an uploaded image alongside text.",
        "medium"),
-    qf("ai-901-038",
-       "A developer must connect a client application to an agent deployed "
-       "in Microsoft Foundry so the application can invoke the agent. Which "
-       "component does the developer use?",
-       ["The Foundry SDK",
-        "A virtual machine image",
-        "A storage account",
-        "A SQL query"],
-       0,
-       "The Foundry SDK connects a lightweight client application to an agent "
-       "or model deployed in Microsoft Foundry.",
-       "medium"),
 ]

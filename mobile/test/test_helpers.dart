@@ -154,23 +154,21 @@ class FakeLocalStore extends LocalStore {
     var result = List<Attempt>.from(_attempts);
     if (courseId != null) {
       result = result
-          .where((a) => _inCourseOrUnattributed(a.questionId, courseId))
+          .where((a) => _inCourse(a.questionId, courseId))
           .toList();
     }
     return List.unmodifiable(result.reversed.toList());
   }
 
-  /// Mirrors [LocalStore.getAttempts]: rows without course attribution stay
-  /// visible in a course-scoped view.
-  bool _inCourseOrUnattributed(String questionId, String courseId) {
-    String? course;
+  /// Mirrors [LocalStore.getAttempts]: only attempts on questions attributed
+  /// to the selected course are shown under that course.
+  bool _inCourse(String questionId, String courseId) {
     for (final q in _questions) {
       if (q.id == questionId) {
-        course = q.courseId;
-        break;
+        return q.courseId == courseId;
       }
     }
-    return course == null || course.isEmpty || course == courseId;
+    return false;
   }
 
   @override
@@ -183,10 +181,7 @@ class FakeLocalStore extends LocalStore {
       result = result.where((s) => s.mode == mode).toList();
     }
     if (courseId != null) {
-      result = result
-          .where((s) =>
-              s.courseId == null || s.courseId!.isEmpty || s.courseId == courseId)
-          .toList();
+      result = result.where((s) => s.courseId == courseId).toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);

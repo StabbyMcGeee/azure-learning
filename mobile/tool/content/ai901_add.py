@@ -47,16 +47,16 @@ QUESTIONS = [
        "likely tokens whose combined probability reaches the threshold.",
        "medium"),
     qf("ai-901-041",
-       "A developer must choose how to serve a model: a real-time endpoint "
-       "for interactive requests or a batch job for large scoring runs. What "
-       "is this choice an example of?",
-       ["A model deployment option",
-        "A responsible AI principle",
-        "A text analysis technique",
-        "A data visualization"],
+       "A developer deploys a model and wants a client application to send "
+       "interactive requests to it over HTTP. What does the application "
+       "call?",
+       ["A real-time endpoint",
+        "A storage account",
+        "A virtual network",
+        "A SQL database"],
        0,
-       "Choosing how to serve a model, such as a real-time endpoint versus "
-       "batch scoring, is a model deployment option.",
+       "A deployed model is served through a real-time endpoint that client "
+       "applications call over HTTP for interactive requests.",
        "medium"),
     qf("ai-901-042",
        "Where can a developer create and test a single-agent solution before "
@@ -70,15 +70,16 @@ QUESTIONS = [
        "before a client application connects to it.",
        "medium"),
     qf("ai-901-043",
-       "A developer builds a lightweight application that extracts the main "
-       "terms from customer feedback. Which Foundry capability does this?",
-       ["Text analysis in Foundry",
-        "Speech synthesis",
-        "Image generation",
-        "Data warehousing"],
+       "A developer builds a lightweight application that shortens long "
+       "documents while keeping their main points. Which text analysis "
+       "technique does it use?",
+       ["summarization",
+        "entity detection",
+        "sentiment analysis",
+        "keyword extraction"],
        0,
-       "Text analysis in Foundry includes keyword extraction for finding the "
-       "main terms in text such as customer feedback.",
+       "Summarization condenses a long document into a shorter version while "
+       "keeping the main points.",
        "medium"),
     qf("ai-901-044",
        "A developer builds an app that answers spoken questions by using a "
@@ -104,15 +105,16 @@ QUESTIONS = [
        "objects within images.",
        "medium"),
     qf("ai-901-046",
-       "Which tool extracts fields from documents and forms in Microsoft "
-       "Foundry?",
-       ["Azure Content Understanding in Foundry Tools",
-        "Azure Speech in Foundry Tools",
-        "Azure Blob Storage",
-        "Azure Cosmos DB"],
+       "Which Foundry capability extracts printed text and structured fields "
+       "from a scanned image?",
+       ["Content Understanding",
+        "Speech synthesis",
+        "Sentiment analysis",
+        "Keyword extraction"],
        0,
-       "Azure Content Understanding in Foundry Tools extracts structured "
-       "information from documents and forms.",
+       "Content Understanding extracts information from images, including "
+       "printed text and structured fields, using optical character "
+       "recognition.",
        "medium"),
     qf("ai-901-047",
        "A developer needs to extract spoken words and visual text from a "
@@ -125,17 +127,6 @@ QUESTIONS = [
        0,
        "Content Understanding extracts information from audio and video, "
        "including spoken words and visual text.",
-       "medium"),
-    qf("ai-901-048",
-       "A developer wants to interact with a deployed model through a web "
-       "interface without writing code. Which surface should they use?",
-       ["The Foundry portal",
-        "The Foundry SDK",
-        "A command-line shell",
-        "A database client"],
-       0,
-       "The Foundry portal is the web interface for deploying and interacting "
-       "with models without writing code.",
        "medium"),
     qf("ai-901-049",
        "Which practice improves a generative model's output by writing clear, "

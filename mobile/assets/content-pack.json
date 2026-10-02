@@ -1028,23 +1028,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-079",
-      "text": "A web app automatically adds instances when CPU rises and removes them when it falls. Which cloud benefit does this behavior provide?",
-      "options": [
-        "high availability",
-        "scalability",
-        "disaster recovery",
-        "encryption"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Automatically adding and removing instances to match load is scalability, one of the key benefits of cloud services.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-080",
       "text": "Which capability does Microsoft Entra ID provide?",
       "options": [
@@ -1208,23 +1191,6 @@
       ],
       "correctOptionIndex": 1,
       "explanation": "A public endpoint is reachable from the internet, while a private endpoint uses a private IP address inside a virtual network.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-109",
-      "text": "Which concept distributes virtual machines across separate physical hardware to reduce the impact of a single hardware failure?",
-      "options": [
-        "Resource groups",
-        "Storage tiers",
-        "Fault domains in an availability set",
-        "Management groups"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "Fault domains in an availability set place VMs on separate physical hardware so a single hardware failure does not take down all instances.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2082,23 +2048,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-103",
-      "text": "Which practice describes defining infrastructure in code files that can be versioned and redeployed consistently?",
-      "options": [
-        "Azure Service Health",
-        "Azure Advisor",
-        "Microsoft Purview",
-        "infrastructure as code (IaC)"
-      ],
-      "correctOptionIndex": 3,
-      "explanation": "Infrastructure as code (IaC) defines infrastructure in versioned code files for consistent, repeatable deployment.",
-      "domain": "Azure Management and Governance",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-104",
       "text": "Which Azure Advisor category recommends resizing or shutting down underused resources to save money?",
       "options": [
@@ -2253,7 +2202,7 @@
     },
     {
       "id": "az-900-126",
-      "text": "Which service helps an organization discover, classify, and govern sensitive data across its estate?",
+      "text": "Which service classifies and labels sensitive data across an organization's data estate?",
       "options": [
         "Microsoft Purview",
         "Azure Advisor",
@@ -2261,7 +2210,7 @@
         "Azure Service Health"
       ],
       "correctOptionIndex": 0,
-      "explanation": "Microsoft Purview discovers, classifies, and governs data across an organization's on-premises and cloud estate.",
+      "explanation": "Microsoft Purview classifies and labels sensitive data so an organization can discover and govern it across its estate.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2320,23 +2269,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-141",
-      "text": "Which term describes the on-demand delivery of computing services such as servers, storage, and databases over the internet?",
-      "options": [
-        "edge computing",
-        "colocation",
-        "cloud computing",
-        "virtualization"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "Cloud computing delivers computing services such as servers, storage, and databases over the internet on demand.",
-      "domain": "Cloud Concepts",
-      "difficulty": "easy",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-142",
       "text": "Under the shared responsibility model for a SaaS application, which item remains the customer's responsibility?",
       "options": [
@@ -2349,23 +2281,6 @@
       "explanation": "Even with SaaS the customer remains responsible for its data, endpoints, and account access management.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-143",
-      "text": "Which cloud model is best for an organization that must keep data on hardware it owns and controls in its own datacenter?",
-      "options": [
-        "private cloud",
-        "public cloud",
-        "hybrid cloud",
-        "serverless"
-      ],
-      "correctOptionIndex": 0,
-      "explanation": "A private cloud dedicates hardware to a single organization, giving it full control in its own datacenter.",
-      "domain": "Cloud Concepts",
-      "difficulty": "easy",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
@@ -2406,15 +2321,15 @@
     },
     {
       "id": "az-900-146",
-      "text": "Which benefit keeps a workload available during a datacenter failure by running it across multiple locations?",
+      "text": "Which benefit of cloud services refers to a system's ability to recover from failures and continue to function?",
       "options": [
-        "high availability",
+        "reliability",
         "scalability",
-        "predictability",
+        "high availability",
         "governance"
       ],
       "correctOptionIndex": 0,
-      "explanation": "High availability keeps a workload available during failures by using redundancy across multiple locations.",
+      "explanation": "Reliability is the ability of a system to recover from failures and continue functioning, supported by design choices such as redundancy.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
@@ -2500,23 +2415,6 @@
       ],
       "correctOptionIndex": 3,
       "explanation": "PaaS provides a managed platform (runtime, middleware, tools) so developers do not manage the underlying infrastructure.",
-      "domain": "Cloud Concepts",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-152",
-      "text": "Which compute approach runs code only when needed and bills only for the compute time used, with the provider managing the servers?",
-      "options": [
-        "a dedicated physical server",
-        "serverless",
-        "a colocated rack",
-        "a virtual machine managed by the customer"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Serverless runs code on demand and bills for actual execution, with the provider managing the servers.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
@@ -4190,23 +4088,6 @@
       "courseId": "ai-901"
     },
     {
-      "id": "ai-901-038",
-      "text": "A developer must connect a client application to an agent deployed in Microsoft Foundry so the application can invoke the agent. Which component does the developer use?",
-      "options": [
-        "A virtual machine image",
-        "A storage account",
-        "The Foundry SDK",
-        "A SQL query"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "The Foundry SDK connects a lightweight client application to an agent or model deployed in Microsoft Foundry.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
       "id": "ai-901-039",
       "text": "In a Foundry chat application, which prompt is the user's own request typed at runtime?",
       "options": [
@@ -4242,15 +4123,15 @@
     },
     {
       "id": "ai-901-041",
-      "text": "A developer must choose how to serve a model: a real-time endpoint for interactive requests or a batch job for large scoring runs. What is this choice an example of?",
+      "text": "A developer deploys a model and wants a client application to send interactive requests to it over HTTP. What does the application call?",
       "options": [
-        "A responsible AI principle",
-        "A model deployment option",
-        "A text analysis technique",
-        "A data visualization"
+        "A storage account",
+        "A real-time endpoint",
+        "A virtual network",
+        "A SQL database"
       ],
       "correctOptionIndex": 1,
-      "explanation": "Choosing how to serve a model, such as a real-time endpoint versus batch scoring, is a model deployment option.",
+      "explanation": "A deployed model is served through a real-time endpoint that client applications call over HTTP for interactive requests.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
@@ -4276,15 +4157,15 @@
     },
     {
       "id": "ai-901-043",
-      "text": "A developer builds a lightweight application that extracts the main terms from customer feedback. Which Foundry capability does this?",
+      "text": "A developer builds a lightweight application that shortens long documents while keeping their main points. Which text analysis technique does it use?",
       "options": [
-        "Text analysis in Foundry",
-        "Speech synthesis",
-        "Image generation",
-        "Data warehousing"
+        "summarization",
+        "entity detection",
+        "sentiment analysis",
+        "keyword extraction"
       ],
       "correctOptionIndex": 0,
-      "explanation": "Text analysis in Foundry includes keyword extraction for finding the main terms in text such as customer feedback.",
+      "explanation": "Summarization condenses a long document into a shorter version while keeping the main points.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
@@ -4327,15 +4208,15 @@
     },
     {
       "id": "ai-901-046",
-      "text": "Which tool extracts fields from documents and forms in Microsoft Foundry?",
+      "text": "Which Foundry capability extracts printed text and structured fields from a scanned image?",
       "options": [
-        "Azure Speech in Foundry Tools",
-        "Azure Blob Storage",
-        "Azure Cosmos DB",
-        "Azure Content Understanding in Foundry Tools"
+        "Speech synthesis",
+        "Sentiment analysis",
+        "Keyword extraction",
+        "Content Understanding"
       ],
       "correctOptionIndex": 3,
-      "explanation": "Azure Content Understanding in Foundry Tools extracts structured information from documents and forms.",
+      "explanation": "Content Understanding extracts information from images, including printed text and structured fields, using optical character recognition.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
@@ -4353,23 +4234,6 @@
       ],
       "correctOptionIndex": 0,
       "explanation": "Content Understanding extracts information from audio and video, including spoken words and visual text.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
-      "id": "ai-901-048",
-      "text": "A developer wants to interact with a deployed model through a web interface without writing code. Which surface should they use?",
-      "options": [
-        "The Foundry SDK",
-        "A command-line shell",
-        "The Foundry portal",
-        "A database client"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "The Foundry portal is the web interface for deploying and interacting with models without writing code.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",

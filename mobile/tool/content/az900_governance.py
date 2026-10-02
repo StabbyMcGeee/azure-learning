@@ -561,20 +561,6 @@ QUESTIONS = [
       "A policy assignment applies a policy definition to a scope such as a "
       "management group, subscription, or resource group.",
       "hard"),
-    # az-900-103 -> MG.3 Bicep / IaC (adjacent)
-    q("az-900-103",
-      "Which practice describes defining infrastructure in code files that "
-      "can be versioned and redeployed consistently?",
-      [
-          "infrastructure as code (IaC)",
-          "Azure Service Health",
-          "Azure Advisor",
-          "Microsoft Purview",
-      ],
-      0,
-      "Infrastructure as code (IaC) defines infrastructure in versioned code "
-      "files for consistent, repeatable deployment.",
-      "hard"),
     # az-900-104 -> MG.4 Azure Advisor
     q("az-900-104",
       "Which Azure Advisor category recommends resizing or shutting down "
@@ -701,8 +687,8 @@ QUESTIONS = [
       "medium"),
     # az-900-126 -> MG.2 Microsoft Purview (re-scoped from compliance offerings)
     q("az-900-126",
-      "Which service helps an organization discover, classify, and govern "
-      "sensitive data across its estate?",
+      "Which service classifies and labels sensitive data across an "
+      "organization's data estate?",
       [
           "Microsoft Purview",
           "Azure Advisor",
@@ -710,8 +696,8 @@ QUESTIONS = [
           "Azure Service Health",
       ],
       0,
-      "Microsoft Purview discovers, classifies, and governs data across an "
-      "organization's on-premises and cloud estate.",
+      "Microsoft Purview classifies and labels sensitive data so an "
+      "organization can discover and govern it across its estate.",
       "medium"),
     # az-900-130 -> AA.1 sovereign regions (adjacent: EU Data Boundary)
     q("az-900-130",

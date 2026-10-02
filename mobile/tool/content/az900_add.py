@@ -34,14 +34,6 @@ def q(id_, domain, text, options, ci, expl, diff="medium"):
 
 
 QUESTIONS = [
-    q("az-900-141", DC,
-      "Which term describes the on-demand delivery of computing services such "
-      "as servers, storage, and databases over the internet?",
-      ["cloud computing", "edge computing", "colocation", "virtualization"],
-      0,
-      "Cloud computing delivers computing services such as servers, storage, "
-      "and databases over the internet on demand.",
-      "easy"),
     q("az-900-142", DC,
       "Under the shared responsibility model for a SaaS application, which "
       "item remains the customer's responsibility?",
@@ -53,14 +45,6 @@ QUESTIONS = [
       "Even with SaaS the customer remains responsible for its data, "
       "endpoints, and account access management.",
       "medium"),
-    q("az-900-143", DC,
-      "Which cloud model is best for an organization that must keep data on "
-      "hardware it owns and controls in its own datacenter?",
-      ["private cloud", "public cloud", "hybrid cloud", "serverless"],
-      0,
-      "A private cloud dedicates hardware to a single organization, giving it "
-      "full control in its own datacenter.",
-      "easy"),
     q("az-900-144", DC,
       "Which pricing approach charges for the resources actually consumed, "
       "with no up-front purchase?",
@@ -79,12 +63,12 @@ QUESTIONS = [
       "that protect data, applications, and infrastructure.",
       "medium"),
     q("az-900-146", DC,
-      "Which benefit keeps a workload available during a datacenter failure "
-      "by running it across multiple locations?",
-      ["high availability", "scalability", "predictability", "governance"],
+      "Which benefit of cloud services refers to a system's ability to "
+      "recover from failures and continue to function?",
+      ["reliability", "scalability", "high availability", "governance"],
       0,
-      "High availability keeps a workload available during failures by using "
-      "redundancy across multiple locations.",
+      "Reliability is the ability of a system to recover from failures and "
+      "continue functioning, supported by design choices such as redundancy.",
       "medium"),
     q("az-900-147", DC,
       "Which benefit describes having predictable performance and predictable "
@@ -135,15 +119,6 @@ QUESTIONS = [
       0,
       "PaaS provides a managed platform (runtime, middleware, tools) so "
       "developers do not manage the underlying infrastructure.",
-      "medium"),
-    q("az-900-152", DC,
-      "Which compute approach runs code only when needed and bills only for "
-      "the compute time used, with the provider managing the servers?",
-      ["serverless", "a dedicated physical server", "a colocated rack",
-       "a virtual machine managed by the customer"],
-      0,
-      "Serverless runs code on demand and bills for actual execution, with "
-      "the provider managing the servers.",
       "medium"),
     q("az-900-153", MG,
       "Which tool provides a graphical web interface for creating and "

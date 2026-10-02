@@ -246,6 +246,16 @@ class LocalStore {
       );
     }
 
+    // Replace this pack's existing rows inside the same transaction so a
+    // question dropped from a newer pack version is removed from the bank
+    // rather than left behind. This is pack-scoped replace-on-upgrade, not
+    // withdrawal: the ledger entry above is kept.
+    await txn.delete(
+      'questions',
+      where: 'packId = ?',
+      whereArgs: [pack.packId],
+    );
+
     // Record content-last-verified dates from the pack metadata. A per-course
     // date is recorded for every course present in the pack, plus a global date.
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
@@ -425,9 +435,10 @@ class LocalStore {
   /// All recorded attempts, optionally filtered to a single course by joining
   /// with the current question bank.
   ///
-  /// Rows with no course attribution — attempts on a question the bank never
-  /// attributed, or whose question is no longer in the bank — are kept in the
-  /// course-scoped view so scoping never silently drops history.
+  /// Unattributed attempts (a question no longer in the bank, or with no
+  /// course) are kept in the unfiltered "all courses" view, but are not shown
+  /// under a specific course so an unrelated attempt is never presented as
+  /// that course's history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
@@ -435,8 +446,8 @@ class LocalStore {
         : await db.rawQuery(
             '''
             SELECT a.* FROM attempts a
-            LEFT JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ? OR q.courseId IS NULL OR q.courseId = ''
+            INNER JOIN questions q ON q.id = a.questionId
+            WHERE q.courseId = ?
             ORDER BY a.timestamp DESC
             ''',
             [courseId],
@@ -453,9 +464,9 @@ class LocalStore {
     );
   }
 
-  /// Recorded sessions, optionally filtered by mode and course. Sessions with
-  /// no course attribution (taken while every course was in scope) are kept in
-  /// a course-scoped view.
+  /// Recorded sessions, optionally filtered by mode and course. A session
+  /// taken with no course selected (all courses) has a null courseId and is
+  /// shown only in the unfiltered view, never under a specific course.
   Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
     final conditions = <String>[];
@@ -465,7 +476,7 @@ class LocalStore {
       whereArgs.add(mode);
     }
     if (courseId != null) {
-      conditions.add("(courseId = ? OR courseId IS NULL OR courseId = '')");
+      conditions.add('courseId = ?');
       whereArgs.add(courseId);
     }
     final rows = conditions.isEmpty

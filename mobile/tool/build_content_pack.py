@@ -129,7 +129,12 @@ def check_question(q, i, errors):
                 errors.append(f"{prefix}: option {oi} must be a non-empty string")
 
     ci = q.get("correctOptionIndex")
-    if not isinstance(ci, int) or ci < 0 or ci >= len(options):
+    if (
+        not isinstance(ci, int)
+        or isinstance(ci, bool)
+        or ci < 0
+        or ci >= len(options)
+    ):
         errors.append(
             f"{prefix}: correctOptionIndex {ci!r} out of range (0..{len(options) - 1})"
         )
@@ -194,7 +199,11 @@ def _spread_options(q):
     if not isinstance(options, list) or len(options) < 2:
         return q
     ci = q.get("correctOptionIndex")
-    if not isinstance(ci, int) or not (0 <= ci < len(options)):
+    if (
+        not isinstance(ci, int)
+        or isinstance(ci, bool)
+        or not (0 <= ci < len(options))
+    ):
         return q
     qid = str(q.get("id", ""))
     seed = int(hashlib.sha256(qid.encode("utf-8")).hexdigest(), 16)
@@ -214,6 +223,7 @@ def _check_position_spread(questions, errors):
         q["correctOptionIndex"]
         for q in questions
         if isinstance(q.get("correctOptionIndex"), int)
+        and not isinstance(q.get("correctOptionIndex"), bool)
     )
     if not c:
         return

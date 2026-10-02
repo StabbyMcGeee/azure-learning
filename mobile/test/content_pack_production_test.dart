@@ -47,24 +47,31 @@ void main() {
     for (final q in pack.questions) {
       counts[q.courseId] = (counts[q.courseId] ?? 0) + 1;
     }
-    expect(counts, {'az-900': 152, 'dp-900': 57, 'ai-901': 49});
+    expect(counts, {'az-900': 146, 'dp-900': 57, 'ai-901': 47});
   });
 
-  test('AZ-900 ships every slot except the four recorded duplicates', () {
+  test('AZ-900 ships every slot except the recorded duplicates', () {
     final az = pack.questions.where((q) => q.courseId == 'az-900').toList();
-    // Ids run 001..156. 019/056/061/090 are dropped duplicate topics whose
-    // subject is retained elsewhere; see docs/content-provenance.md.
+    // Ids run 001..156. Dropped slots are duplicate topics whose subject is
+    // retained elsewhere, or weighting-pad items removed for same-fact
+    // duplication; see docs/content-provenance.md.
     final dropped = {
       'az-900-019',
       'az-900-056',
       'az-900-061',
+      'az-900-079',
       'az-900-090',
+      'az-900-103',
+      'az-900-109',
+      'az-900-141',
+      'az-900-143',
+      'az-900-152',
     };
     final expected = {
       for (var n = 1; n <= 156; n++) 'az-900-${n.toString().padLeft(3, '0')}',
     }..removeAll(dropped);
 
-    expect(az.length, 152);
+    expect(az.length, 146);
     expect(az.map((q) => q.id).toSet(), expected);
   });
 

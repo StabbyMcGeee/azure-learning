@@ -419,20 +419,6 @@ QUESTIONS = [
       "Availability sets distribute VMs across fault domains and update "
       "domains to protect against hardware failure and planned maintenance.",
       "hard"),
-    # az-900-079 -> DC.2 scalability (adjacent: autoscale)
-    q("az-900-079",
-      "A web app automatically adds instances when CPU rises and removes "
-      "them when it falls. Which cloud benefit does this behavior provide?",
-      [
-          "scalability",
-          "high availability",
-          "disaster recovery",
-          "encryption",
-      ],
-      0,
-      "Automatically adding and removing instances to match load is "
-      "scalability, one of the key benefits of cloud services.",
-      "hard"),
     # az-900-080 -> AA.4 Microsoft Entra ID / directory services
     q("az-900-080",
       "Which capability does Microsoft Entra ID provide?",
@@ -569,20 +555,6 @@ QUESTIONS = [
       0,
       "A public endpoint is reachable from the internet, while a private "
       "endpoint uses a private IP address inside a virtual network.",
-      "hard"),
-    # az-900-109 -> AA.2 availability sets
-    q("az-900-109",
-      "Which concept distributes virtual machines across separate physical "
-      "hardware to reduce the impact of a single hardware failure?",
-      [
-          "Fault domains in an availability set",
-          "Resource groups",
-          "Storage tiers",
-          "Management groups",
-      ],
-      0,
-      "Fault domains in an availability set place VMs on separate physical "
-      "hardware so a single hardware failure does not take down all instances.",
       "hard"),
     # az-900-110 -> AA.2 containers (adjacent: Azure Container Registry)
     q("az-900-110",
