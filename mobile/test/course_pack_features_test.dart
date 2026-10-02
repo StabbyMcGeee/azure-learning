@@ -27,7 +27,7 @@ String _packJson({
     'domain': 'Domain',
     'difficulty': 'easy',
     'source': 'Test fixture',
-    'rightsBasis': 'synthetic-fixture',
+    'rightsBasis': 'original-human',
     'courseId': courseId,
   }).toList();
 
@@ -38,7 +38,7 @@ String _packJson({
     "packVersion": $packVersion,
     "title": "Test pack",
     "source": "Test fixture",
-    "rightsBasis": "synthetic-fixture",
+    "rightsBasis": "original-human",
     "questions": ${jsonEncode(questions)}
   }
   ''';

@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "itemId": "az900-001",
+      "courseId": "az-900",
+      "version": 1,
+      "contentHash": "sha256:placeholder",
+      "objectiveId": "az-900/DC.1/1.cloud",
+      "outlineSnapshot": {
+        "url": "https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900",
+        "retrievedAt": "2026-10-02",
+        "skillsMeasuredAsOf": "2026-07-20",
+        "contentHash": "sha256:outline"
+      },
+      "factSheetId": "fs-az900-001",
+      "factSources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/overview",
+          "retrievedAt": "2026-10-02",
+          "licenseClass": "cc-by-4.0-repo"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/",
+          "retrievedAt": "2026-10-02",
+          "licenseClass": "cc-by-4.0-repo"
+        }
+      ],
+      "termRefs": ["tr:cloud-computing"],
+      "author": "Placeholder Author",
+      "authoredAt": "2026-10-02",
+      "aiAssistance": "none",
+      "noExposureAttestation": {
+        "authorId": "placeholder-author",
+        "date": "2026-10-02",
+        "examSat": [],
+        "ndaBound": []
+      },
+      "techReviewer": "Tech Reviewer",
+      "techReviewedAt": "2026-10-02",
+      "rightsReviewer": "Rights Reviewer",
+      "rightsReviewedAt": "2026-10-02",
+      "similarityReport": {
+        "tool": "internal-token-run",
+        "version": "1",
+        "thresholds": {"maxRunLen": 6},
+        "comparedTo": ["https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/overview"],
+        "resultHash": "sha256:placeholder",
+        "maxRunLen": 0
+      },
+      "rightsBasis": "original-human",
+      "locale": "en-US",
+      "status": "approved",
+      "lastVerifiedAt": "2026-10-02",
+      "outlineVersionAtVerify": "2026-07-20"
+    },
+    {
+      "itemId": "az900-000-legacy",
+      "courseId": "az-900",
+      "version": 0,
+      "contentHash": null,
+      "objectiveId": "az-900/DC.1/1.cloud",
+      "outlineSnapshot": null,
+      "factSheetId": null,
+      "factSources": null,
+      "termRefs": [],
+      "author": null,
+      "authoredAt": null,
+      "aiAssistance": null,
+      "noExposureAttestation": null,
+      "techReviewer": null,
+      "techReviewedAt": null,
+      "rightsReviewer": null,
+      "rightsReviewedAt": null,
+      "similarityReport": null,
+      "rightsBasis": null,
+      "locale": null,
+      "status": "withdrawn",
+      "withdrawnAt": "2026-10-02",
+      "withdrawalReason": "rights-basis-failed",
+      "lastVerifiedAt": null,
+      "outlineVersionAtVerify": null
+    }
+  ]
+}

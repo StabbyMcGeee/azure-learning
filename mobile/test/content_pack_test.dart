@@ -20,7 +20,7 @@ const String _validPackJson = '''
   "packVersion": 1,
   "title": "Synthetic test pack",
   "source": "Test fixture",
-  "rightsBasis": "synthetic-fixture",
+  "rightsBasis": "original-human",
   "questions": [
     {
       "id": "q-001",
@@ -30,7 +30,7 @@ const String _validPackJson = '''
       "domain": "Domain A",
       "difficulty": "easy",
       "source": "Per-question fixture",
-      "rightsBasis": "per-question-synthetic",
+      "rightsBasis": "original-human",
       "courseId": "course-test"
     },
     {
@@ -42,7 +42,7 @@ const String _validPackJson = '''
       "domain": "Domain B",
       "difficulty": "medium",
       "source": "Per-question fixture",
-      "rightsBasis": "per-question-synthetic",
+      "rightsBasis": "original-human",
       "courseId": "course-test"
     }
   ]
@@ -134,8 +134,8 @@ void main() {
 
     test('rejects missing per-question rightsBasis', () {
       final json = _validPackJson.replaceFirst(
-        '"rightsBasis": "per-question-synthetic"',
-        '"rightsBasis": ""',
+        '"source": "Per-question fixture",\n      "rightsBasis": "original-human",',
+        '"source": "Per-question fixture",\n      "rightsBasis": "",',
       );
       final pack = ContentPack.parse(json);
       final errors = ContentPackValidator(pack).validate();
@@ -152,31 +152,122 @@ void main() {
       expect(errors, contains(contains('missing or empty courseId')));
     });
 
-    test('rejects empty question list beyond max bound', () {
+    test('rejects a rightsBasis outside the permitted values', () {
+      final json = _validPackJson.replaceFirst(
+        '"rightsBasis": "original-human"',
+        '"rightsBasis": "invented-basis"',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('not one of the permitted values')));
+    });
+
+    test('rejects licensed-cc-by-4.0 without licenseRef and attributionText',
+        () {
+      final json = _validPackJson.replaceFirst(
+        '"rightsBasis": "original-human"',
+        '"rightsBasis": "licensed-cc-by-4.0"',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      expect(errors, contains(contains('requires a non-empty licenseRef')));
+      expect(
+        errors,
+        contains(contains('requires a non-empty attributionText')),
+      );
+    });
+
+    test('accepts licensed-cc-by-4.0 with companion fields', () {
+      const json = '''
+      {
+        "formatVersion": "azpack-v2",
+        "packId": "com.example.test.licensed",
+        "packVersion": 1,
+        "title": "Licensed test pack",
+        "source": "Test fixture",
+        "rightsBasis": "licensed-cc-by-4.0",
+        "licenseRef": "https://example.com/cc-by-license",
+        "attributionText": "CC BY 4.0 — Example Author",
+        "questions": [
+          {
+            "id": "q-001",
+            "text": "Sample question one?",
+            "options": ["A", "B", "C"],
+            "correctOptionIndex": 1,
+            "domain": "Domain A",
+            "difficulty": "easy",
+            "source": "Per-question fixture",
+            "rightsBasis": "original-human",
+            "courseId": "course-test"
+          }
+        ]
+      }
+      ''';
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      expect(errors, isEmpty);
+    });
+
+    test('rejects an invalid pack-level lastVerifiedAt date', () {
+      final json = _validPackJson.replaceFirst(
+        '"packVersion": 1',
+        '"packVersion": 1,\n  "lastVerifiedAt": "not-a-date"',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack, lintTerminology: false).validate();
+      expect(errors, contains(contains('lastVerifiedAt')));
+    });
+
+    test('terminology lint fails the pack on retired Azure AD wording', () {
       final pack = ContentPack(
         formatVersion: 'azpack-v2',
-        packId: 'big-pack',
+        packId: 'lint-test',
         packVersion: 1,
-        title: 'Big',
-        source: 'synthetic',
-        rightsBasis: 'synthetic',
-        questions: List.generate(
-          contentPackMaxQuestions + 1,
-          (i) => PackQuestion(
-            id: 'q-$i',
-            text: 'Q',
-            options: const ['A', 'B'],
+        title: 'Lint test',
+        source: 'Test fixture',
+        rightsBasis: 'original-human',
+        questions: [
+          PackQuestion(
+            id: 'az900-lint',
+            text: 'Which Azure AD feature provides SSO?',
+            options: const ['SSO', 'MFA'],
             correctOptionIndex: 0,
-            domain: 'D',
+            domain: 'Domain',
             difficulty: 'easy',
-            source: 'synthetic',
-            rightsBasis: 'synthetic',
-            courseId: 'course-test',
+            source: 'Test fixture',
+            rightsBasis: 'original-human',
+            courseId: 'az-900',
           ),
-        ),
+        ],
       );
       final errors = ContentPackValidator(pack).validate();
-      expect(errors, contains(contains('maximum is $contentPackMaxQuestions')));
+      expect(errors, contains(contains('Azure AD')));
+    });
+
+    test('terminology lint fails the pack on bare RBAC', () {
+      final pack = ContentPack(
+        formatVersion: 'azpack-v2',
+        packId: 'lint-rbac',
+        packVersion: 1,
+        title: 'Lint RBAC test',
+        source: 'Test fixture',
+        rightsBasis: 'original-human',
+        questions: [
+          PackQuestion(
+            id: 'az900-rbac',
+            text: 'Which RBAC role is read-only?',
+            options: const ['Owner', 'Reader'],
+            correctOptionIndex: 1,
+            domain: 'Domain',
+            difficulty: 'easy',
+            source: 'Test fixture',
+            rightsBasis: 'original-human',
+            courseId: 'az-900',
+          ),
+        ],
+      );
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('RBAC')));
     });
   });
 
@@ -201,7 +292,7 @@ void main() {
 
       final first = questions.firstWhere((q) => q.id == 'q-001');
       expect(first.source, 'Per-question fixture');
-      expect(first.rightsBasis, 'per-question-synthetic');
+      expect(first.rightsBasis, 'original-human');
     });
 
     test('invalid pack is rejected and writes nothing', () async {
@@ -212,7 +303,7 @@ void main() {
         "packVersion": 1,
         "title": "Bad",
         "source": "synthetic",
-        "rightsBasis": "synthetic",
+        "rightsBasis": "original-human",
         "questions": [
           {
             "id": "q-001",
@@ -222,7 +313,7 @@ void main() {
             "domain": "D",
             "difficulty": "easy",
             "source": "synthetic",
-            "rightsBasis": "synthetic"
+            "rightsBasis": "original-human"
           }
         ]
       }
@@ -396,7 +487,7 @@ void main() {
         "packVersion": 1,
         "title": "Bad",
         "source": "synthetic",
-        "rightsBasis": "synthetic",
+        "rightsBasis": "original-human",
         "questions": [
           {
             "id": "q-001",
@@ -406,7 +497,7 @@ void main() {
             "domain": "D",
             "difficulty": "easy",
             "source": "",
-            "rightsBasis": "synthetic"
+            "rightsBasis": "original-human"
           }
         ]
       }

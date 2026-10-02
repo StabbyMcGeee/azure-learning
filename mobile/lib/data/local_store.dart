@@ -217,6 +217,40 @@ class LocalStore {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
+    await txn.insert(
+      'pack_ledger',
+      {
+        'packId': pack.packId,
+        'version': pack.packVersion,
+        'appliedAt': DateTime.now().millisecondsSinceEpoch,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+    // Record content-last-verified dates from the pack metadata. A per-course
+    // date is recorded for every course present in the pack, plus a global date.
+    if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
+      final courseIds = pack.questions
+          .map((q) => q.courseId)
+          .where((c) => c.isNotEmpty)
+          .toSet();
+      await txn.insert(
+        'settings',
+        {'key': 'contentLastVerifiedAt', 'value': pack.lastVerifiedAt},
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      for (final courseId in courseIds) {
+        await txn.insert(
+          'settings',
+          {
+            'key': 'contentLastVerifiedAt_$courseId',
+            'value': pack.lastVerifiedAt,
+          },
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    }
+
     final batch = txn.batch();
     for (final q in pack.questions) {
       batch.insert(
@@ -261,6 +295,25 @@ class LocalStore {
     );
     if (rows.isEmpty) return null;
     return rows.first['version'] as int?;
+  }
+
+  /// Returns the last content-verified date recorded for [courseId], or the
+  /// global date when [courseId] is omitted.
+  Future<String?> getContentLastVerifiedAt({String? courseId}) async {
+    final db = await database;
+    final key = courseId == null
+        ? 'contentLastVerifiedAt'
+        : 'contentLastVerifiedAt_$courseId';
+    final rows = await db.query(
+      'settings',
+      where: 'key = ?',
+      whereArgs: [key],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    final value = rows.first['value'] as String?;
+    if (value == null || value.isEmpty) return null;
+    return value;
   }
 
   Future<void> insertQuestions(List<Question> questions) async {
