@@ -64,17 +64,18 @@ class FakeLocalStore extends LocalStore {
     }
     _packVersions[pack.packId] = pack.packVersion;
 
-    // Clear stale content-last-verified dates before writing new ones.
-    _settings.removeWhere(
-      (key, _) => key == 'contentLastVerifiedAt' || key.startsWith('contentLastVerifiedAt_'),
-    );
+    // Clear content-last-verified dates only for the courses this pack touches.
+    final courseIds = pack.questions
+        .map((q) => q.courseId)
+        .where((c) => c.isNotEmpty)
+        .toSet();
+    _settings.remove('contentLastVerifiedAt');
+    for (final courseId in courseIds) {
+      _settings.remove('contentLastVerifiedAt_$courseId');
+    }
 
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
       _settings['contentLastVerifiedAt'] = pack.lastVerifiedAt;
-      final courseIds = pack.questions
-          .map((q) => q.courseId)
-          .where((c) => c.isNotEmpty)
-          .toSet();
       for (final courseId in courseIds) {
         _settings['contentLastVerifiedAt_$courseId'] = pack.lastVerifiedAt;
       }

@@ -136,7 +136,8 @@ class TerminologyLinter {
   }
 
   /// All known lowercase patterns for this course: verified terms, retired
-  /// patterns, and ambiguous-acronym phrases.
+  /// patterns, ambiguous-acronym phrases, and the retired-term replacements so
+  /// that a fixed retired term is not immediately reported as unverified.
   Set<String> _knownPatternsForCourse() {
     final patterns = <String>{};
     final verified = TerminologyRegister.verifiedTerms[courseId];
@@ -148,7 +149,11 @@ class TerminologyLinter {
     for (final retired in TerminologyRegister.retiredTerms) {
       if (retired.courses.contains(courseId)) {
         patterns.add(retired.pattern.toLowerCase());
+        patterns.add(retired.replacement.toLowerCase());
       }
+    }
+    for (final entry in TerminologyRegister.knownMisspellings.entries) {
+      patterns.add(entry.value.toLowerCase());
     }
     for (final entry in TerminologyRegister.ambiguousAcronyms.entries) {
       final phrase = entry.value[courseId];
@@ -200,7 +205,12 @@ class TerminologyLinter {
   bool _isProductMarker(String value) {
     final lower = value.toLowerCase();
     for (final marker in TerminologyRegister.productTermMarkers) {
-      if (lower == marker || lower.contains(marker)) return true;
+      if (lower == marker) return true;
+      // Match a marker at word boundaries, e.g. "azure" inside "AzurePortal"
+      // but not inside "powerful".
+      if (RegExp(r'(^|[0-9_-])' + marker + r'($|[0-9_-])').hasMatch(lower)) {
+        return true;
+      }
     }
     return false;
   }

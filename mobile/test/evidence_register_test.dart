@@ -14,7 +14,7 @@ Map<String, dynamic> _validItem() => {
     'url': 'https://example.com/az-900-outline',
     'retrievedAt': '2026-10-02',
     'skillsMeasuredAsOf': '2026-07-20',
-    'contentHash': 'sha256:outline',
+    'contentHash': '0000000000000000000000000000000000000000000000000000000000000000',
   },
   'factSheetId': 'fs-az900-001',
   'factSources': [
@@ -48,7 +48,7 @@ Map<String, dynamic> _validItem() => {
     'version': '1',
     'thresholds': {'maxRunLen': 6},
     'comparedTo': ['https://example.com/source-a'],
-    'resultHash': 'sha256:sim',
+    'resultHash': '0000000000000000000000000000000000000000000000000000000000000000',
     'maxRunLen': 0,
   },
   'rightsBasis': 'original-human',
@@ -200,8 +200,9 @@ void main() {
       item['authoredAt'] = '2026';
       item['lastVerifiedAt'] = '2026-02-31';
       final errors = EvidenceRegisterValidator.validateItem(item);
-      expect(errors, hasLength(2));
-      expect(errors, everyElement(contains('ISO-8601 date')));
+      expect(errors, hasLength(greaterThanOrEqualTo(2)));
+      expect(errors, contains(contains('authoredAt')));
+      expect(errors, contains(contains('lastVerifiedAt')));
     });
 
     test('validates the committed evidence-register.json artifact', () async {

@@ -114,6 +114,22 @@ class EvidenceRegisterValidator {
       }
     }
 
+    void requireIsoDateIn(Map<String, dynamic> container, String key, {String? prefix}) {
+      final value = container[key];
+      final label = prefix == null ? key : '$prefix.$key';
+      if (value is! String || value.trim().isEmpty || !_isIsoDate(value)) {
+        errors.add('Missing or invalid ISO-8601 date field "$label"');
+      }
+    }
+
+    void requireStringHashIn(Map<String, dynamic> container, String key, {String? prefix}) {
+      final value = container[key];
+      final label = prefix == null ? key : '$prefix.$key';
+      if (value is! String || !RegExp(r'^[a-f0-9]{64}$').hasMatch(value)) {
+        errors.add('Missing or invalid SHA-256 hash field "$label"');
+      }
+    }
+
     void requireArray(String key) {
       final value = item[key];
       if (value is! List<dynamic>) {
@@ -203,6 +219,25 @@ class EvidenceRegisterValidator {
           attestation['date'] is! String) {
         errors.add('Status "$status" requires a signed noExposureAttestation');
       }
+      if (attestation is Map<String, dynamic>) {
+        requireIsoDateIn(attestation, 'date', prefix: 'noExposureAttestation');
+      }
+
+      final outlineSnapshot = item['outlineSnapshot'];
+      if (outlineSnapshot is Map<String, dynamic>) {
+        requireIsoDateIn(outlineSnapshot, 'retrievedAt', prefix: 'outlineSnapshot');
+        requireStringHashIn(outlineSnapshot, 'contentHash', prefix: 'outlineSnapshot');
+      }
+
+      final similarityReport = item['similarityReport'];
+      if (similarityReport is! Map<String, dynamic> ||
+          similarityReport['tool'] is! String ||
+          similarityReport['resultHash'] is! String) {
+        errors.add('Status "$status" requires a similarityReport');
+      }
+      if (similarityReport is Map<String, dynamic>) {
+        requireStringHashIn(similarityReport, 'resultHash', prefix: 'similarityReport');
+      }
 
       final author = item['author'];
       final techReviewer = item['techReviewer'];
@@ -214,13 +249,6 @@ class EvidenceRegisterValidator {
           author is String &&
           rightsReviewer == author) {
         errors.add('rightsReviewer must differ from author');
-      }
-
-      final similarityReport = item['similarityReport'];
-      if (similarityReport is! Map<String, dynamic> ||
-          similarityReport['tool'] is! String ||
-          similarityReport['resultHash'] is! String) {
-        errors.add('Status "$status" requires a similarityReport');
       }
     }
 
@@ -237,9 +265,10 @@ class EvidenceRegisterValidator {
             errors,
             prefix: 'factSources[$i]',
           );
-          if (source['url'] is! String || source['retrievedAt'] is! String) {
-            errors.add('factSources[$i] requires url and retrievedAt');
+          if (source['url'] is! String || source['url'].toString().trim().isEmpty) {
+            errors.add('factSources[$i] requires a non-empty url');
           }
+          requireIsoDateIn(source, 'retrievedAt', prefix: 'factSources[$i]');
         } else {
           errors.add('factSources[$i] is not an object');
         }
