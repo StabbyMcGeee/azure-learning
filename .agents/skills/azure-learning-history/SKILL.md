@@ -11,6 +11,8 @@ entries of the Azure Learning project.
 
 ## How to recover history
 
+`HANDOFF.txt` is a compact current-state/index, not a transcript. Keep it short; add durable detail to a focused dated archive and add one mapping row here instead of appending history to the handoff. Read only the archive topic needed for the current task.
+
 1. **Read the current handoff first.** Always start by loading
    `HANDOFF.txt` so the response is grounded in the current state and archive
    index.
@@ -32,7 +34,9 @@ entries of the Azure Learning project.
 | Desktop app implementation, UI/theme work, packaging, validation runs, bugfixes, content expansion | `archive/handoff/desktop-app-development-2026-09.md` |
 | Microsoft Learn source links, terminology alignment, retired-product renames, URL audits | `archive/handoff/terminology-and-sources-2026-09.md` |
 | AGY QA/usability audits, findings, and the implementation responses that fixed them | `archive/handoff/qa-audits-and-usability-2026-09.md` |
-| Mobile product concept, pricing, store-release requirements, legal/publishability audits, content-rights gate, CloudCert Coach requirements | `archive/handoff/mobile-product-and-release-2026-09.md` |
+| Mobile product concept, historical pricing, store-release requirements, legal/publishability audits, CloudCert Coach requirements | `archive/handoff/mobile-product-and-release-2026-09.md` |
+| Current US$5 multi-course direction, deferred add-on pricing, AI-assisted original content, source-rights and provenance rules | `archive/handoff/product-scope-and-content-rights-2026-10.md` |
+| Previous full current-state handoff snapshot (historical, may be superseded) | `archive/handoff/handoff-2026-10-01-pre-85-refresh.md` |
 | Current unresolved gates and archive index | `HANDOFF.txt` (always read first) |
 
 ## Common trigger phrases

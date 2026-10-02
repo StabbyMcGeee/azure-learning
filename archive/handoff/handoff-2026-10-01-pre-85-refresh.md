@@ -1,0 +1,114 @@
+Azure Learning — Current Handoff
+
+This file is a concise current-state index. Historical, resolved, and deep-reference
+material is preserved in dated archive files under `archive/handoff/` and is
+recoverable on demand using the `.agents/skills/azure-learning-history/` skill.
+Do not delete archive content; add new dated sections at the bottom of the
+relevant archive file.
+
+
+Project status
+- The existing artifact is a local Linux desktop Python/Tkinter + PyInstaller
+  study app (`azure_learning_app.py`) with 133 AZ-900 question records, ten
+  interaction types, SQLite persistence, spaced repetition, exam simulation,
+  statistics, and JSON progress export. It is validated and rebuilds cleanly.
+- The active goal is a paid, offline-first **Flutter mobile app** for iOS and
+  Android. v1 is scoped as a **single, one-time paid app purchase** targeting
+  the equivalent of **$1 upfront**; no subscription, consumable, or paid add-on.
+- The desktop executable remains a private prototype/validation artifact and is
+  **not** a mobile store release artifact.
+
+
+Unresolved gates and decisions
+1. Content rights / provenance (BLOCKER). The 133 question prompts, answers,
+   explanations, scenarios, and all store/app art must be documented as
+   independently authored or commercially licensed. Microsoft Learn source links
+   are factual references only; they do not grant commercial reuse rights.
+   No agent can certify this gate — it requires a human publisher attestation.
+   See `archive/handoff/mobile-product-and-release-2026-09.md` for the full
+   release-gate checklist.
+2. Public product name / trademark clearance (BLOCKER). `Azure Learning` uses a
+   Microsoft mark as the primary brand and cannot ship publicly as-is. The
+   working proposal is `CloudCert Coach` / `CloudCert Coach: AZ-900`, but the
+   final name must be cleared before any store metadata, package identifiers,
+   icon, or screenshots are created.
+3. Mobile implementation scaffold. No Flutter project, Android/iOS project,
+   signing configuration, store metadata, privacy policy, public support URL,
+   license, or provenance record exists yet.
+4. Pricing model. The current captain direction is the **$1 paid-app** model.
+   An alternative free + one-time unlock recommendation exists in the archive
+   (`mobile-product-and-release-2026-09.md`) and must be revisited if the
+   direction changes.
+
+
+Required next work before any store submission
+- Choose and clear the final public brand (not `Azure Learning`).
+- Create a per-item content provenance register and obtain human sign-off.
+- Add a LICENSE file and a public privacy-policy / support URL.
+- Add an in-app About/Legal screen with the independent/unaffiliated notice and
+  the score-estimate disclaimer.
+- Scaffold the Flutter mobile project, implement the offline question bank and
+  learning flows, and produce signed Android App Bundle + iOS archive.
+- Run the full device acceptance, accessibility, offline, and store-readiness
+  audits documented in the mobile archive.
+
+
+Desktop AZ-900 exam correctness fixes — 2026-10-01
+- Fixed `_finish_exam` so unanswered items still score as wrong but are no longer
+  persisted as attempts or pushed into the spaced-repetition schedule.
+- Aligned `_build_exam_set` question selection with `EXAM_DOMAIN_WEIGHTS`
+  (official AZ-900 July 2026 midpoints: cloud 27.5%, architecture 37.5%,
+  governance 32.5%), removing the previous governance 0.35 selection drift.
+- Added focused regression tests in `tests/test_az900_exam.py` covering blank
+  and partial exams plus weighted selection.
+- Verification: `python3 -m py_compile azure_learning_app.py` passes;
+  `python3 -m pytest tests/test_az900_exam.py -v` passes (3/3).
+- Mobile scope unchanged; this is the legacy desktop correction slice only.
+
+
+Archive index
+- `archive/handoff/desktop-app-development-2026-09.md`
+  Chronological implementation, validation, UI/theme, packaging, and bugfix
+  history of the legacy desktop app from the original 66-question baseline
+  through the final 133-question dark-theme build.
+- `archive/handoff/terminology-and-sources-2026-09.md`
+  Microsoft Learn terminology alignment and source-link audits/replacements
+  for the 133 AZ-900 question bank.
+- `archive/handoff/qa-audits-and-usability-2026-09.md`
+  AGY end-user QA audits, usability findings, and the implementation responses
+  that resolved them.
+- `archive/handoff/mobile-product-and-release-2026-09.md`
+  Mobile product concept, commercial/pricing discussion, legal/store readiness
+  audits, content-rights gate, CloudCert Coach release requirements, and
+  required UX acceptance tests.
+
+
+Coordination notes
+- Read `AGENTS.md` before editing application code. This file documents only
+  project handoff state; it does not grant or remove any agent ownership.
+- Do not edit `AGENTS.md` or `CLAUDE.md` to add handoff knowledge; corrections
+  of factual errors only.
+
+
+Mobile Flutter v1 scaffold — 2026-10-01
+- Added `mobile/` Flutter project with Android and iOS platforms enabled.
+- Uses unmistakable placeholder identifiers:
+  - display name: `Study App (placeholder)`
+  - package/bundle id: `com.example.studyapp`
+  Both are documented in `mobile/README.md` and must be replaced after brand
+  clearance.
+- Implemented offline-first architecture: dashboard, study, practice, exam
+  simulation, review/spaced-repetition, and progress persistence backed by
+  local SQLite via sqflite.
+- Runtime question bank starts empty; no legacy 133 desktop questions imported.
+  Synthetic fixtures live in `test/` only.
+- v1 is account-free, sync-free, analytics-free, ads-free, and has no in-app
+  payment SDK; the $1 model is a paid-app download handled by the store.
+- Added empty-content states and responsive dashboard grid.
+- Tests cover navigation, persistence, answer/exam behavior, and review
+  scheduling. `flutter analyze` and `flutter test` pass.
+- Validation prerequisites not met on this WSL Linux host: no Android SDK/Java,
+  no Xcode/macOS. Android/iOS builds were not run. Details recorded in
+  `mobile/README.md`.
+- Next: clear final brand, replace identifiers, load rights-cleared curriculum,
+  add icons/splash/legal screens, and run device/store acceptance audits.
