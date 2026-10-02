@@ -1,5 +1,5 @@
 {
-  "formatVersion": "azpack-v1",
+  "formatVersion": "azpack-v2",
   "packId": "com.example.studyapp.demo.synthetic",
   "packVersion": 1,
   "title": "Synthetic demo pack for tests only",
@@ -20,7 +20,8 @@
       "domain": "Cloud Concepts",
       "difficulty": "easy",
       "source": "Synthetic fixture for testing",
-      "rightsBasis": "synthetic-fixture-not-for-distribution"
+      "rightsBasis": "synthetic-fixture-not-for-distribution",
+      "courseId": "demo-course"
     },
     {
       "id": "demo-002",
@@ -36,7 +37,8 @@
       "domain": "Cloud Concepts",
       "difficulty": "easy",
       "source": "Synthetic fixture for testing",
-      "rightsBasis": "synthetic-fixture-not-for-distribution"
+      "rightsBasis": "synthetic-fixture-not-for-distribution",
+      "courseId": "demo-course"
     }
   ]
 }

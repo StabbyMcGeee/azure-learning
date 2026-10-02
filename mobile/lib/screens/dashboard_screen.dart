@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../navigation/app_router.dart';
+import '../widgets/course_selector.dart';
 
 /// Main landing screen with navigation into the study, practice, exam, review,
 /// and progress areas.
@@ -31,6 +32,8 @@ class DashboardScreen extends StatelessWidget {
                 'No account, ads, or network required.',
                 style: theme.textTheme.bodyMedium,
               ),
+              const SizedBox(height: 16),
+              const CourseSelector(),
               const SizedBox(height: 24),
               Expanded(
                 child: GridView.count(

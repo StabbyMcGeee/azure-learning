@@ -8,14 +8,14 @@ void main() {
   setUpAll(initTestDatabase);
 
   testWidgets('App launches and dashboard is accessible', (tester) async {
-    await tester.pumpWidget(const StudyApp());
+    await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
     expect(find.text('Study App (placeholder)'), findsOneWidget);
     expect(find.byType(MaterialApp), findsOneWidget);
   });
 
   testWidgets('Empty state displays action when questions are absent',
       (tester) async {
-    await tester.pumpWidget(const StudyApp());
+    await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
     await tester.tap(find.text('Study'));
     await tester.pumpAndSettle();
     expect(find.text('Study material is empty'), findsOneWidget);

@@ -28,8 +28,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   Future<void> _load() async {
-    final attempts = await _store.getAllAttempts();
-    final sessions = await _store.getSessions();
+    final courseId = await _store.getSelectedCourseId();
+    final attempts = await _store.getAttempts(courseId: courseId);
+    final sessions = await _store.getSessions(courseId: courseId);
     if (mounted) {
       setState(() {
         _attempts = attempts;

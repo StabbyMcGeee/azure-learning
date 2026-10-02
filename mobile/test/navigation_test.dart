@@ -10,7 +10,7 @@ void main() {
 
   group('Navigation', () {
     testWidgets('dashboard shows study areas', (tester) async {
-      await tester.pumpWidget(const StudyApp());
+      await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
       expect(find.text('Study App (placeholder)'), findsOneWidget);
       expect(find.text('Study'), findsOneWidget);
       expect(find.text('Practice'), findsOneWidget);
@@ -20,7 +20,7 @@ void main() {
     });
 
     testWidgets('tapping Study navigates to empty study screen', (tester) async {
-      await tester.pumpWidget(const StudyApp());
+      await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
       await tester.tap(find.text('Study'));
       await tester.pumpAndSettle();
       expect(find.text('Study material is empty'), findsOneWidget);
