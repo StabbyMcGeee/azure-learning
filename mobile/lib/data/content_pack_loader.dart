@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../models/content_pack.dart';
@@ -17,8 +16,9 @@ class ContentPackLoader {
   /// Attempts to load a bundled pack from [assetPath].
   ///
   /// Returns `true` when a pack was found, parsed, validated, and applied.
-  /// Returns `false` for any problem, including a missing asset, so the app
-  /// keeps its existing empty bank.
+  /// Returns `false` for any problem — a missing asset, malformed pack,
+  /// database failure, or platform error — so the app always keeps its
+  /// existing bank and starts regardless of pack-load outcome.
   static Future<bool> loadBundledPackIfPresent(
     LocalStore store, {
     String assetPath = defaultAssetPath,
@@ -26,10 +26,9 @@ class ContentPackLoader {
     try {
       final jsonString = await rootBundle.loadString(assetPath);
       return await ContentPackLoader.loadPackFromString(store, jsonString);
-    } on FlutterError {
-      // Asset not found or not registered. Keep the empty bank.
-      return false;
-    } on FormatException {
+    } catch (_) {
+      // Missing/invalid asset, malformed pack, or any storage/platform error:
+      // keep the existing bank and never prevent the app from starting.
       return false;
     }
   }
@@ -55,19 +54,6 @@ class ContentPackLoader {
       return true;
     } on PackVersionTooLowException {
       return false;
-    }
-  }
-
-  /// Parses a pack without applying it, returning validation errors.
-  ///
-  /// This is useful for diagnostics and tooling. An empty error list does not
-  /// prove that rights are cleared.
-  static List<String> dryRun(String jsonString) {
-    try {
-      final pack = ContentPack.parse(jsonString);
-      return ContentPackValidator(pack).validate();
-    } on FormatException catch (e) {
-      return [e.message];
     }
   }
 }

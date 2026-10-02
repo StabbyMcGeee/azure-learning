@@ -20,7 +20,7 @@
       "explanation": "Cloud computing delivers computing services such as servers, storage, and networking over the internet on a pay-as-you-go basis, so the customer does not own or maintain the physical infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -37,7 +37,7 @@
       "explanation": "In a consumption-based model you pay only for what you use and you stop incurring charges when you stop using the resources. Buying fixed capacity up front is capital expenditure, not consumption-based pay-as-you-go.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -54,7 +54,7 @@
       "explanation": "The shared responsibility model assigns responsibility for the physical security of datacenters, hosts, and networks to the cloud provider. The customer remains responsible for its data, endpoints, accounts, and access management.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -71,7 +71,7 @@
       "explanation": "Scalability is the ability to add or remove resources to meet changing demand, such as scaling out during peak traffic and scaling back in afterward.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -88,7 +88,7 @@
       "explanation": "Manageability describes how easily a cloud solution can be operated and monitored through a portal, CLI, or API rather than through physical datacenter visits.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -105,7 +105,7 @@
       "explanation": "A hybrid cloud combines a private cloud or on-premises datacenter with a public cloud, allowing data and applications to be shared between them.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -122,7 +122,7 @@
       "explanation": "Serverless computing abstracts away server management; the provider handles infrastructure and the code runs on demand, typically in response to events.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -139,7 +139,7 @@
       "explanation": "Scalability is the ability to add or remove resources to match changing demand, such as automatically adding resources when traffic rises.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -156,7 +156,7 @@
       "explanation": "High availability means a service remains available even when individual components or locations fail, often through redundancy across multiple locations.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -173,7 +173,7 @@
       "explanation": "Predictability in the cloud comes from capabilities such as autoscaling for performance and cost-tracking tools for spending; it does not mean costs are always zero or fixed.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -190,7 +190,7 @@
       "explanation": "Cloud computing delivers computing services such as compute, storage, and networking over the internet with pay-as-you-go pricing.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -207,7 +207,7 @@
       "explanation": "A public cloud provides shared, multi-tenant resources over the internet to the general public, in contrast to a private cloud dedicated to a single organization.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -224,7 +224,7 @@
       "explanation": "The customer is always responsible for its data, endpoints, accounts, and access management, while the cloud provider protects the underlying physical infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -241,7 +241,7 @@
       "explanation": "In SaaS the provider fully manages the application and infrastructure, and the customer only uses the software. In IaaS and PaaS the customer retains more management responsibility.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -258,7 +258,7 @@
       "explanation": "Microsoft Cost Management provides cost analysis, budgets, and recommendations for controlling and optimizing cloud spending.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -275,7 +275,7 @@
       "explanation": "Reliability is improved by distributing resources across multiple regions or availability zones so the system can recover from failures and keep functioning.",
       "domain": "Cloud Concepts",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -292,7 +292,7 @@
       "explanation": "Azure Migrate is a service that provides tools to discover, assess, and migrate on-premises servers, databases, and web apps to Azure.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -309,7 +309,7 @@
       "explanation": "With IaaS the customer manages the operating system and applications while the cloud provider manages the physical infrastructure such as servers, storage, and networking.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -326,7 +326,7 @@
       "explanation": "Scaling out adds more instances, such as virtual machines, to meet increased demand. Replacing failed hardware is fault tolerance, not scaling.",
       "domain": "Cloud Concepts",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -343,7 +343,7 @@
       "explanation": "Renting cloud capacity converts up-front capital expenditure (CapEx) on hardware into ongoing operational expenditure (OpEx) billed as it is used.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -360,7 +360,7 @@
       "explanation": "Predictable costs come from monitoring usage with cost-tracking tools and understanding consumption-based pricing. Ignoring usage or removing tags reduces cost predictability.",
       "domain": "Cloud Concepts",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -377,7 +377,7 @@
       "explanation": "A private cloud dedicates resources to a single organization, either in its own datacenter or a hosted one, without shared multi-tenant hardware.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -394,7 +394,7 @@
       "explanation": "Cloud adoption is commonly driven by scalability and the reduction of up-front capital costs. It does not eliminate security responsibilities or the need to manage data.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -411,7 +411,7 @@
       "explanation": "Cloud computing is characterized by on-demand self-service, broad network access, resource pooling, rapid elasticity, and measured (pay-as-you-go) service.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -428,7 +428,7 @@
       "explanation": "Moving from IaaS to PaaS to SaaS shifts more management to the cloud provider, so the customer's share of responsibility decreases.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -445,7 +445,7 @@
       "explanation": "Pay-as-you-go billing charges only for what is consumed with no up-front or long-term commitment, which is a core part of the consumption-based model.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -462,7 +462,7 @@
       "explanation": "A public cloud provides shared, multi-tenant resources over the internet, while a private cloud dedicates resources to a single organization.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -479,7 +479,7 @@
       "explanation": "On-demand self-service lets users provision resources through a portal or API immediately, without manual datacenter work.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -496,7 +496,7 @@
       "explanation": "The consumption-based model charges for actual use and stops accruing cost when resources are released; it does not require up-front purchase of all capacity.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -513,7 +513,7 @@
       "explanation": "Azure Reservations offer a discounted price in exchange for a one- or three-year commitment on eligible resources, suited to steady, predictable workloads.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -530,7 +530,7 @@
       "explanation": "Azure Spot Virtual Machines offer deep discounts on unused capacity but can be evicted when Azure needs the capacity back, so they suit interruptible workloads.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -547,7 +547,7 @@
       "explanation": "IaaS is one of the three cloud service types, along with PaaS and SaaS. Private, hybrid, and public are deployment models, not service types.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -564,7 +564,7 @@
       "explanation": "A resource group is a logical container that holds related Azure resources so they can be managed, secured, and deleted together.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -581,7 +581,7 @@
       "explanation": "An availability zone is a physically separate datacenter within an Azure region, providing fault isolation and high availability.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -598,7 +598,7 @@
       "explanation": "Azure Virtual Machines are an infrastructure as a service (IaaS) option that gives full control over the operating system and installed software.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -615,7 +615,7 @@
       "explanation": "Virtual network peering connects two Azure virtual networks so resources can communicate privately using the Azure backbone.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -632,7 +632,7 @@
       "explanation": "Azure ExpressRoute provides a private, dedicated connection between an on-premises network and Azure, avoiding the public internet.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -649,7 +649,7 @@
       "explanation": "Azure Blob Storage is object storage for unstructured data such as images, videos, documents, and logs.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -666,7 +666,7 @@
       "explanation": "Zone-redundant storage (ZRS) replicates data synchronously across three availability zones in the primary region.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -683,7 +683,7 @@
       "explanation": "Microsoft Entra Conditional Access evaluates signals such as user, device, and location and applies policies that allow or block access.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -700,7 +700,7 @@
       "explanation": "Zero Trust is a security model that verifies every request explicitly and assumes breach, rather than trusting a network boundary.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -717,7 +717,7 @@
       "explanation": "Azure Virtual Machine Scale Sets deploy and manage identical VMs and can scale the number of instances in or out automatically.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -734,7 +734,7 @@
       "explanation": "Management groups organize subscriptions into a hierarchy and let you apply governance such as Azure Policy at scale.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -751,7 +751,7 @@
       "explanation": "Azure Migrate is a hub of tools for discovering, assessing, and migrating on-premises servers, databases, and apps to Azure.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -768,7 +768,7 @@
       "explanation": "Microsoft Entra ID is the cloud-based identity and directory service that authenticates users and manages access to resources.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -785,7 +785,7 @@
       "explanation": "Tags are name-value pairs attached to Azure resources to organize them and track costs, for example by department or environment.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -802,7 +802,7 @@
       "explanation": "A private endpoint gives a service a private IP inside a virtual network so traffic stays private and does not use the public internet.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -819,7 +819,7 @@
       "explanation": "An Azure region is a geographic area containing one or more datacenters connected by a low-latency network.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -836,7 +836,7 @@
       "explanation": "Azure Container Instances runs a container without managing VMs or an orchestrator, making it the simplest container option.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -853,7 +853,7 @@
       "explanation": "Single sign-on (SSO) lets a user sign in once and access multiple applications without re-entering credentials.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -870,7 +870,7 @@
       "explanation": "Multifactor authentication (MFA) requires two or more independent factors, such as a password plus a phone prompt, to verify identity.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -887,7 +887,7 @@
       "explanation": "Locally redundant storage (LRS) keeps three copies of data within a single datacenter in the primary region.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -904,7 +904,7 @@
       "explanation": "Azure Data Box is a physical device used to transfer large amounts of data to Azure when network transfer is impractical or slow.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -921,7 +921,7 @@
       "explanation": "Azure Private Link enables private endpoints that bring a service into a virtual network over a private IP address.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -938,7 +938,7 @@
       "explanation": "Azure Virtual Machines provide IaaS with a full operating system that the customer configures and manages.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -955,7 +955,7 @@
       "explanation": "The hierarchy is management groups (broadest), then subscriptions, then resource groups, then resources (narrowest).",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -972,7 +972,7 @@
       "explanation": "Azure VPN Gateway creates an encrypted site-to-site tunnel between an on-premises network and Azure over the public internet.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -989,7 +989,7 @@
       "explanation": "Azure Container Apps is a managed platform for running containerized applications with built-in scaling.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1006,7 +1006,7 @@
       "explanation": "Azure Files provides fully managed file shares that can be mounted over SMB or NFS.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1023,7 +1023,7 @@
       "explanation": "Availability sets distribute VMs across fault domains and update domains to protect against hardware failure and planned maintenance.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1040,7 +1040,7 @@
       "explanation": "Automatically adding and removing instances to match load is scalability, one of the key benefits of cloud services.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1057,7 +1057,7 @@
       "explanation": "Microsoft Entra ID provides cloud identity and directory services, including authentication and access management.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1074,7 +1074,7 @@
       "explanation": "Azure DNS provides name resolution for Azure resources using the domain name system.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1091,7 +1091,7 @@
       "explanation": "Azure Files provides fully managed file shares accessible by multiple virtual machines over SMB or NFS.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1108,7 +1108,7 @@
       "explanation": "A management group can contain subscriptions and apply governance such as Azure Policy across all of them.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1125,7 +1125,7 @@
       "explanation": "Azure App Service hosts web apps as a PaaS offering, so the customer does not manage the underlying servers.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1142,7 +1142,7 @@
       "explanation": "Scaling resources up during peak hours and down afterward is scalability, a core cloud benefit.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1159,7 +1159,7 @@
       "explanation": "Region pairs are two regions in the same geography used together for disaster recovery and to sequence updates.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1176,7 +1176,7 @@
       "explanation": "Azure Functions is a serverless compute service that runs code in response to events without managing servers.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1193,7 +1193,7 @@
       "explanation": "Containers are lightweight and portable, packaging an application with its dependencies while sharing the host operating system kernel.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1210,7 +1210,7 @@
       "explanation": "A public endpoint is reachable from the internet, while a private endpoint uses a private IP address inside a virtual network.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1227,7 +1227,7 @@
       "explanation": "Fault domains in an availability set place VMs on separate physical hardware so a single hardware failure does not take down all instances.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1244,7 +1244,7 @@
       "explanation": "Containers package an application and its dependencies into a portable image that runs consistently across environments.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1261,7 +1261,7 @@
       "explanation": "Subnets divide a virtual network into smaller address spaces to organize and isolate resources.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1278,7 +1278,7 @@
       "explanation": "Region pairs provide geographic redundancy across two regions in the same geography for disaster recovery.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1295,7 +1295,7 @@
       "explanation": "Deploying across multiple availability zones keeps a workload running when a single datacenter in the region fails.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1312,7 +1312,7 @@
       "explanation": "An availability set places virtual machines in separate update domains so planned maintenance does not reboot all instances at once.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1329,7 +1329,7 @@
       "explanation": "Azure Virtual Desktop delivers virtualized desktops and applications that users access remotely.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1346,7 +1346,7 @@
       "explanation": "Sovereign regions are physically and logically isolated Azure environments for customers with strict legal or compliance requirements, such as government agencies.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1363,7 +1363,7 @@
       "explanation": "Microsoft Entra Domain Services provides managed domain services such as domain join and group policy without self-managed controllers.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1380,7 +1380,7 @@
       "explanation": "External identities let you invite users outside your organization, such as partners and customers, to access your applications.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1397,7 +1397,7 @@
       "explanation": "AzCopy is a command-line tool for copying blobs and files to and from Azure storage accounts.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1414,7 +1414,7 @@
       "explanation": "Azure File Sync synchronizes on-premises file servers with Azure Files so the same files are available in both locations.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1431,7 +1431,7 @@
       "explanation": "Azure Storage Explorer is a desktop application for managing Azure storage accounts, blobs, files, and queues graphically.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1448,7 +1448,7 @@
       "explanation": "The Azure pricing calculator estimates the cost of Azure resources before deployment based on selected services and configurations.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1465,7 +1465,7 @@
       "explanation": "Tags are name-value pairs applied to resources to organize them and track attributes such as cost center or environment.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1482,7 +1482,7 @@
       "explanation": "Resource locks prevent accidental deletion or modification of resources by applying a read-only or delete lock.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1499,7 +1499,7 @@
       "explanation": "Azure Policy enforces organizational rules and standards for resources, such as allowed regions and virtual machine sizes.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1516,7 +1516,7 @@
       "explanation": "Azure Advisor provides personalized recommendations across reliability, security, cost, operational excellence, and performance.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1533,7 +1533,7 @@
       "explanation": "Azure Cloud Shell is a browser-based command-line environment with Azure CLI and Azure PowerShell for managing resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1550,7 +1550,7 @@
       "explanation": "Azure Resource Manager (ARM) is the deployment and management service for Azure, handling resource creation, updates, and deletion.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1567,7 +1567,7 @@
       "explanation": "An ARM template is a declarative JSON file that defines the Azure resources and configuration to deploy.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1584,7 +1584,7 @@
       "explanation": "Azure Monitor Application Insights monitors live application performance, failures, and usage telemetry.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1601,7 +1601,7 @@
       "explanation": "Azure Policy evaluates resources against defined rules and reports compliance, helping enforce standards at scale.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1618,7 +1618,7 @@
       "explanation": "Azure Arc extends Azure management and governance to resources running on-premises or in other clouds.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1635,7 +1635,7 @@
       "explanation": "Microsoft Cost Management provides cost analysis, budgets, and recommendations to monitor and control cloud spending.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1652,7 +1652,7 @@
       "explanation": "Azure Monitor alerts notify you when a monitored metric or log condition is met.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1669,7 +1669,7 @@
       "explanation": "Infrastructure as code (IaC) defines and deploys infrastructure using declarative files such as ARM templates rather than manual steps.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1686,7 +1686,7 @@
       "explanation": "Azure Advisor provides cost recommendations, including suggestions for reducing wasted spend.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1703,7 +1703,7 @@
       "explanation": "Azure Service Health reports service issues, planned maintenance, and health advisories affecting your resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1720,7 +1720,7 @@
       "explanation": "Azure role-based access control (RBAC) grants permissions to resources using built-in or custom roles such as Owner, Contributor, and Reader.",
       "domain": "Azure Architecture and Services",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1737,7 +1737,7 @@
       "explanation": "Azure Monitor collects and analyzes metrics and logs from Azure and on-premises resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1754,7 +1754,7 @@
       "explanation": "Azure Policy enforces rules, resource locks prevent unwanted changes, and tags organize resources; together they enforce governance.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1771,7 +1771,7 @@
       "explanation": "ARM templates provide repeatable, consistent, and declarative deployments of Azure resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1788,7 +1788,7 @@
       "explanation": "Log Analytics is a tool in Azure Monitor for querying and analyzing collected log data.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1805,7 +1805,7 @@
       "explanation": "Microsoft Purview provides data governance, protection, and management across on-premises and cloud environments.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1822,7 +1822,7 @@
       "explanation": "Microsoft Defender for Cloud provides cloud security posture management and workload protection across Azure and hybrid environments.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1839,7 +1839,7 @@
       "explanation": "Azure Cloud Shell provides Azure CLI and Azure PowerShell for managing Azure resources from a browser.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1856,7 +1856,7 @@
       "explanation": "Azure Resource Health, part of Azure Service Health, reports the health of an individual resource.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1873,7 +1873,7 @@
       "explanation": "ARM templates are declarative JSON files that describe Azure resources and their configuration.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1890,7 +1890,7 @@
       "explanation": "Azure Monitor alerts send notifications or trigger actions when a metric or log threshold is crossed.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1907,7 +1907,7 @@
       "explanation": "Azure Advisor groups recommendations into categories including reliability, security, cost, operational excellence, and performance.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1924,7 +1924,7 @@
       "explanation": "A read-only lock prevents both deletion and modification; a delete lock prevents only deletion.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1941,7 +1941,7 @@
       "explanation": "Cost analysis in Microsoft Cost Management lets you view and break down spending by resource, service, or tag.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1958,7 +1958,7 @@
       "explanation": "Azure Policy can enforce a rule that storage accounts deny public blob access and report non-compliance.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1975,7 +1975,7 @@
       "explanation": "Azure Policy can deny the creation of non-compliant resources or report them as non-compliant.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -1992,7 +1992,7 @@
       "explanation": "Azure role-based access control (RBAC) follows least privilege: users receive only the roles and permissions they need.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2009,7 +2009,7 @@
       "explanation": "The Deny effect in Azure Policy blocks creation or modification of non-compliant resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2026,7 +2026,7 @@
       "explanation": "Azure Service Health reports service issues and regional outages affecting Azure services and your resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2043,7 +2043,7 @@
       "explanation": "An initiative groups related policy definitions so they can be assigned and managed together.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2060,7 +2060,7 @@
       "explanation": "Budgets in Microsoft Cost Management let you set spending limits and receive alerts when spending approaches them.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2077,7 +2077,7 @@
       "explanation": "A policy assignment applies a policy definition to a scope such as a management group, subscription, or resource group.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2094,7 +2094,7 @@
       "explanation": "Infrastructure as code (IaC) defines infrastructure in versioned code files for consistent, repeatable deployment.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2111,7 +2111,7 @@
       "explanation": "Azure Advisor cost recommendations suggest resizing or shutting down underused resources to reduce spend.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2128,7 +2128,7 @@
       "explanation": "Log Analytics stores and queries log data collected by Azure Monitor.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2145,7 +2145,7 @@
       "explanation": "Azure Monitor provides a unified view of metrics and logs across Azure resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2162,7 +2162,7 @@
       "explanation": "Azure Monitor collects metrics and logs from Azure resources for analysis, visualization, and alerting.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2179,7 +2179,7 @@
       "explanation": "Contributor can create and manage resources but cannot grant access; granting access requires Owner or User Access Administrator.",
       "domain": "Azure Architecture and Services",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2196,7 +2196,7 @@
       "explanation": "The Audit effect reports non-compliant resources without blocking them, unlike Deny which blocks creation.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2213,7 +2213,7 @@
       "explanation": "Azure Resource Health reports whether an individual resource is available and healthy.",
       "domain": "Azure Management and Governance",
       "difficulty": "hard",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2230,7 +2230,7 @@
       "explanation": "Azure Hybrid Benefit lets you use existing on-premises licenses to reduce the cost of eligible Azure workloads.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2247,7 +2247,7 @@
       "explanation": "Microsoft Cost Management helps monitor spending, set budgets, and alert when costs exceed thresholds.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2264,7 +2264,7 @@
       "explanation": "Microsoft Purview discovers, classifies, and governs data across an organization's on-premises and cloud estate.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2281,7 +2281,7 @@
       "explanation": "Sovereign regions are isolated Azure environments for customers with strict legal or compliance requirements.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2298,7 +2298,7 @@
       "explanation": "Azure Arc extends Azure management and governance, including Azure Policy, to on-premises and multi-cloud resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2315,7 +2315,7 @@
       "explanation": "Azure Arc provides unified management and governance across on-premises, multi-cloud, and edge resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2332,7 +2332,7 @@
       "explanation": "Cloud computing delivers computing services such as servers, storage, and databases over the internet on demand.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2349,7 +2349,7 @@
       "explanation": "Even with SaaS the customer remains responsible for its data, endpoints, and account access management.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2366,7 +2366,7 @@
       "explanation": "A private cloud dedicates hardware to a single organization, giving it full control in its own datacenter.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2383,7 +2383,7 @@
       "explanation": "The consumption-based model charges for actual resource use with no up-front purchase, unlike capital expenditure.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2400,7 +2400,7 @@
       "explanation": "Security is a benefit of cloud services, delivered through controls that protect data, applications, and infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2417,7 +2417,7 @@
       "explanation": "High availability keeps a workload available during failures by using redundancy across multiple locations.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2434,7 +2434,7 @@
       "explanation": "Predictability means both performance and cost can be anticipated, supported by autoscaling and cost-tracking tools.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2451,7 +2451,7 @@
       "explanation": "Governance lets an organization apply policies and controls consistently across cloud resources.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2468,7 +2468,7 @@
       "explanation": "With IaaS the customer manages the operating system and applications, while the provider manages the physical infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2485,7 +2485,7 @@
       "explanation": "Microsoft 365 is software as a service (SaaS): the provider fully manages the applications and infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2502,7 +2502,7 @@
       "explanation": "PaaS provides a managed platform (runtime, middleware, tools) so developers do not manage the underlying infrastructure.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2519,7 +2519,7 @@
       "explanation": "Serverless runs code on demand and bills for actual execution, with the provider managing the servers.",
       "domain": "Cloud Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2536,7 +2536,7 @@
       "explanation": "The Azure portal is the graphical web interface for creating and managing Azure resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2553,7 +2553,7 @@
       "explanation": "A resource lock (read-only or delete) prevents accidental deletion or modification of a resource such as a storage account.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2570,7 +2570,7 @@
       "explanation": "The archive tier has the lowest storage cost for rarely accessed data that can tolerate retrieval latency of hours.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2587,7 +2587,7 @@
       "explanation": "defense-in-depth layers multiple independent security controls so that one failing layer does not compromise the whole system.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     },
@@ -2604,7 +2604,7 @@
       "explanation": "Structured data has a fixed schema and is organized into rows and columns, as in a relational database or spreadsheet.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2621,7 +2621,7 @@
       "explanation": "JSON is semi-structured because it has some organization (key-value pairs) but no fixed relational schema. Images and audio are unstructured.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2638,7 +2638,7 @@
       "explanation": "Unstructured data such as images, video, audio, and free-form text has no fixed schema.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2655,7 +2655,7 @@
       "explanation": "Parquet is a columnar format that compresses and stores data by column, which makes it efficient for analytical queries.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2672,7 +2672,7 @@
       "explanation": "CSV (comma-separated values) stores tabular data as plain text with values separated by commas.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2689,7 +2689,7 @@
       "explanation": "A database is an organized collection of data that is stored and accessed electronically.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2706,7 +2706,7 @@
       "explanation": "Azure SQL Database is a relational PaaS service suited to catalog and order records that need relational queries and consistency.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2723,7 +2723,7 @@
       "explanation": "Transactional workloads (OLTP) process many small, fast point operations on current data, such as order entry.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2740,7 +2740,7 @@
       "explanation": "Analytical workloads (OLAP) perform large reads and aggregations over historical data for reporting and analysis.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2757,7 +2757,7 @@
       "explanation": "A database administrator manages the availability, security, backups, and performance of databases.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2774,7 +2774,7 @@
       "explanation": "A data engineer builds and maintains data pipelines that ingest, transform, and move data between systems.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2791,7 +2791,7 @@
       "explanation": "A data analyst explores data, builds reports, and visualizes findings to answer business questions.",
       "domain": "Core Data Concepts",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2808,7 +2808,7 @@
       "explanation": "Relational data is organized into tables with rows and columns and uses keys to define relationships between tables.",
       "domain": "Relational Data on Azure",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2825,7 +2825,7 @@
       "explanation": "Normalization organizes data into related tables to reduce redundancy and improve data integrity.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2842,7 +2842,7 @@
       "explanation": "A primary key is the column or columns that uniquely identify each row in a table.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2859,7 +2859,7 @@
       "explanation": "SELECT retrieves rows from a table. INSERT, UPDATE, and DELETE modify data.",
       "domain": "Relational Data on Azure",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2876,7 +2876,7 @@
       "explanation": "INSERT adds a new row to a table.",
       "domain": "Relational Data on Azure",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2893,7 +2893,7 @@
       "explanation": "A view is a virtual table defined by a saved query; it does not store data itself.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2910,7 +2910,7 @@
       "explanation": "Azure SQL Database is a fully managed PaaS relational database with automatic updates, backups, and high availability.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2927,7 +2927,7 @@
       "explanation": "Azure SQL Managed Instance is a PaaS offering with near-complete SQL Server compatibility and features such as cross-database queries.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2944,7 +2944,7 @@
       "explanation": "SQL Server on Azure Virtual Machines is an IaaS option that gives full control over the OS and SQL Server installation.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2961,7 +2961,7 @@
       "explanation": "Azure Database for PostgreSQL, Azure Database for MySQL, and Azure Database for MariaDB are managed PaaS open-source relational databases.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2978,7 +2978,7 @@
       "explanation": "Azure Blob Storage is object storage for unstructured data such as images, videos, and backups.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -2995,7 +2995,7 @@
       "explanation": "Block blobs store text and binary data such as documents and media. Append blobs suit logs, and page blobs suit virtual disks.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3012,7 +3012,7 @@
       "explanation": "Azure Files provides fully managed file shares mountable over SMB or NFS.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3029,7 +3029,7 @@
       "explanation": "Azure Table Storage is a NoSQL key-value store for semi-structured data with fast, inexpensive lookups.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3046,7 +3046,7 @@
       "explanation": "Azure Cosmos DB is a globally distributed, multi-model NoSQL database designed for low-latency access at scale.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3063,7 +3063,7 @@
       "explanation": "Azure Cosmos DB suits globally distributed applications that need low-latency access to data across regions.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3080,7 +3080,7 @@
       "explanation": "The Core (SQL) API stores documents and queries them with SQL-like syntax.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3097,7 +3097,7 @@
       "explanation": "The Gremlin API stores graph data (entities and relationships) and supports graph traversals.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3114,7 +3114,7 @@
       "explanation": "Data ingestion loads data from source systems into a storage or processing system, either in batches or as a stream.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3131,7 +3131,7 @@
       "explanation": "ETL (extract, transform, load) transforms data after extraction and before loading it into the target store.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3148,7 +3148,7 @@
       "explanation": "A data warehouse stores structured, relational data optimized for fast aggregations and reporting.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3165,7 +3165,7 @@
       "explanation": "A data lake stores large volumes of raw, structured and unstructured data in its native format at low cost.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3182,7 +3182,7 @@
       "explanation": "Azure Databricks is an Apache Spark-based analytics platform for large-scale data processing and machine learning.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3199,7 +3199,7 @@
       "explanation": "Microsoft Fabric is a unified SaaS analytics platform that combines data engineering, warehousing, real-time analytics, and Power BI.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3216,7 +3216,7 @@
       "explanation": "Streaming data is processed as events arrive, enabling near real-time latency, unlike batch processing on a schedule.",
       "domain": "Analytics Workload",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3233,7 +3233,7 @@
       "explanation": "Batch data is processed in large volumes on a schedule, with latency of minutes to hours rather than seconds.",
       "domain": "Analytics Workload",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3250,7 +3250,7 @@
       "explanation": "Azure Stream Analytics processes and queries streaming data from sources such as Azure Event Hubs in real time.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3267,7 +3267,7 @@
       "explanation": "Azure Data Explorer provides fast, interactive analysis of large volumes of log and telemetry data.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3284,7 +3284,7 @@
       "explanation": "Microsoft Power BI is Microsoft's business intelligence service for creating reports, dashboards, and visualizations.",
       "domain": "Analytics Workload",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3301,7 +3301,7 @@
       "explanation": "Power BI connects to many data sources and transforms the data during import for analysis.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3318,7 +3318,7 @@
       "explanation": "A Power BI data model defines relationships between tables so fields can be combined across them in reports.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3335,7 +3335,7 @@
       "explanation": "DAX (Data Analysis Expressions) defines calculated measures and columns in Power BI data models.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3352,7 +3352,7 @@
       "explanation": "A map visualization displays geographic data using location fields such as country or latitude and longitude.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3369,7 +3369,7 @@
       "explanation": "A slicer is an interactive filter that lets a report viewer select values such as year or region.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3386,7 +3386,7 @@
       "explanation": "Avro is a compact, row-based binary format commonly used for data serialization.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3403,7 +3403,7 @@
       "explanation": "Semi-structured data has a flexible or self-describing schema (for example JSON), unlike the fixed schema of structured data.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3420,7 +3420,7 @@
       "explanation": "A document store keeps records as documents (often JSON) with no fixed relational schema.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3437,7 +3437,7 @@
       "explanation": "Transactional workloads rely on ACID transactions over current data, whereas analytical workloads aggregate historical data.",
       "domain": "Core Data Concepts",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3454,7 +3454,7 @@
       "explanation": "UPDATE modifies values in existing rows; INSERT adds rows, SELECT reads rows, and CREATE defines objects.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3471,7 +3471,7 @@
       "explanation": "An index speeds up lookups on a column, at the cost of extra storage and write overhead.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3488,7 +3488,7 @@
       "explanation": "A foreign key references the primary key of another table, defining a relationship between tables.",
       "domain": "Relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3505,7 +3505,7 @@
       "explanation": "The MongoDB API in Azure Cosmos DB lets applications use MongoDB drivers and query patterns.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3522,7 +3522,7 @@
       "explanation": "The Cassandra API in Azure Cosmos DB supports Cassandra Query Language and column-family data.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3539,7 +3539,7 @@
       "explanation": "Append blobs are optimized for appending data such as log entries; block blobs suit general binary/text, and page blobs suit disks.",
       "domain": "Non-relational Data on Azure",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3556,7 +3556,7 @@
       "explanation": "Azure Data Factory orchestrates and schedules data movement and transformation pipelines for ingestion and processing.",
       "domain": "Analytics Workload",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "dp-900"
     },
@@ -3573,7 +3573,7 @@
       "explanation": "Fairness requires AI solutions to avoid bias and treat all groups equitably.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3590,7 +3590,7 @@
       "explanation": "Reliability and safety require an AI solution to behave safely and operate correctly, including under unexpected conditions.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3607,7 +3607,7 @@
       "explanation": "Privacy and security focus on protecting user data and securing the AI system.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3624,7 +3624,7 @@
       "explanation": "Inclusiveness requires AI solutions to empower and be accessible to people of all abilities.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3641,7 +3641,7 @@
       "explanation": "Transparency means users can understand how the AI system makes decisions and what data it uses.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3658,7 +3658,7 @@
       "explanation": "Accountability holds people responsible for the behavior and outcomes of an AI system.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3675,7 +3675,7 @@
       "explanation": "Generative AI models produce new content by predicting the most likely next token based on patterns learned from training data.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3692,7 +3692,7 @@
       "explanation": "The system prompt provides instructions and context that guide how the model behaves, while the user prompt is the user's request.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3709,7 +3709,7 @@
       "explanation": "Temperature controls randomness: lower values produce more deterministic output, higher values produce more varied output.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3726,7 +3726,7 @@
       "explanation": "The max tokens parameter limits the number of tokens the model can generate in its response.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3743,7 +3743,7 @@
       "explanation": "Choosing how and where to serve a model (real-time endpoint versus batch) is a model deployment option.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3760,7 +3760,7 @@
       "explanation": "Generative AI creates new content such as text, images, or code from a prompt.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3777,7 +3777,7 @@
       "explanation": "Agentic AI describes systems (agents) that act autonomously to achieve goals, often by calling tools.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3794,7 +3794,7 @@
       "explanation": "Entity detection (named entity recognition) identifies and categorizes named items such as people, places, organizations, and dates.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3811,7 +3811,7 @@
       "explanation": "Sentiment analysis determines the tone of text as positive, negative, or neutral.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3828,7 +3828,7 @@
       "explanation": "Keyword extraction identifies the most important terms and phrases in a document.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3845,7 +3845,7 @@
       "explanation": "Summarization condenses a long document into a shorter version while keeping the main points.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3862,7 +3862,7 @@
       "explanation": "Speech recognition (speech-to-text) converts spoken audio into text.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3879,7 +3879,7 @@
       "explanation": "Speech synthesis (text-to-speech) converts text into spoken audio.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3896,7 +3896,7 @@
       "explanation": "Object detection identifies and locates objects within an image, usually with bounding boxes.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3913,7 +3913,7 @@
       "explanation": "Image-generation models create new images from a text description.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3930,7 +3930,7 @@
       "explanation": "Optical character recognition extracts text information from images such as scanned documents.",
       "domain": "AI Concepts and Capabilities",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3947,7 +3947,7 @@
       "explanation": "Microsoft Foundry is a platform for building, testing, and deploying AI solutions, including generative AI apps and agents.",
       "domain": "Microsoft Foundry",
       "difficulty": "easy",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3964,7 +3964,7 @@
       "explanation": "The Foundry portal is the web interface for deploying models and interacting with them.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3981,7 +3981,7 @@
       "explanation": "The Foundry SDK lets developers build lightweight client applications that call models deployed in Microsoft Foundry.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -3998,7 +3998,7 @@
       "explanation": "A single-agent solution is an AI agent that acts to accomplish tasks, often by calling tools, built and tested in Microsoft Foundry.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4015,7 +4015,7 @@
       "explanation": "A multimodal model processes multiple input types, such as text, images, and audio, in a single model.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4032,7 +4032,7 @@
       "explanation": "The system prompt sets the model's role, tone, and rules, guiding how it responds to the user prompt.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4049,7 +4049,7 @@
       "explanation": "Lowering the temperature reduces randomness, making responses more consistent and predictable.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4066,7 +4066,7 @@
       "explanation": "After deploying a model, you can interact with it through the chat interface in the Foundry portal to test its responses.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4083,7 +4083,7 @@
       "explanation": "Azure Speech in Foundry Tools provides speech recognition and speech synthesis capabilities.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4100,7 +4100,7 @@
       "explanation": "Azure Content Understanding in Foundry Tools extracts information from documents, forms, images, audio, and video.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4117,7 +4117,7 @@
       "explanation": "Content Understanding extracts structured information from unstructured content such as documents, images, audio, and video.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4134,7 +4134,7 @@
       "explanation": "Azure Speech in Foundry Tools provides speech recognition and speech synthesis for converting audio to text and text to speech.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4151,7 +4151,7 @@
       "explanation": "Generative image models in Microsoft Foundry create new visual outputs from text descriptions.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4168,7 +4168,7 @@
       "explanation": "Microsoft Foundry supports building lightweight applications that perform text analysis such as entity detection and sentiment analysis.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4185,7 +4185,7 @@
       "explanation": "A multimodal model can interpret visual input in prompts, such as reasoning about an uploaded image alongside text.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4202,7 +4202,7 @@
       "explanation": "The Foundry SDK connects a lightweight client application to an agent or model deployed in Microsoft Foundry.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4219,7 +4219,7 @@
       "explanation": "The user prompt is the user's request typed at runtime; the system prompt sets the model's role and rules.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4236,7 +4236,7 @@
       "explanation": "top_p (nucleus sampling) limits sampling to the smallest set of most likely tokens whose combined probability reaches the threshold.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4253,7 +4253,7 @@
       "explanation": "Choosing how to serve a model, such as a real-time endpoint versus batch scoring, is a model deployment option.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4270,7 +4270,7 @@
       "explanation": "A single-agent solution is created and tested in the Foundry portal before a client application connects to it.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4287,7 +4287,7 @@
       "explanation": "Text analysis in Foundry includes keyword extraction for finding the main terms in text such as customer feedback.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4304,7 +4304,7 @@
       "explanation": "Responding to spoken prompts uses a deployed multimodal model that processes both audio and text.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4321,7 +4321,7 @@
       "explanation": "Vision capabilities in Foundry include object detection for locating objects within images.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4338,7 +4338,7 @@
       "explanation": "Azure Content Understanding in Foundry Tools extracts structured information from documents and forms.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4355,7 +4355,7 @@
       "explanation": "Content Understanding extracts information from audio and video, including spoken words and visual text.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4372,7 +4372,7 @@
       "explanation": "The Foundry portal is the web interface for deploying and interacting with models without writing code.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     },
@@ -4389,7 +4389,7 @@
       "explanation": "Creating effective prompts (clear, specific instructions and context) improves a generative model's output.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
-      "source": "Original AI-fleet-authored content with publisher review (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
+      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
       "rightsBasis": "original-human-ai-assisted",
       "courseId": "ai-901"
     }

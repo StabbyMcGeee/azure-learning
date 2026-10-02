@@ -368,6 +368,18 @@ void main() {
   });
 
   group('Bundled asset loading', () {
+    test('bundled production pack loads into the store', () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
+      final store = FakeLocalStore();
+      final success =
+          await ContentPackLoader.loadBundledPackIfPresent(store);
+      expect(success, isTrue);
+      final questions = await store.getQuestions();
+      expect(questions, isNotEmpty);
+      expect(questions.map((q) => q.courseId).toSet(),
+          containsAll(['az-900', 'dp-900', 'ai-901']));
+    });
+
     test('loadBundledPackIfPresent returns false for a missing asset path',
         () async {
       final db = await openTestDatabase();

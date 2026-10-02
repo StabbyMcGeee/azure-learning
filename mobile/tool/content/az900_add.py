@@ -6,7 +6,7 @@ management items.
 """
 
 SRC = (
-    "Original AI-fleet-authored content with publisher review (Dimitri Meier); "
+    "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); "
     "facts from Microsoft Learn AZ-900 study guide (2026-07-20) and docs, "
     "retrieved 2026-10-02"
 )

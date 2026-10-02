@@ -6,7 +6,7 @@ No legacy wording or recalled exam item was used.
 """
 
 SRC = (
-    "Original AI-fleet-authored content with publisher review (Dimitri Meier); "
+    "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); "
     "facts from Microsoft Learn DP-900 study guide (2026-07-21) and docs, "
     "retrieved 2026-10-02"
 )

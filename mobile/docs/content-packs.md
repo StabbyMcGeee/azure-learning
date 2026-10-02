@@ -132,14 +132,6 @@ one already recorded. Equal and higher versions are accepted, making repeat
 loads and upgrades safe. The ledger entry is written inside the same transaction
 as the question rows, so a failed write never leaves a stale ledger behind.
 
-## Per-pack withdrawal
-
-A pack can be withdrawn by `packId`. This deletes every question row that
-carries that `packId` and removes the ledger entry for the pack. Attempts and
-sessions are not touched, and questions from other packs remain in the bank.
-After withdrawal, the withdrawn pack can be re-applied at any version because its
-ledger entry has been cleared.
-
 ## Atomic application and repeat safety
 
 Packs are applied inside a single SQLite transaction. If any part of the write
@@ -189,10 +181,11 @@ automatically when an older database is opened at version 3.
 3. Build a JSON file matching the `azpack-v2` schema above and run the
    terminology lint over the content (the validator does this automatically).
 4. Validate the file locally:
-   - Use `ContentPackLoader.dryRun(jsonString)` in a Dart script or test.
+   - Run the mobile tests, which exercise the validator with synthetic fixtures,
+     or run `tool/build_content_pack.py` to regenerate and validate the
+     production pack.
    - Run `dart run tool/validate_evidence_register.dart` to validate the
      private evidence register (`data/evidence-register.json`).
-   - Or run the mobile tests, which exercise the validator with synthetic fixtures.
 5. Place the validated file at `assets/content-pack.json` and register it in
    `pubspec.yaml`. Keep the private evidence register out of `assets/`.
 6. Update `packVersion` when you revise content so the app can detect and

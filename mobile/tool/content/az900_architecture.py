@@ -7,7 +7,7 @@ Storage Explorer). Legacy wording was not read or reused.
 """
 
 SRC = (
-    "Original AI-fleet-authored content with publisher review (Dimitri Meier); "
+    "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); "
     "facts from Microsoft Learn, retrieved 2026-10-02"
 )
 BASIS = "original-human-ai-assisted"

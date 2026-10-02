@@ -32,10 +32,19 @@ class _CourseSelectorState extends State<CourseSelector> {
   Future<void> _load() async {
     final courses = await _store.getCourses();
     final selected = await _store.getSelectedCourseId();
+    final effective =
+        (selected != null && courses.contains(selected)) ? selected : null;
+    if (selected != effective) {
+      // The persisted selection no longer exists in the bank. Clear it so
+      // the dropdown's displayed value and the stored value agree, and so
+      // every screen falls back to "all courses" rather than filtering by a
+      // vanished course id.
+      await _store.setSelectedCourseId(null);
+    }
     if (mounted) {
       setState(() {
         _courses = courses;
-        _selected = courses.contains(selected) ? selected : null;
+        _selected = effective;
         _loaded = true;
       });
     }

@@ -80,6 +80,13 @@ class _StudyScreenState extends State<StudyScreen> {
               ),
               const SizedBox(height: 8),
               Text('$_questionCount questions available offline'),
+              const SizedBox(height: 24),
+              FilledButton.icon(
+                icon: const Icon(Icons.edit_note),
+                label: const Text('Start practicing'),
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRouter.practice),
+              ),
             ],
           ),
         ),

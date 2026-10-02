@@ -19,6 +19,10 @@ python3 tool/build_content_pack.py
   in-house or freelance human authors.
 - This is the accepted weaker-ownership route recorded in `data/captain.md`.
 
+**Review status: PENDING.** The captain's substantive human review has **not**
+yet been performed. It must happen before paid sale. The per-item `source`
+field records the review as pending, not as done.
+
 **Rights basis per item:** `original-human-ai-assisted` (the human publisher
 makes the substantive expressive choices through review; the AI fleet drafts).
 This is one of the permitted values in the azlegal-db-v1 evidence schema
