@@ -67,6 +67,11 @@ class DashboardScreen extends StatelessWidget {
                       label: 'Progress',
                       onTap: () => Navigator.pushNamed(context, AppRouter.progress),
                     ),
+                    _DashboardTile(
+                      icon: Icons.info,
+                      label: 'About \u0026 Legal',
+                      onTap: () => Navigator.pushNamed(context, AppRouter.aboutLegal),
+                    ),
                   ],
                 ),
               ),

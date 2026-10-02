@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/about_legal_screen.dart';
 import '../screens/dashboard_screen.dart';
 import '../screens/exam_result_screen.dart';
 import '../screens/exam_screen.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const String examResult = '/exam/result';
   static const String review = '/review';
   static const String progress = '/progress';
+  static const String aboutLegal = '/about-legal';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final name = settings.name;
@@ -46,6 +48,9 @@ class AppRouter {
     }
     if (name == progress) {
       return MaterialPageRoute(builder: (_) => const ProgressScreen());
+    }
+    if (name == aboutLegal) {
+      return MaterialPageRoute(builder: (_) => const AboutLegalScreen());
     }
     return null;
   }

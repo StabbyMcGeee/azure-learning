@@ -1,2 +1,6 @@
 # Worktree pool directory created by the treehouse tooling, not project content.
 .treehouse/
+
+# Python test caches
+__pycache__/
+.pytest_cache/

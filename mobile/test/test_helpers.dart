@@ -49,6 +49,7 @@ class FakeLocalStore extends LocalStore {
   final List<Attempt> _attempts = [];
   final List<StudySession> _sessions = [];
   final Map<String, int> _packVersions = {};
+  final Map<String, String?> _settings = {};
   String? _selectedCourseId;
 
   FakeLocalStore([List<Question>? questions]) {
@@ -62,6 +63,16 @@ class FakeLocalStore extends LocalStore {
       throw const PackVersionTooLowException();
     }
     _packVersions[pack.packId] = pack.packVersion;
+    if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
+      _settings['contentLastVerifiedAt'] = pack.lastVerifiedAt;
+      final courseIds = pack.questions
+          .map((q) => q.courseId)
+          .where((c) => c.isNotEmpty)
+          .toSet();
+      for (final courseId in courseIds) {
+        _settings['contentLastVerifiedAt_$courseId'] = pack.lastVerifiedAt;
+      }
+    }
     for (final q in pack.questions) {
       _questions.removeWhere((existing) => existing.id == q.id);
       _questions.add(q.toQuestion(packId: pack.packId));
@@ -219,11 +230,20 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
+  Future<String?> getContentLastVerifiedAt({String? courseId}) async {
+    final key = courseId == null
+        ? 'contentLastVerifiedAt'
+        : 'contentLastVerifiedAt_$courseId';
+    return _settings[key];
+  }
+
+  @override
   Future<void> clearAllData() async {
     _questions.clear();
     _attempts.clear();
     _sessions.clear();
     _packVersions.clear();
+    _settings.clear();
     _selectedCourseId = null;
   }
 }

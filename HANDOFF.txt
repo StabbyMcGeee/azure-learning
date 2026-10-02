@@ -11,7 +11,7 @@ This file is a short current-state pointer. Use `.agents/skills/azure-learning-h
 - Private repo: `https://github.com/StabbyMcGeee/azure-learning`; local/remote `main` is `fe904bd`.
 - Flutter offline study/practice/exam/review/progress shell is implemented. `flutter analyze` and targeted tests passed. Android/iOS packaging and device tests have not run; this host lacks Android SDK/Java and a Mac/Xcode.
 - `fm/azpack-v1` at `e61850f` adds versioned content-pack loading, per-question provenance, and SQLite migration. All 40 tests and `flutter analyze` passed with synthetic fixtures only. Production content is empty. The captain approved landing exactly `e61850f` locally, but it has not been merged.
-- Current loader is single-course; multi-course catalog/selection and course-scoped progress are needed.
+- `fm/azcontent-gate-v1` adds enumerated `rightsBasis` validation, a private evidence-register validator, terminology lint, and an About \u0026 Legal screen. `flutter analyze` and all 89 mobile tests pass; 3 Python tests pass. Production content remains empty.
 
 ## Content and rights
 - The legacy 133-question desktop bank is not cleared for paid mobile use.

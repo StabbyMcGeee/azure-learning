@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../legal/rights_basis.dart';
+import '../legal/terminology_lint.dart';
 import 'question.dart';
 
 /// Offline content pack format version identifier.
@@ -27,6 +29,9 @@ class ContentPack {
   final String title;
   final String source;
   final String rightsBasis;
+  final String? licenseRef;
+  final String? attributionText;
+  final String? lastVerifiedAt;
   final List<PackQuestion> questions;
 
   const ContentPack({
@@ -36,6 +41,9 @@ class ContentPack {
     required this.title,
     required this.source,
     required this.rightsBasis,
+    this.licenseRef,
+    this.attributionText,
+    this.lastVerifiedAt,
     required this.questions,
   });
 
@@ -59,6 +67,9 @@ class ContentPack {
     final title = _requireString(json, 'title');
     final source = _requireString(json, 'source');
     final rightsBasis = _requireString(json, 'rightsBasis');
+    final licenseRef = json['licenseRef'] as String?;
+    final attributionText = json['attributionText'] as String?;
+    final lastVerifiedAt = json['lastVerifiedAt'] as String?;
 
     final rawQuestions = json['questions'];
     if (rawQuestions is! List<dynamic>) {
@@ -81,6 +92,9 @@ class ContentPack {
       title: title,
       source: source,
       rightsBasis: rightsBasis,
+      licenseRef: licenseRef,
+      attributionText: attributionText,
+      lastVerifiedAt: lastVerifiedAt,
       questions: questions,
     );
   }
@@ -113,6 +127,8 @@ class PackQuestion {
   final String difficulty;
   final String source;
   final String rightsBasis;
+  final String? licenseRef;
+  final String? attributionText;
   final String courseId;
 
   const PackQuestion({
@@ -125,6 +141,8 @@ class PackQuestion {
     required this.difficulty,
     required this.source,
     required this.rightsBasis,
+    this.licenseRef,
+    this.attributionText,
     required this.courseId,
   });
 
@@ -135,6 +153,8 @@ class PackQuestion {
     final difficulty = ContentPack._requireString(json, 'difficulty');
     final source = ContentPack._requireString(json, 'source');
     final rightsBasis = ContentPack._requireString(json, 'rightsBasis');
+    final licenseRef = json['licenseRef'] as String?;
+    final attributionText = json['attributionText'] as String?;
     final courseId = ContentPack._requireString(json, 'courseId');
 
     final rawOptions = json['options'];
@@ -165,6 +185,8 @@ class PackQuestion {
       difficulty: difficulty,
       source: source,
       rightsBasis: rightsBasis,
+      licenseRef: licenseRef,
+      attributionText: attributionText,
       courseId: courseId,
     );
   }
@@ -192,7 +214,16 @@ class PackQuestion {
 class ContentPackValidator {
   final ContentPack pack;
 
-  const ContentPackValidator(this.pack);
+  /// Whether to run the azlegal-db-v1 terminology lint over question content.
+  ///
+  /// Terminology checking is a build-time gate and is enabled by default. It
+  /// can be disabled for tests that exercise only structural validation.
+  final bool lintTerminology;
+
+  const ContentPackValidator(
+    this.pack, {
+    this.lintTerminology = true,
+  });
 
   List<String> validate() {
     final errors = <String>[];
@@ -222,6 +253,22 @@ class ContentPackValidator {
     }
     if (pack.rightsBasis.trim().isEmpty) {
       errors.add('Missing or empty pack-level rightsBasis');
+    } else {
+      errors.addAll(
+        RightsBasis.validate(
+          pack.rightsBasis,
+          licenseRef: pack.licenseRef,
+          attributionText: pack.attributionText,
+        ).map((e) => 'Pack-level: $e'),
+      );
+    }
+
+    if (pack.lastVerifiedAt != null &&
+        !_isIsoDate(pack.lastVerifiedAt!)) {
+      errors.add(
+        'Pack-level lastVerifiedAt "${pack.lastVerifiedAt}" is not a valid '
+        'ISO-8601 date',
+      );
     }
   }
 
@@ -273,11 +320,43 @@ class ContentPackValidator {
 
       if (q.rightsBasis.trim().isEmpty) {
         errors.add('$prefix: missing or empty rightsBasis');
+      } else {
+        errors.addAll(
+          RightsBasis.validate(
+            q.rightsBasis,
+            licenseRef: q.licenseRef,
+            attributionText: q.attributionText,
+          ).map((e) => '$prefix: $e'),
+        );
       }
 
       if (q.courseId.trim().isEmpty) {
         errors.add('$prefix: missing or empty courseId');
       }
+
+      if (lintTerminology) {
+        final linter = TerminologyLinter(
+          courseId: q.courseId,
+          itemId: q.id,
+        );
+        final violations = linter.lint(
+          text: q.text,
+          options: q.options,
+          explanation: q.explanation,
+        );
+        for (final v in violations) {
+          errors.add('$prefix: ${v.message}; expected: "${v.expected}"');
+        }
+      }
     }
+  }
+}
+
+bool _isIsoDate(String value) {
+  try {
+    DateTime.parse(value);
+    return true;
+  } on FormatException {
+    return false;
   }
 }

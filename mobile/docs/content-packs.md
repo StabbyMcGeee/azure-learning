@@ -32,7 +32,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
   "packVersion": 1,
   "title": "Example AZ-900 Study Pack",
   "source": "Original human-authored content",
-  "rightsBasis": "original",
+  "rightsBasis": "original-human",
+  "lastVerifiedAt": "2026-10-02",
   "questions": [
     {
       "id": "az-900-001",
@@ -48,7 +49,7 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
       "domain": "Cloud Concepts",
       "difficulty": "easy",
       "source": "Original human-authored content",
-      "rightsBasis": "original",
+      "rightsBasis": "original-human",
       "courseId": "az-900"
     }
   ]
@@ -57,15 +58,18 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 
 ### Top-level fields
 
-| Field            | Type   | Required | Description                                                          |
-|------------------|--------|----------|----------------------------------------------------------------------|
-| `formatVersion`  | string | yes      | Must be exactly `azpack-v2`.                                         |
-| `packId`         | string | yes      | Stable reverse-DNS identifier for this pack.                         |
-| `packVersion`    | int    | yes      | Monotonically increasing pack revision, `>= 1`.                      |
-| `title`          | string | yes      | Human-readable title.                                                |
-| `source`         | string | yes      | Where the pack content came from (e.g. author, licensee).            |
-| `rightsBasis`    | string | yes      | Legal basis for use (e.g. `original`, `licensed-xyz`, `public-domain`).|
-| `questions`      | array  | yes      | List of question objects.                                              |
+| Field              | Type   | Required | Description                                                          |
+|--------------------|--------|----------|----------------------------------------------------------------------|
+| `formatVersion`    | string | yes      | Must be exactly `azpack-v2`.                                         |
+| `packId`           | string | yes      | Stable reverse-DNS identifier for this pack.                           |
+| `packVersion`      | int    | yes      | Monotonically increasing pack revision, `>= 1`.                      |
+| `title`            | string | yes      | Human-readable title.                                                |
+| `source`           | string | yes      | Where the pack content came from (e.g. author, licensee).            |
+| `rightsBasis`      | enum   | yes      | One of `original-human`, `original-human-ai-assisted`, `licensed-cc-by-4.0`, `licensed-commercial`, `public-domain`. |
+| `licenseRef`       | string | cond     | Required when `rightsBasis` starts with `licensed-`.                  |
+| `attributionText`  | string | cond     | Required when `rightsBasis` is `licensed-cc-by-4.0`.                 |
+| `lastVerifiedAt`   | string | no       | ISO-8601 date shown in About \u0026 Legal as the content-last-verified date. |
+| `questions`        | array  | yes      | List of question objects.                                            |
 
 ### Per-question fields
 
@@ -79,7 +83,9 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 | `domain`              | string  | yes      | Domain or topic tag.                                                           |
 | `difficulty`          | string  | yes      | Difficulty label.                                                              |
 | `source`              | string  | yes      | Per-question source; can differ from pack-level source.                        |
-| `rightsBasis`         | string  | yes      | Per-question rights basis; can differ from pack-level rightsBasis.             |
+| `rightsBasis`         | enum    | yes      | Per-question rights basis; can differ from pack-level rightsBasis.             |
+| `licenseRef`          | string  | cond     | Required when the per-question `rightsBasis` starts with `licensed-`.          |
+| `attributionText`     | string  | cond     | Required when the per-question `rightsBasis` is `licensed-cc-by-4.0`.        |
 | `courseId`            | string  | yes      | Course identifier this question belongs to; supplied by the pack.              |
 
 The `courseId` is never hardcoded in the app. A learner can select any course
@@ -90,10 +96,17 @@ screens scope their content to that selection.
 
 Before any database write the parser/validator checks:
 
-- The JSON is well-formed.
-- `formatVersion` is exactly `azpack-v2`.
-- `packVersion` is an integer `>= 1`.
-- All required pack-level and per-question string fields are present and non-empty.
+- The `rightsBasis` value is checked against the azlegal-db-v1 permitted
+  values (`original-human`, `original-human-ai-assisted`, `licensed-cc-by-4.0`,
+  `licensed-commercial`, `public-domain`). Any other value rejects the pack.
+- `licensed-*` bases require a non-empty `licenseRef`; `licensed-cc-by-4.0`
+  also requires a non-empty `attributionText`.
+- A terminology lint runs over every question's text, options, and
+  explanation against the azlegal-db-v1 register. Retired product names,
+  bare ambiguous abbreviations such as `RBAC`, and unverified course-scoped
+  terms are reported with the expected wording, and the pack is rejected.
+- `lastVerifiedAt`, when present, must be a valid ISO-8601 date. It is stored
+  and displayed in About \u0026 Legal as the content-last-verified date.
 - Every question has at least two options.
 - `correctOptionIndex` is within the range of the options array.
 - All question IDs are unique within the pack.
@@ -164,12 +177,15 @@ automatically when an older database is opened at version 3.
 1. Produce or license original questions.
 2. Record, for every question, the source author/licensor, the rights basis,
    and a stable `courseId` supplied by the pack.
-3. Build a JSON file matching the `azpack-v2` schema above.
+3. Build a JSON file matching the `azpack-v2` schema above and run the
+   terminology lint over the content (the validator does this automatically).
 4. Validate the file locally:
    - Use `ContentPackLoader.dryRun(jsonString)` in a Dart script or test.
+   - Run `dart run tool/validate_evidence_register.dart` to validate the
+     private evidence register (`data/evidence-register.json`).
    - Or run the mobile tests, which exercise the validator with synthetic fixtures.
 5. Place the validated file at `assets/content-pack.json` and register it in
-   `pubspec.yaml`.
+   `pubspec.yaml`. Keep the private evidence register out of `assets/`.
 6. Update `packVersion` when you revise content so the app can detect and
    replace older rows.
 
