@@ -240,7 +240,7 @@ void main() {
       await store.applyContentPack(v2);
 
       expect(await store.getAppliedPackVersion('pack-a'), 2);
-      final questions = await store.getAllQuestions();
+      final questions = await store.getQuestions();
       expect(questions.map((q) => q.id), containsAll(['q-a1', 'q-a2']));
     });
 
@@ -254,7 +254,7 @@ void main() {
       await store.applyContentPack(pack);
       await store.applyContentPack(pack);
       expect(await store.getAppliedPackVersion('pack-a'), 1);
-      expect(await store.getAllQuestions(), hasLength(1));
+      expect(await store.getQuestions(), hasLength(1));
     });
 
     test('downgrade is rejected and leaves content unchanged', () async {
@@ -274,13 +274,13 @@ void main() {
       final successV2 =
           await ContentPackLoader.loadPackFromString(store, v2Json);
       expect(successV2, isTrue);
-      expect(await store.getAllQuestions(), hasLength(2));
+      expect(await store.getQuestions(), hasLength(2));
 
       final successV1 =
           await ContentPackLoader.loadPackFromString(store, v1Json);
       expect(successV1, isFalse);
       expect(await store.getAppliedPackVersion('pack-a'), 2);
-      expect(await store.getAllQuestions(), hasLength(2));
+      expect(await store.getQuestions(), hasLength(2));
     });
   });
 
@@ -339,12 +339,12 @@ void main() {
       await store.withdrawPack('pack-a');
 
       expect(await store.getAppliedPackVersion('pack-a'), isNull);
-      final remaining = await store.getAllQuestions();
+      final remaining = await store.getQuestions();
       expect(remaining.map((q) => q.id), ['q-b1']);
       expect(await store.getCourses(), ['sc-900']);
 
       // Learner history is intact.
-      expect(await store.getAllAttempts(), hasLength(2));
+      expect(await store.getAttempts(), hasLength(2));
       expect(await store.getSessions(), hasLength(1));
 
       // Re-applying the withdrawn pack at its original version succeeds now
@@ -363,7 +363,7 @@ void main() {
       ));
       await store.applyContentPack(pack);
       await store.withdrawPack('unknown');
-      expect(await store.getAllQuestions(), hasLength(1));
+      expect(await store.getQuestions(), hasLength(1));
       expect(await store.getAppliedPackVersion('pack-a'), 1);
     });
   });
@@ -384,7 +384,7 @@ void main() {
         assetPath: 'assets/this-pack-does-not-exist.json',
       );
       expect(success, isFalse);
-      expect(await store.getAllQuestions(), isEmpty);
+      expect(await store.getQuestions(), isEmpty);
       await store.close();
     });
   });

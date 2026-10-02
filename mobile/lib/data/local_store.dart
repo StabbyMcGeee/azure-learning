@@ -347,9 +347,6 @@ class LocalStore {
     return rows.map(Question.fromMap).toList();
   }
 
-  /// Alias for [getQuestions] without a course filter.
-  Future<List<Question>> getAllQuestions() => getQuestions();
-
   Future<Question?> getQuestion(String id) async {
     final db = await database;
     final rows = await db.query(
@@ -431,8 +428,6 @@ class LocalStore {
           );
     return rows.map(Attempt.fromMap).toList();
   }
-
-  Future<List<Attempt>> getAllAttempts() => getAttempts();
 
   Future<void> saveSession(StudySession session) async {
     final db = await database;

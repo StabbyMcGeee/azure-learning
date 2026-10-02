@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:study_app/legal/evidence_register.dart';
 
@@ -189,6 +192,14 @@ void main() {
         errors,
         isNot(contains(contains('Invalid withdrawalReason'))),
       );
+    });
+
+    test('validates the committed evidence-register.json artifact', () async {
+      final file = File('data/evidence-register.json');
+      expect(file.existsSync(), isTrue);
+      final decoded = jsonDecode(await file.readAsString());
+      final errors = EvidenceRegisterValidator.validateRegister(decoded);
+      expect(errors, isEmpty);
     });
   });
 }

@@ -118,9 +118,6 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
-  Future<List<Question>> getAllQuestions() => getQuestions();
-
-  @override
   Future<Question?> getQuestion(String id) async {
     try {
       return _questions.firstWhere((q) => q.id == id);
@@ -170,9 +167,6 @@ class FakeLocalStore extends LocalStore {
     }
     return List.unmodifiable(result.reversed.toList());
   }
-
-  @override
-  Future<List<Attempt>> getAllAttempts() => getAttempts();
 
   @override
   Future<void> saveSession(StudySession session) async => _sessions.add(session);
