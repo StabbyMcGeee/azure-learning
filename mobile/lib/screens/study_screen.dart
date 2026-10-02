@@ -8,10 +8,10 @@ import '../widgets/empty_state.dart';
 
 /// Study mode landing screen.
 ///
-/// Shows the empty-content state when nothing is loaded in the bank, scopes
-/// loaded study material to the selected course, and lets learners choose a
-/// course to browse its material grouped by domain. Studying is untimed and
-/// unscored and does not record attempts.
+/// Content is scoped to the course selected on the dashboard; with no
+/// selection every course in the bank is listed. Tapping a course opens its
+/// material grouped by domain. Studying is untimed and unscored and does not
+/// record attempts.
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
 
@@ -31,7 +31,8 @@ class _StudyScreenState extends State<StudyScreen> {
   }
 
   Future<void> _load() async {
-    final questions = await _store.getQuestions();
+    final courseId = await _store.getSelectedCourseId();
+    final questions = await _store.getQuestions(courseId: courseId);
     if (mounted) {
       setState(() {
         _questions = questions;

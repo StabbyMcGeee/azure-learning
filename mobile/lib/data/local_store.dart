@@ -209,12 +209,13 @@ class LocalStore {
 
   /// Atomically applies a validated [ContentPack] to the question bank.
   ///
-  /// The pack's previous rows (by `packId`) are replaced in full: questions
-  /// present in the new pack version are inserted or updated, and questions
-  /// dropped from a newer version are deleted. Attempt and session history is
-  /// left untouched because those rows live in separate tables. Repeat calls
-  /// with the same or a higher version are safe. A lower version than the one
-  /// recorded in the pack ledger is rejected and leaves the bank unchanged.
+  /// After the call the applied version is the bank's only source of truth for
+  /// that `packId`: rows whose id is still carried are replaced and rows the
+  /// new version dropped are deleted, so retired content cannot linger. Attempt,
+  /// session, and study-status history is left untouched because those rows live
+  /// in separate tables. Repeat calls with the same or a higher version are
+  /// safe. A lower version than the one recorded in the pack ledger is rejected
+  /// and leaves the bank unchanged.
   Future<void> applyContentPack(ContentPack pack) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -251,8 +252,6 @@ class LocalStore {
         'appliedAt': DateTime.now().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-
     // Clear previously stored content-last-verified dates only for the courses
     // present in this pack, preserving dates for unrelated courses.
     final courseIds = pack.questions

@@ -188,8 +188,9 @@ class FakeLocalStore extends LocalStore {
       result = result.where((s) => s.mode == mode).toList();
     }
     if (courseId != null) {
-      result =
-          result.where((s) => s.courseId == courseId || s.courseId == null).toList();
+      result = result
+          .where((s) => s.courseId == courseId || s.courseId == null)
+          .toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);

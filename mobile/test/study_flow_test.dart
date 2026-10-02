@@ -193,6 +193,58 @@ void main() {
       expect(find.text('New'), findsOneWidget);
     });
 
+    testWidgets('a newer pack version retires items the learner already saw',
+        (tester) async {
+      final store = FakeLocalStore();
+      await store.applyContentPack(
+        _pack('pack-a', 'AZ-900', ['study-001', 'study-002'], packVersion: 1),
+      );
+      await tester.pumpWidget(StudyApp(store: store));
+
+      await tester.tap(find.text('Study'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('AZ-900'));
+      await tester.pumpAndSettle();
+      expect(find.text('0 of 2 items seen'), findsOneWidget);
+
+      await tester.ensureVisible(find.text('Mark seen').first);
+      await tester.tap(find.text('Mark seen').first);
+      await tester.pumpAndSettle();
+      await tester.fling(find.byType(ListView), const Offset(0, 300), 1000);
+      await tester.pumpAndSettle();
+      expect(find.text('1 of 2 items seen'), findsOneWidget);
+
+      // The course's pack ships a newer version that drops one of the two
+      // items. The retired item must leave the bank, so it no longer counts
+      // toward coverage and is no longer studyable.
+      await store.applyContentPack(
+        _pack('pack-a', 'AZ-900', ['study-001'], packVersion: 2),
+      );
+      await tester.fling(find.byType(ListView), const Offset(0, 300), 1000);
+      await tester.pumpAndSettle();
+
+      expect(find.text('1 of 1 items seen'), findsOneWidget);
+      expect(find.text('Question study-002'), findsNothing);
+    });
+
+    testWidgets('lists only the selected course', (tester) async {
+      final store = FakeLocalStore(_sampleQuestions());
+      await tester.pumpWidget(StudyApp(store: store));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('All courses'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('AZ-900').last);
+      await tester.pumpAndSettle();
+      expect(await store.getSelectedCourseId(), 'AZ-900');
+
+      await tester.tap(find.text('Study'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('AZ-900'), findsWidgets);
+      expect(find.text('AZ-104'), findsNothing);
+    });
+
     testWidgets('a withdrawn course selection falls back to all content',
         (tester) async {
       final store = FakeLocalStore();
@@ -221,11 +273,16 @@ void main() {
   });
 }
 
-ContentPack _pack(String packId, String courseId, List<String> questionIds) =>
+ContentPack _pack(
+  String packId,
+  String courseId,
+  List<String> questionIds, {
+  int packVersion = 1,
+}) =>
     ContentPack(
       formatVersion: contentPackFormatVersion,
       packId: packId,
-      packVersion: 1,
+      packVersion: packVersion,
       title: 'Test pack',
       source: 'synthetic',
       rightsBasis: 'synthetic',

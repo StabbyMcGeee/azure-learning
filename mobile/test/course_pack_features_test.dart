@@ -449,6 +449,49 @@ void main() {
       expect(await store.getAppliedPackVersion('pack-a'), 2);
       expect(await store.getQuestions(), hasLength(2));
     });
+
+    test('a newer version deletes the items the pack dropped', () async {
+      final v1 = ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 1,
+        courseId: 'course-A',
+        questionIds: ['q-a1', 'q-a2', 'q-a3'],
+      ));
+      final other = ContentPack.parse(_packJson(
+        packId: 'pack-b',
+        packVersion: 1,
+        courseId: 'course-B',
+        questionIds: ['q-b1'],
+      ));
+      final v2 = ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 2,
+        courseId: 'course-A',
+        questionIds: ['q-a1'],
+      ));
+
+      await store.applyContentPack(v1);
+      await store.applyContentPack(other);
+      await store.recordAttempt(Attempt(
+        questionId: 'q-a2',
+        selectedOptionIndex: 0,
+        correct: true,
+        timestamp: DateTime.now(),
+      ));
+
+      await store.applyContentPack(v2);
+
+      expect(
+        (await store.getQuestions(courseId: 'course-A')).map((q) => q.id),
+        ['q-a1'],
+      );
+      expect(await store.getQuestions(courseId: 'course-B'), hasLength(1));
+      expect(await store.getAppliedPackVersion('pack-a'), 2);
+      expect(
+        (await store.getAttempts()).map((a) => a.questionId),
+        ['q-a2'],
+      );
+    });
   });
 
   group('Per-pack withdrawal', () {

@@ -146,12 +146,13 @@ as the question rows, so a failed write never leaves a stale ledger behind.
 Packs are applied inside a single SQLite transaction. If any part of the write
 fails, the whole transaction rolls back and the database is unchanged.
 
-Question rows are keyed by `id`. Applying a pack replaces that pack's rows in
-full inside the same transaction: questions present in the new pack version
-are inserted or updated, and questions dropped from a newer version are
-deleted. A pack with no questions is rejected (it would otherwise erase the
-bank). The `attempts` and `sessions` tables are never touched, so user history
-survives every apply.
+Question rows are keyed by `id`. Applying a pack makes the applied version the
+only source of rows for that `packId`: rows the pack still carries are replaced
+and rows it no longer carries are deleted, so retired content cannot linger in
+the bank. A pack with no questions is rejected (it would otherwise erase the
+bank). Other packs' rows are never touched, and the `attempts`, `sessions`,
+and `study_status` tables are left alone. This makes repeat loading safe and
+keeps user history intact.
 
 ## Schema migration from v1
 
@@ -202,8 +203,7 @@ automatically when an older database is opened at version 3.
 5. Place the validated file at `assets/content-pack.json` and register it in
    `pubspec.yaml`. Keep the private evidence register out of `assets/`.
 6. Update `packVersion` when you revise content so the app can detect and
-   replace older rows.
-
+   replace older rows and drop the items the new version retires.
 Rewrite any item of the existing 133-question desktop bank that carries a
 legal issue, and do not reuse its wording, unless its rights are independently
 cleared. Do not ship the synthetic demo fixture as production content.

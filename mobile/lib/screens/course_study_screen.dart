@@ -24,8 +24,14 @@ class CourseStudyScreen extends StatefulWidget {
 class _CourseStudyScreenState extends State<CourseStudyScreen> {
   LocalStore get _store => context.read<LocalStore>();
   final Map<String, GlobalKey> _itemKeys = {};
-  List<Question> _questions = [];
-  Map<String, StudyMaterialStatus> _statuses = {};
+  List<_StudyRow> _rows = const [];
+  StudyProgress _progress = const StudyProgress(
+    courseId: '',
+    total: 0,
+    seen: 0,
+    needsReview: 0,
+  );
+  Question? _resumeTarget;
   bool _loaded = false;
 
   @override
@@ -37,46 +43,77 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
   Future<void> _load() async {
     final questions = await _store.getQuestions(courseId: widget.courseId);
     final statuses = await _store.getStudyStatusesForCourse(widget.courseId);
-    if (mounted) {
-      setState(() {
-        _questions = questions;
-        _statuses = statuses;
-        _loaded = true;
-      });
-    }
+    if (!mounted) return;
+    setState(() {
+      _rows = _planRows(questions, statuses);
+      _progress = _coverage(questions, statuses);
+      _resumeTarget = _firstUnfinished(questions, statuses);
+      _loaded = true;
+    });
   }
 
-  Map<String, List<Question>> get _grouped {
-    final groups = <String, List<Question>>{};
-    for (final q in _questions) {
-      groups.putIfAbsent(q.domain, () => []).add(q);
-    }
-    return groups;
-  }
+  static bool _countsAsSeen(StudyMaterialStatus? status) =>
+      status == StudyMaterialStatus.seen ||
+      status == StudyMaterialStatus.needsReview;
 
-  StudyProgress get _progress {
-    int seen = 0;
-    int needsReview = 0;
-    for (final q in _questions) {
-      final status = _statuses[q.id];
-      if (status == StudyMaterialStatus.seen) {
-        seen++;
-      } else if (status == StudyMaterialStatus.needsReview) {
-        seen++;
-        needsReview++;
+  /// Flattens the course into one row per progress card, domain header, and
+  /// question so the list builder only has to build what is on screen.
+  List<_StudyRow> _planRows(
+    List<Question> questions,
+    Map<String, StudyMaterialStatus> statuses,
+  ) {
+    final ids = {for (final q in questions) q.id};
+    _itemKeys.removeWhere((id, _) => !ids.contains(id));
+
+    final grouped = <String, List<Question>>{};
+    for (final q in questions) {
+      grouped.putIfAbsent(q.domain, () => <Question>[]).add(q);
+    }
+
+    final rows = <_StudyRow>[const _ProgressRow()];
+    for (final entry in grouped.entries) {
+      final items = entry.value;
+      rows.add(_DomainRow(
+        domain: entry.key,
+        seen: items.where((q) => _countsAsSeen(statuses[q.id])).length,
+        total: items.length,
+      ));
+      for (final q in items) {
+        rows.add(_QuestionRow(
+          question: q,
+          status: statuses[q.id],
+          key: _itemKeys.putIfAbsent(q.id, GlobalKey.new),
+        ));
       }
+    }
+    return rows;
+  }
+
+  StudyProgress _coverage(
+    List<Question> questions,
+    Map<String, StudyMaterialStatus> statuses,
+  ) {
+    var seen = 0;
+    var needsReview = 0;
+    for (final q in questions) {
+      final status = statuses[q.id];
+      if (_countsAsSeen(status)) seen++;
+      if (status == StudyMaterialStatus.needsReview) needsReview++;
     }
     return StudyProgress(
       courseId: widget.courseId,
-      total: _questions.length,
+      total: questions.length,
       seen: seen,
       needsReview: needsReview,
     );
   }
 
-  Question? get _resumeQuestion {
-    for (final q in _questions) {
-      final status = _statuses[q.id];
+  Question? _firstUnfinished(
+    List<Question> questions,
+    Map<String, StudyMaterialStatus> statuses,
+  ) {
+    for (final q in questions) {
+      final status = statuses[q.id];
       if (status == null || status == StudyMaterialStatus.needsReview) {
         return q;
       }
@@ -94,7 +131,7 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
   }
 
   void _scrollToResume() {
-    final target = _resumeQuestion;
+    final target = _resumeTarget;
     if (target == null) return;
     final key = _itemKeys[target.id];
     if (key == null) return;
@@ -109,12 +146,11 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.courseId),
         actions: [
-          if (_resumeQuestion != null)
+          if (_resumeTarget != null)
             TextButton(
               onPressed: _scrollToResume,
               child: const Text(
@@ -124,15 +160,15 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
             ),
         ],
       ),
-      body: _body(theme),
+      body: _body(),
     );
   }
 
-  Widget _body(ThemeData theme) {
+  Widget _body() {
     if (!_loaded) {
       return const Center(child: CircularProgressIndicator());
     }
-    if (_questions.isEmpty) {
+    if (_progress.total == 0) {
       return EmptyState(
         icon: Icons.menu_book,
         title: '${widget.courseId} has no material',
@@ -142,100 +178,122 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
       );
     }
 
-    final progress = _progress;
-    final children = _buildListChildren(theme, progress);
-
     return RefreshIndicator(
       onRefresh: _load,
       child: ListView.builder(
         padding: const EdgeInsets.only(bottom: 24.0),
-        itemCount: children.length,
-        itemBuilder: (context, index) => children[index],
+        itemCount: _rows.length,
+        itemBuilder: (context, index) => _buildRow(context, _rows[index]),
       ),
     );
   }
 
-  List<Widget> _buildListChildren(ThemeData theme, StudyProgress progress) {
-    final List<Widget> children = [];
-
-    children.add(
-      Card(
-        margin: const EdgeInsets.all(12.0),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Course progress', style: theme.textTheme.titleMedium),
-              const SizedBox(height: 8),
-              LinearProgressIndicator(
-                value: progress.coverage,
-                minHeight: 8,
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${progress.seen} of ${progress.total} items seen'
-                '${progress.needsReview > 0 ? ' · ${progress.needsReview} marked for review' : ''}',
-                style: theme.textTheme.bodyMedium,
-              ),
-            ],
+  Widget _buildRow(BuildContext context, _StudyRow row) {
+    final theme = Theme.of(context);
+    return switch (row) {
+      _ProgressRow() => _progressCard(theme, _progress),
+      _DomainRow(:final domain, :final seen, :final total) =>
+        _domainHeader(theme, domain: domain, seen: seen, total: total),
+      _QuestionRow(:final question, :final status, :final key) => Padding(
+          key: key,
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+          child: _StudyItem(
+            question: question,
+            status: status,
+            onMarkSeen: () => _mark(question.id, StudyMaterialStatus.seen),
+            onMarkNeedsReview: () =>
+                _mark(question.id, StudyMaterialStatus.needsReview),
           ),
+        ),
+    };
+  }
+
+  Widget _progressCard(ThemeData theme, StudyProgress progress) {
+    return Card(
+      margin: const EdgeInsets.all(12.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Course progress', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            LinearProgressIndicator(
+              value: progress.coverage,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${progress.seen} of ${progress.total} items seen'
+              '${progress.needsReview > 0 ? ' · ${progress.needsReview} marked for review' : ''}',
+              style: theme.textTheme.bodyMedium,
+            ),
+          ],
         ),
       ),
     );
+  }
 
-    final grouped = _grouped;
-    for (final domain in grouped.keys) {
-      final questions = grouped[domain]!;
-      final domainSeen = questions.where((q) {
-        final s = _statuses[q.id];
-        return s == StudyMaterialStatus.seen ||
-            s == StudyMaterialStatus.needsReview;
-      }).length;
-
-      children.add(
-        Padding(
-          padding: const EdgeInsets.fromLTRB(12.0, 16.0, 12.0, 4.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  domain,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              Text(
-                '$domainSeen/${questions.length}',
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-      );
-
-      for (final q in questions) {
-        final key = _itemKeys[q.id] ??= GlobalKey();
-        final status = _statuses[q.id];
-        children.add(
-          Padding(
-            key: key,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-            child: _StudyItem(
-              question: q,
-              status: status,
-              onMarkSeen: () => _mark(q.id, StudyMaterialStatus.seen),
-              onMarkNeedsReview: () => _mark(q.id, StudyMaterialStatus.needsReview),
+  Widget _domainHeader(
+    ThemeData theme, {
+    required String domain,
+    required int seen,
+    required int total,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12.0, 16.0, 12.0, 4.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              domain,
+              style: theme.textTheme.titleSmall?.copyWith(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ),
-        );
-      }
-    }
-    return children;
+          Text(
+            '$seen/$total',
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
   }
+}
+
+sealed class _StudyRow {
+  const _StudyRow();
+}
+
+class _ProgressRow extends _StudyRow {
+  const _ProgressRow();
+}
+
+class _DomainRow extends _StudyRow {
+  final String domain;
+  final int seen;
+  final int total;
+
+  const _DomainRow({
+    required this.domain,
+    required this.seen,
+    required this.total,
+  });
+}
+
+class _QuestionRow extends _StudyRow {
+  final Question question;
+  final StudyMaterialStatus? status;
+  final GlobalKey key;
+
+  const _QuestionRow({
+    required this.question,
+    required this.status,
+    required this.key,
+  });
 }
 
 class _StudyItem extends StatelessWidget {
