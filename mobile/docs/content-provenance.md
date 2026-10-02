@@ -1,0 +1,114 @@
+# Content provenance register (launch packs)
+
+This file records the rights basis and source evidence for the launch content
+pack shipped at `assets/content-pack.json`. It is a reviewer-facing record; it
+does **not** by itself prove rights clearance. A qualified human (the captain,
+as publisher) reviews and attests before sale, per the settled authoring route.
+
+The pack is generated from the authoring sources under `tool/content/` by
+`tool/build_content_pack.py`. Edit the authoring sources, then regenerate:
+
+```bash
+python3 tool/build_content_pack.py
+```
+
+## Authoring route (settled 2026-10-02)
+
+- Content is authored by the AI fleet (firstmate + crew) as fresh originals.
+- The captain supplies substantive human review/authorship; there are no
+  in-house or freelance human authors.
+- This is the accepted weaker-ownership route recorded in `data/captain.md`.
+
+**Rights basis per item:** `original-human-ai-assisted` (the human publisher
+makes the substantive expressive choices through review; the AI fleet drafts).
+This is one of the permitted values in the azlegal-db-v1 evidence schema
+(section 3.1). Every question in the pack carries this value in its
+`rightsBasis` field.
+
+## Source discipline
+
+Each item was authored from, and only from:
+
+1. The snapshotted public skills-measured outline (objective scope), and
+2. Standard Microsoft Learn product facts (terminology, capabilities).
+
+No legacy desktop question text, no recalled exam item, and no vendor bank was
+read or reused. The legacy 133-question bank was used only as a coverage index
+via `data/azrights-rewrite-map-v1/report.md` (metadata only: id, category,
+type, difficulty, source URL).
+
+## Outline snapshots (authoritative exam wording)
+
+| Course | Study guide | Skills measured as of | Retrieved |
+|---|---|---|---|
+| AZ-900 | `https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900` | July 20, 2026 | 2026-10-02 |
+| DP-900 | `https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/dp-900` | July 21, 2026 | 2026-10-02 |
+| AI-901 | `https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-901` | April 15, 2026 | 2026-10-02 |
+
+AI-900 is retired (2026-06-30); the current exam code is AI-901. SC-900 is
+staged after launch and is not part of this pack.
+
+## Terminology preserved verbatim
+
+Exact official Azure terminology is preserved per the azlegal-db-v1
+terminology register. Notable verbatim terms used in this pack include:
+
+- `Microsoft Entra Conditional Access`
+- `region pairs` (never "regional pairs" or "paired regions")
+- `locally redundant storage (LRS)`, `zone-redundant storage (ZRS)`,
+  `geo-redundant storage (GRS)`, `geo-zone-redundant storage (GZRS)` (never
+  "geo redundant zones")
+- `Microsoft Entra ID` (never "Azure AD" / "Azure Active Directory")
+- `Microsoft Defender for Cloud` (never "Azure Security Center")
+- `Azure Virtual Machine Scale Sets` (never "VM scale sets")
+- `Azure role-based access control (RBAC)` (always qualified; never bare "RBAC")
+- `external identities` (never "Azure AD B2B/B2C")
+- AI-901: `Microsoft Foundry`, `Foundry portal`, `Foundry SDK`,
+  `Azure Speech in Foundry Tools`, `Azure Content Understanding in Foundry Tools`
+
+Retired AI-901 study-resource wording (LUIS, Language Understanding, Anomaly
+Detector, Azure Bot Service, Form Recognizer, Azure AI Document Intelligence,
+Azure OpenAI, Azure AI Foundry) is not used.
+
+## Coverage
+
+| Course | Items | Basis |
+|---|---|---|
+| az-900 | 140 | 133 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped to the nearest in-scope objective, 7 outline topics the legacy bank never covered |
+| dp-900 | 46 | Authored from the DP-900 skills outline (all four domains) |
+| ai-901 | 38 | Authored from the AI-901 skills outline (both domains) |
+
+### AZ-900 re-scoped slots (out-of-scope legacy topic -> nearest objective)
+
+| Legacy slot | Legacy topic (out of scope) | Replacement objective |
+|---|---|---|
+| az-900-078 | Azure Backup | AA.2 availability sets |
+| az-900-087 | "6 Rs" of app modernization | AA.3 Azure Migrate |
+| az-900-108 | Cloud Adoption Framework | DC.2 benefits of cloud services |
+| az-900-125 | Azure support plans | MG.1 Microsoft Cost Management |
+| az-900-126 | Service Trust Portal | MG.2 Microsoft Purview |
+| az-900-132 | Azure Lighthouse | MG.3 Azure Arc |
+
+### AZ-900 gap topics added (not covered by the legacy bank)
+
+Azure Virtual Desktop (az-900-134), sovereign regions (az-900-135), Microsoft
+Entra Domain Services (az-900-136), external identities (az-900-137), AzCopy
+(az-900-138), Azure File Sync (az-900-139), Azure Storage Explorer
+(az-900-140).
+
+## Validation
+
+- `python3 tool/build_content_pack.py` regenerates the pack and enforces:
+  schema shape, unique ids, correctOptionIndex in range, rightsBasis enum,
+  courseId enum, and terminology lint (retired wording and bare "RBAC").
+- `flutter test test/content_pack_production_test.dart` validates the shipped
+  artifact with the app's own `ContentPackValidator`.
+- `flutter analyze` is clean; the full mobile test suite passes.
+
+## Open item for the content-integrity gate
+
+The content-integrity branch (`fm/azcontent-gate-v1`) ships a terminology lint
+that currently matches retired wording by naive substring. That lint would
+falsely flag the official term "Azure Advisor" as retired wording "Azure AD".
+This pack uses "Azure Advisor" (an MG.4 outline term) correctly; the lint
+should use whole-word matching before it gates this content.
