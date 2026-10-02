@@ -1,8 +1,9 @@
 """AZ-900 management-and-governance replacement items (fresh originals).
 
-Covers the 52 governance-category legacy slots. Items whose public objective is
-an architecture-and-services topic (Azure RBAC, Microsoft Defender for Cloud,
-sovereign regions) carry that domain tag. Legacy wording was not read or reused.
+Covers the 52 governance-category slots of the existing 133-question bank.
+Items whose public objective is an architecture-and-services topic (Azure RBAC,
+Microsoft Defender for Cloud, sovereign regions) carry that domain tag. The
+bank's wording was not read or reused; each slot was rewritten from scratch.
 """
 
 SRC = (
@@ -171,8 +172,8 @@ QUESTIONS = [
       "hard"),
     # az-900-033 -> MG.3 Azure Arc
     q("az-900-033",
-      "Which service extends Azure management to servers and Kubernetes "
-      "clusters running outside Azure?",
+      "Which service brings servers running outside Azure under Azure "
+      "management and governance?",
       [
           "Azure Arc",
           "Azure Cloud Shell",
@@ -180,8 +181,8 @@ QUESTIONS = [
           "Azure Service Health",
       ],
       0,
-      "Azure Arc extends Azure management and governance to resources "
-      "running on-premises or in other clouds.",
+      "Azure Arc extends Azure management and governance to servers and "
+      "other resources running on-premises or in other clouds.",
       "medium"),
     # az-900-034 -> MG.1 Microsoft Cost Management
     q("az-900-034",
@@ -727,32 +728,34 @@ QUESTIONS = [
       "strict legal or compliance requirements.",
       "medium",
       AA),
-    # az-900-131 -> MG.3 Azure Arc
+    # az-900-131 -> MG.3 Azure Arc-enabled data services
     q("az-900-131",
-      "Which service lets you manage on-premises servers using Azure "
-      "governance tools such as Azure Policy?",
+      "Which Azure Arc offering lets you run and manage Azure data services "
+      "such as SQL Managed Instance and PostgreSQL on servers outside Azure?",
       [
-          "Azure Arc",
-          "Azure Cloud Shell",
-          "Azure Advisor",
-          "Azure Monitor alerts",
+          "Azure Arc-enabled data services",
+          "Azure Arc-enabled Kubernetes",
+          "Azure Arc-enabled servers",
+          "Azure Arc Resource Bridge",
       ],
       0,
-      "Azure Arc extends Azure management and governance, including Azure "
-      "Policy, to on-premises and multi-cloud resources.",
+      "Azure Arc-enabled data services lets you operate Azure data services "
+      "such as SQL Managed Instance and PostgreSQL on infrastructure outside "
+      "Azure while keeping them managed and governed by Azure.",
       "medium"),
-    # az-900-132 -> MG.3 Azure Arc (re-scoped from Azure Lighthouse)
+    # az-900-132 -> MG.3 Azure Arc-enabled Kubernetes (re-scoped from Azure Lighthouse)
     q("az-900-132",
-      "Which service provides a unified way to govern and manage resources "
-      "across on-premises and other clouds?",
+      "Which Azure Arc offering connects Kubernetes clusters running "
+      "on-premises or in other clouds to Azure?",
       [
-          "Azure Arc",
-          "Azure Cloud Shell",
-          "Azure Advisor",
-          "Azure Service Health",
+          "Azure Arc-enabled Kubernetes",
+          "Azure Kubernetes Service",
+          "Azure Container Apps",
+          "Azure Arc Resource Bridge",
       ],
       0,
-      "Azure Arc provides unified management and governance across "
-      "on-premises, multi-cloud, and edge resources.",
+      "Azure Arc-enabled Kubernetes connects Kubernetes clusters running "
+      "outside Azure so they can be managed and governed alongside Azure "
+      "resources.",
       "medium"),
 ]

@@ -424,6 +424,10 @@ class LocalStore {
 
   /// All recorded attempts, optionally filtered to a single course by joining
   /// with the current question bank.
+  ///
+  /// Rows with no course attribution — attempts on a question the bank never
+  /// attributed, or whose question is no longer in the bank — are kept in the
+  /// course-scoped view so scoping never silently drops history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
@@ -431,8 +435,8 @@ class LocalStore {
         : await db.rawQuery(
             '''
             SELECT a.* FROM attempts a
-            INNER JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ?
+            LEFT JOIN questions q ON q.id = a.questionId
+            WHERE q.courseId = ? OR q.courseId IS NULL OR q.courseId = ''
             ORDER BY a.timestamp DESC
             ''',
             [courseId],
@@ -449,6 +453,9 @@ class LocalStore {
     );
   }
 
+  /// Recorded sessions, optionally filtered by mode and course. Sessions with
+  /// no course attribution (taken while every course was in scope) are kept in
+  /// a course-scoped view.
   Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
     final conditions = <String>[];
@@ -458,7 +465,7 @@ class LocalStore {
       whereArgs.add(mode);
     }
     if (courseId != null) {
-      conditions.add('courseId = ?');
+      conditions.add("(courseId = ? OR courseId IS NULL OR courseId = '')");
       whereArgs.add(courseId);
     }
     final rows = conditions.isEmpty

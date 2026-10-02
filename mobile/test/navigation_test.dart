@@ -45,5 +45,28 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Progress'), findsWidgets);
     });
+
+    testWidgets('progress labels the selected course as its scope',
+        (tester) async {
+      final store = FakeLocalStore(QuestionBank.syntheticFixtures());
+      await store.setSelectedCourseId('az-900');
+      await tester.pumpWidget(
+        StudyApp(store: store, initialRoute: AppRouter.progress),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Accuracy for az-900'), findsOneWidget);
+      expect(find.textContaining('Recent attempts'), findsOneWidget);
+    });
+
+    testWidgets('progress labels the no-filter scope as all courses',
+        (tester) async {
+      final store = FakeLocalStore(QuestionBank.syntheticFixtures());
+      await tester.pumpWidget(
+        StudyApp(store: store, initialRoute: AppRouter.progress),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Accuracy for all courses'), findsOneWidget);
+      expect(find.textContaining('Recent exam sessions'), findsOneWidget);
+    });
   });
 }

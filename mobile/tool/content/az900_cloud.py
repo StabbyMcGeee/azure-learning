@@ -1,9 +1,10 @@
 """AZ-900 cloud-concepts replacement items (fresh originals).
 
-Each item replaces the legacy slot with a new original authored from the
-public AZ-900 skills outline (July 20, 2026) and standard Microsoft Learn facts.
-Legacy wording was not read or reused; only the public objective and exact
-official Azure term from the coverage map were followed.
+Each item rewrites its slot of the existing 133-question bank with a new
+original authored from the public AZ-900 skills outline (July 20, 2026) and
+standard Microsoft Learn facts. The bank's wording was not read or reused; only
+the public objective and exact official Azure term from the coverage map were
+followed.
 """
 
 SRC = (

@@ -1607,7 +1607,7 @@
     },
     {
       "id": "az-900-033",
-      "text": "Which service extends Azure management to servers and Kubernetes clusters running outside Azure?",
+      "text": "Which service brings servers running outside Azure under Azure management and governance?",
       "options": [
         "Azure Cloud Shell",
         "Azure Advisor",
@@ -1615,7 +1615,7 @@
         "Azure Service Health"
       ],
       "correctOptionIndex": 2,
-      "explanation": "Azure Arc extends Azure management and governance to resources running on-premises or in other clouds.",
+      "explanation": "Azure Arc extends Azure management and governance to servers and other resources running on-premises or in other clouds.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2287,15 +2287,15 @@
     },
     {
       "id": "az-900-131",
-      "text": "Which service lets you manage on-premises servers using Azure governance tools such as Azure Policy?",
+      "text": "Which Azure Arc offering lets you run and manage Azure data services such as SQL Managed Instance and PostgreSQL on servers outside Azure?",
       "options": [
-        "Azure Cloud Shell",
-        "Azure Advisor",
-        "Azure Monitor alerts",
-        "Azure Arc"
+        "Azure Arc-enabled Kubernetes",
+        "Azure Arc-enabled servers",
+        "Azure Arc Resource Bridge",
+        "Azure Arc-enabled data services"
       ],
       "correctOptionIndex": 3,
-      "explanation": "Azure Arc extends Azure management and governance, including Azure Policy, to on-premises and multi-cloud resources.",
+      "explanation": "Azure Arc-enabled data services lets you operate Azure data services such as SQL Managed Instance and PostgreSQL on infrastructure outside Azure while keeping them managed and governed by Azure.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2304,15 +2304,15 @@
     },
     {
       "id": "az-900-132",
-      "text": "Which service provides a unified way to govern and manage resources across on-premises and other clouds?",
+      "text": "Which Azure Arc offering connects Kubernetes clusters running on-premises or in other clouds to Azure?",
       "options": [
-        "Azure Arc",
-        "Azure Cloud Shell",
-        "Azure Advisor",
-        "Azure Service Health"
+        "Azure Arc-enabled Kubernetes",
+        "Azure Kubernetes Service",
+        "Azure Container Apps",
+        "Azure Arc Resource Bridge"
       ],
       "correctOptionIndex": 0,
-      "explanation": "Azure Arc provides unified management and governance across on-premises, multi-cloud, and edge resources.",
+      "explanation": "Azure Arc-enabled Kubernetes connects Kubernetes clusters running outside Azure so they can be managed and governed alongside Azure resources.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",

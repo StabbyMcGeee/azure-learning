@@ -13,9 +13,9 @@ Offline-first Flutter mobile app for iOS and Android.
 - **No** account, sign-in, sync, analytics, ads, or in-app payment SDK.
 - Works offline. All study progress is stored locally with SQLite.
 - The runtime question bank is loaded at startup from the bundled content pack
-  (`assets/content-pack.json`, AZ-900 / DP-900 / AI-901). The legacy desktop
-  133-question bank is intentionally **not** imported; production content is
-  authored fresh with a per-item rights basis recorded in
+  (`assets/content-pack.json`, AZ-900 / DP-900 / AI-901). The existing desktop
+  133-question bank is not imported as-is; every slot was rewritten from
+  scratch, and production content carries a per-item rights basis recorded in
   `docs/content-provenance.md`.
 - Synthetic test fixtures exist only in `test/` and are never shipped as
   production curriculum.

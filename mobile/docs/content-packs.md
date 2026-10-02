@@ -193,9 +193,9 @@ automatically when an older database is opened at version 3.
 6. Update `packVersion` when you revise content so the app can detect and
    replace older rows.
 
-Do not reuse the legacy 133 desktop questions unless their rights are
-independently cleared. Do not ship the synthetic demo fixture as production
-content.
+Rewrite any item of the existing 133-question desktop bank that carries a
+legal issue, and do not reuse its wording, unless its rights are independently
+cleared. Do not ship the synthetic demo fixture as production content.
 
 ## Example: loading a pack in a test
 

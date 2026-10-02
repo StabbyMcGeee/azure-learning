@@ -2,12 +2,13 @@
 ///
 /// Runtime questions come from the bundled content pack
 /// (`assets/content-pack.json`), applied to SQLite by `ContentPackLoader` at
-/// startup. The legacy 133 desktop questions are not carried into this build;
+/// startup. Every slot of the existing 133-question desktop bank was rewritten
+/// from scratch rather than carried over, so no original wording ships;
 /// production content is authored fresh in the pack with a recorded rights
 /// basis. Synthetic fixtures may be injected in tests only.
 ///
 /// Questions loaded from a [ContentPack] carry [source] and [rightsBasis]
-/// provenance metadata; legacy rows may leave these null.
+/// provenance metadata; rows from other sources may leave these null.
 class Question {
   final String id;
   final String text;

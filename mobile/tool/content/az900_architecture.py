@@ -1,9 +1,10 @@
 """AZ-900 architecture-and-services replacement items (fresh originals).
 
-Covers the 45 architecture-category legacy slots plus the 7 outline topics the
-legacy bank never covered (Azure Virtual Desktop, sovereign regions, Microsoft
-Entra Domain Services, external identities, AzCopy, Azure File Sync, Azure
-Storage Explorer). Legacy wording was not read or reused.
+Covers the 45 architecture-category slots of the existing 133-question bank plus
+the 7 outline topics that bank never covered (Azure Virtual Desktop, sovereign
+regions, Microsoft Entra Domain Services, external identities, AzCopy, Azure
+File Sync, Azure Storage Explorer). The bank's wording was not read or reused;
+each slot was rewritten from scratch.
 """
 
 SRC = (
@@ -654,7 +655,7 @@ QUESTIONS = [
       "An availability set places virtual machines in separate update "
       "domains so planned maintenance does not reboot all instances at once.",
       "medium"),
-    # ---- gap items (7 outline topics the legacy bank never covered) ----
+    # ---- gap items (7 outline topics the 133-question bank never covered) ----
     # az-900-134 -> AA.2 Azure Virtual Desktop
     q("az-900-134",
       "Which service provides virtualized desktops and applications that "

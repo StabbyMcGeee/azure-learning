@@ -2,7 +2,7 @@
 
 Authored from the public DP-900 skills outline ("Skills measured as of
 July 21, 2026", retrieved 2026-10-02) and standard Microsoft Learn facts.
-No legacy wording or recalled exam item was used.
+No wording from the existing 133-question bank and no recalled exam item was used.
 """
 
 SRC = (

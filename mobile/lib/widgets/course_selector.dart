@@ -68,10 +68,10 @@ class _CourseSelectorState extends State<CourseSelector> {
     if (_courses.isEmpty) {
       return const ListTile(
         leading: Icon(Icons.school_outlined),
-        title: Text('No courses loaded'),
+        title: Text('No courses yet'),
         subtitle: Text(
-          'Load a content pack to choose a course. '
-          'Courses are discovered from pack data, not hardcoded.',
+          'This device has no course content yet. Update or reinstall the '
+          'app to load your courses.',
         ),
       );
     }

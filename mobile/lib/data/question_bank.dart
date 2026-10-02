@@ -4,9 +4,9 @@ import '../models/question.dart';
 ///
 /// This list is intentionally empty. The app's runtime questions are loaded
 /// from the bundled content pack (`assets/content-pack.json`) by
-/// `ContentPackLoader`, not from this list. The legacy desktop 133-question
-/// bank is not carried over; production content is authored fresh in the pack
-/// with a recorded rights basis.
+/// `ContentPackLoader`, not from this list. Every slot of the existing desktop
+/// 133-question bank was rewritten from scratch; production content is authored
+/// fresh in the pack with a recorded rights basis.
 class QuestionBank {
   static const List<Question> productionBank = [];
 

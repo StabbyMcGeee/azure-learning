@@ -162,6 +162,63 @@ void main() {
       expect(bSessions.map((s) => s.id), ['s-b']);
     });
 
+    test('course-scoped history keeps rows without course attribution',
+        () async {
+      final packA = ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 1,
+        courseId: 'course-A',
+        questionIds: ['q-a1'],
+      ));
+      final packB = ContentPack.parse(_packJson(
+        packId: 'pack-b',
+        packVersion: 1,
+        courseId: 'course-B',
+        questionIds: ['q-b1'],
+      ));
+      await store.applyContentPack(packA);
+      await store.applyContentPack(packB);
+
+      final base = DateTime(2026, 10, 2);
+      Attempt attempt(String id, int minutes) => Attempt(
+            questionId: id,
+            selectedOptionIndex: 0,
+            correct: true,
+            timestamp: base.add(Duration(minutes: minutes)),
+          );
+      StudySession session(String id, String? courseId) => StudySession(
+            id: id,
+            mode: 'exam',
+            courseId: courseId,
+            startedAt: base,
+            finishedAt: base,
+            questionCount: 1,
+            correctCount: 1,
+            scorePercent: 100,
+          );
+
+      await store.recordAttempt(attempt('q-a1', 1));
+      await store.recordAttempt(attempt('q-b1', 2));
+      // Recorded before questions carried a course id, or against a question
+      // the current bank no longer holds.
+      await store.recordAttempt(attempt('pre-course-q1', 3));
+      await store.saveSession(session('s-a', 'course-A'));
+      await store.saveSession(session('s-b', 'course-B'));
+      await store.saveSession(session('s-all', null));
+
+      final aAttempts = await store.getAttempts(courseId: 'course-A');
+      final bAttempts = await store.getAttempts(courseId: 'course-B');
+      expect(aAttempts.map((a) => a.questionId).toSet(),
+          {'q-a1', 'pre-course-q1'});
+      expect(bAttempts.map((a) => a.questionId).toSet(),
+          {'q-b1', 'pre-course-q1'});
+
+      final aSessions = await store.getSessions(courseId: 'course-A');
+      final bSessions = await store.getSessions(courseId: 'course-B');
+      expect(aSessions.map((s) => s.id).toSet(), {'s-a', 's-all'});
+      expect(bSessions.map((s) => s.id).toSet(), {'s-b', 's-all'});
+    });
+
     test('review items are filtered by selected course', () async {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',

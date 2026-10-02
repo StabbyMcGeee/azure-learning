@@ -2,7 +2,7 @@
 
 Brings the analytics domain back under its 30% ceiling by deepening core,
 relational, and non-relational coverage, and adds the Azure Data Factory and
-Azure Cosmos DB API items the legacy coverage missed.
+Azure Cosmos DB API items the 133-question bank never covered.
 """
 
 SRC = (

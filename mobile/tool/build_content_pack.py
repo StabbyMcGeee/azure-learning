@@ -210,9 +210,13 @@ def _spread_options(q):
 
 def _check_position_spread(questions, errors):
     """Fail the build if the answer key is positionally biased."""
-    if not questions:
+    c = Counter(
+        q["correctOptionIndex"]
+        for q in questions
+        if isinstance(q.get("correctOptionIndex"), int)
+    )
+    if not c:
         return
-    c = Counter(q["correctOptionIndex"] for q in questions)
     total = len(questions)
     pos, cnt = c.most_common(1)[0]
     share = cnt / total
@@ -233,7 +237,6 @@ def main():
     # Spread the correct answer across option positions before validation so
     # the shipped pack never exposes a fixed answer position.
     questions = [_spread_options(q) for q in questions]
-    _check_position_spread(questions, errors)
 
     seen_ids = set()
     for i, q in enumerate(questions):
@@ -243,6 +246,10 @@ def main():
         elif qid:
             seen_ids.add(qid)
         check_question(q, i, errors)
+
+    # Runs after check_question so it never reads a key that per-item
+    # validation has not already guaranteed.
+    _check_position_spread(questions, errors)
 
     if errors:
         print("VALIDATION FAILED:")

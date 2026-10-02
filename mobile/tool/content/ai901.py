@@ -2,8 +2,8 @@
 
 Authored from the public AI-901 skills outline ("Skills measured as of
 April 15, 2026", retrieved 2026-10-02) and standard Microsoft Learn facts.
-AI-900 is retired; the current exam code is AI-901. No legacy wording or
-recalled exam item was used.
+AI-900 is retired; the current exam code is AI-901. No wording from the
+existing 133-question bank and no recalled exam item was used.
 """
 
 SRC = (

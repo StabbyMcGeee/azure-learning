@@ -43,9 +43,11 @@ Each item was authored from, and only from:
 1. The snapshotted public skills-measured outline (objective scope), and
 2. Standard Microsoft Learn product facts (terminology, capabilities).
 
-No legacy desktop question text, no recalled exam item, and no vendor bank was
-read or reused. The legacy 133-question bank was used only as a coverage index
-(metadata only: id, category, type, difficulty, source URL); the resulting
+No question text from the 133-question desktop bank, no recalled exam item,
+and no vendor bank was read or reused. The existing 133-question bank was
+used only as a coverage index (metadata only: id, category, type, difficulty,
+source URL); each slot was then rewritten from scratch, so no slot ships with
+the original wording or a legal issue carried over. The resulting
 slot-to-objective mapping is recorded in the coverage tables below and in the
 `tool/content/` module docstrings.
 
@@ -87,7 +89,7 @@ Azure OpenAI, Azure AI Foundry) is not used.
 
 | Course | Items | Basis |
 |---|---|---|
-| az-900 | 152 | 129 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus 16 domain-weighting and missing-objective items (az-900-141..156, ending with storage tiers and defense-in-depth) |
+| az-900 | 152 | 129 existing-bank slots rewritten as fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus 16 domain-weighting and missing-objective items (az-900-141..156, ending with storage tiers and defense-in-depth) |
 | dp-900 | 57 | Authored from the DP-900 skills outline (all four domains) |
 | ai-901 | 49 | Authored from the AI-901 skills outline (both domains) |
 
@@ -99,20 +101,20 @@ Domain weighting is aligned to the published study-guide bands:
 | dp-900 | Core 28.1% (25-30), Relational 22.8% (20-25), Non-relational 19.3% (15-20), Analytics 29.8% (25-30) |
 | ai-901 | AI Concepts and Capabilities 44.9% (40-45), Microsoft Foundry 55.1% (55-60) |
 
-### AZ-900 re-scoped slots (out-of-scope legacy topic -> nearest objective)
+### AZ-900 re-scoped slots (out-of-scope bank topic -> nearest objective)
 
-| Legacy slot | Legacy topic (out of scope) | Replacement objective |
+| Bank slot | Bank topic (out of scope) | Replacement objective |
 |---|---|---|
 | az-900-078 | Azure Backup | AA.2 availability sets |
 | az-900-087 | "6 Rs" of app modernization | AA.3 Azure Migrate |
 | az-900-108 | Cloud Adoption Framework | DC.2 benefits of cloud services |
 | az-900-125 | Azure support plans | MG.1 Microsoft Cost Management |
 | az-900-126 | Service Trust Portal | MG.2 Microsoft Purview |
-| az-900-132 | Azure Lighthouse | MG.3 Azure Arc |
+| az-900-132 | Azure Lighthouse | MG.3 Azure Arc-enabled Kubernetes |
 
-### AZ-900 legacy slots dropped as duplicate topics
+### AZ-900 bank slots dropped as duplicate topics
 
-The shipped AZ-900 ids run `001`..`156`. Four legacy slots have no shipped id
+The shipped AZ-900 ids run `001`..`156`. Four bank slots have no shipped id
 because their topic was already covered by a stronger item and keeping both
 would ship near-duplicate questions. Their subject is not lost:
 
@@ -123,7 +125,7 @@ would ship near-duplicate questions. Their subject is not lost:
 | az-900-061 | private endpoint benefit for storage | az-900-063, az-900-102 |
 | az-900-090 | availability-zone characteristics | az-900-010, az-900-015, az-900-128, az-900-129 |
 
-### AZ-900 gap topics added (not covered by the legacy bank)
+### AZ-900 gap topics added (not covered by the 133-question bank)
 
 Azure Virtual Desktop (az-900-134), sovereign regions (az-900-135), Microsoft
 Entra Domain Services (az-900-136), external identities (az-900-137), AzCopy
