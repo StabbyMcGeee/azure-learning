@@ -1,10 +1,10 @@
 """AZ-900 architecture-and-services replacement items (fresh originals).
 
-Covers the 45 architecture-category slots of the existing 133-question bank plus
-the 7 outline topics that bank never covered (Azure Virtual Desktop, sovereign
-regions, Microsoft Entra Domain Services, external identities, AzCopy, Azure
-File Sync, Azure Storage Explorer). The bank's wording was not read or reused;
-each slot was rewritten from scratch.
+Fresh-original items for the architecture-and-services domain of the existing
+133-question bank, plus the outline topics that bank never covered (Azure
+Virtual Desktop, Microsoft Entra Domain Services, external identities, AzCopy,
+Azure File Sync, Azure Storage Explorer). The bank's wording was not read or
+reused; each item was rewritten from scratch.
 """
 
 SRC = (
@@ -599,20 +599,6 @@ QUESTIONS = [
       "Region pairs provide geographic redundancy across two regions in the "
       "same geography for disaster recovery.",
       "medium"),
-    # az-900-128 -> AA.1 availability zones (reliability)
-    q("az-900-128",
-      "Which design choice improves reliability by keeping a workload running "
-      "when one datacenter in a region fails?",
-      [
-          "Deploying across multiple availability zones",
-          "Using a single availability zone",
-          "Putting all resources in one resource group",
-          "Using one storage account",
-      ],
-      0,
-      "Deploying across multiple availability zones keeps a workload running "
-      "when a single datacenter in the region fails.",
-      "hard"),
     # az-900-129 -> AA.2 availability sets
     q("az-900-129",
       "Which feature keeps virtual machines available during Azure planned "
@@ -641,22 +627,6 @@ QUESTIONS = [
       0,
       "Azure Virtual Desktop delivers virtualized desktops and applications "
       "that users access remotely.",
-      "medium"),
-    # az-900-135 -> AA.1 sovereign regions
-    q("az-900-135",
-      "A government agency needs Azure services that are physically and "
-      "logically isolated from commercial Azure regions to satisfy national "
-      "legal requirements. Which region type provides this?",
-      [
-          "sovereign regions",
-          "availability zones",
-          "resource groups",
-          "virtual networks",
-      ],
-      0,
-      "Sovereign regions are physically and logically isolated Azure "
-      "environments for customers with strict legal or compliance "
-      "requirements, such as government agencies.",
       "medium"),
     # az-900-136 -> AA.4 Microsoft Entra Domain Services
     q("az-900-136",

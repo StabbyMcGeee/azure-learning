@@ -293,14 +293,6 @@ QUESTIONS = [
        "The system prompt sets the model's role, tone, and rules, guiding how "
        "it responds to the user prompt.",
        "medium"),
-    qf("ai-901-029",
-       "A developer wants a model's responses to be highly consistent and "
-       "predictable. Which configuration parameter should be lowered?",
-       ["temperature", "max tokens", "the system prompt", "the endpoint URL"],
-       0,
-       "Lowering the temperature reduces randomness, making responses more "
-       "consistent and predictable.",
-       "medium"),
     qf("ai-901-030",
        "Which Foundry workflow step lets you test a model's responses "
        "directly through a chat interface in the portal?",
@@ -340,18 +332,6 @@ QUESTIONS = [
        "Content Understanding extracts structured information from "
        "unstructured content such as documents, images, audio, and video.",
        "medium"),
-    qf("ai-901-034",
-       "A developer builds an app that converts spoken audio to text and "
-       "then reads the answer back aloud. Which Foundry tool provides these "
-       "speech capabilities?",
-       ["Azure Speech in Foundry Tools",
-        "Azure Content Understanding in Foundry Tools",
-        "A sentiment analysis model",
-        "A keyword extraction model"],
-       0,
-       "Azure Speech in Foundry Tools provides speech recognition and speech "
-       "synthesis for converting audio to text and text to speech.",
-       "medium"),
     qf("ai-901-035",
        "Which Foundry capability lets a developer create new images from text "
        "descriptions?",
@@ -375,16 +355,5 @@ QUESTIONS = [
        "Microsoft Foundry supports building lightweight applications that "
        "perform text analysis such as entity detection and sentiment "
        "analysis.",
-       "medium"),
-    qf("ai-901-037",
-       "Which model type interprets visual input supplied in a prompt, such "
-       "as asking about an uploaded image?",
-       ["A multimodal model",
-        "A speech synthesis model",
-        "A keyword extraction model",
-        "A data model"],
-       0,
-       "A multimodal model can interpret visual input in prompts, such as "
-       "reasoning about an uploaded image alongside text.",
        "medium"),
 ]

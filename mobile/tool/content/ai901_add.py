@@ -69,30 +69,6 @@ QUESTIONS = [
        "A single-agent solution is created and tested in the Foundry portal "
        "before a client application connects to it.",
        "medium"),
-    qf("ai-901-043",
-       "A developer builds a lightweight application that shortens long "
-       "documents while keeping their main points. Which text analysis "
-       "technique does it use?",
-       ["summarization",
-        "entity detection",
-        "sentiment analysis",
-        "keyword extraction"],
-       0,
-       "Summarization condenses a long document into a shorter version while "
-       "keeping the main points.",
-       "medium"),
-    qf("ai-901-044",
-       "A developer builds an app that answers spoken questions by using a "
-       "model that processes both audio and text. Which model type is "
-       "required?",
-       ["A multimodal model",
-        "A keyword extraction model",
-        "A sentiment analysis model",
-        "A table model"],
-       0,
-       "Responding to spoken prompts uses a deployed multimodal model that "
-       "processes both audio and text.",
-       "medium"),
     qf("ai-901-045",
        "A developer builds an app that detects objects in photos. Which "
        "Foundry capability supports this?",
@@ -103,30 +79,6 @@ QUESTIONS = [
        0,
        "Vision capabilities in Foundry include object detection for locating "
        "objects within images.",
-       "medium"),
-    qf("ai-901-046",
-       "Which Foundry capability extracts printed text and structured fields "
-       "from a scanned image?",
-       ["Content Understanding",
-        "Speech synthesis",
-        "Sentiment analysis",
-        "Keyword extraction"],
-       0,
-       "Content Understanding extracts information from images, including "
-       "printed text and structured fields, using optical character "
-       "recognition.",
-       "medium"),
-    qf("ai-901-047",
-       "A developer needs to extract spoken words and visual text from a "
-       "video recording. Which Foundry capability handles audio and video "
-       "content?",
-       ["Content Understanding",
-        "Speech synthesis",
-        "Sentiment analysis",
-        "Keyword extraction"],
-       0,
-       "Content Understanding extracts information from audio and video, "
-       "including spoken words and visual text.",
        "medium"),
     qf("ai-901-049",
        "Which practice improves a generative model's output by writing clear, "

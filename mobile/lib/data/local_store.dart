@@ -182,11 +182,12 @@ class LocalStore {
 
   /// Atomically applies a validated [ContentPack] to the question bank.
   ///
-  /// Existing questions with the same id are replaced, but attempt and session
-  /// history is left untouched because those rows live in separate tables.
-  /// Repeat calls with the same or a higher version are safe. A lower version
-  /// than the one recorded in the pack ledger is rejected and leaves the bank
-  /// unchanged.
+  /// The pack's previous rows (by `packId`) are replaced in full: questions
+  /// present in the new pack version are inserted or updated, and questions
+  /// dropped from a newer version are deleted. Attempt and session history is
+  /// left untouched because those rows live in separate tables. Repeat calls
+  /// with the same or a higher version are safe. A lower version than the one
+  /// recorded in the pack ledger is rejected and leaves the bank unchanged.
   Future<void> applyContentPack(ContentPack pack) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -435,10 +436,9 @@ class LocalStore {
   /// All recorded attempts, optionally filtered to a single course by joining
   /// with the current question bank.
   ///
-  /// Unattributed attempts (a question no longer in the bank, or with no
-  /// course) are kept in the unfiltered "all courses" view, but are not shown
-  /// under a specific course so an unrelated attempt is never presented as
-  /// that course's history.
+  /// Rows with no course attribution — attempts on a question the bank never
+  /// attributed, or whose question is no longer in the bank — are kept in the
+  /// course-scoped view so scoping never silently drops history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
@@ -446,8 +446,8 @@ class LocalStore {
         : await db.rawQuery(
             '''
             SELECT a.* FROM attempts a
-            INNER JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ?
+            LEFT JOIN questions q ON q.id = a.questionId
+            WHERE q.courseId = ? OR q.courseId IS NULL OR q.courseId = ''
             ORDER BY a.timestamp DESC
             ''',
             [courseId],
@@ -464,9 +464,9 @@ class LocalStore {
     );
   }
 
-  /// Recorded sessions, optionally filtered by mode and course. A session
-  /// taken with no course selected (all courses) has a null courseId and is
-  /// shown only in the unfiltered view, never under a specific course.
+  /// Recorded sessions, optionally filtered by mode and course. Sessions with
+  /// no course attribution (taken while every course was in scope) are kept in
+  /// a course-scoped view so scoping never silently drops history.
   Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
     final conditions = <String>[];
@@ -476,7 +476,7 @@ class LocalStore {
       whereArgs.add(mode);
     }
     if (courseId != null) {
-      conditions.add('courseId = ?');
+      conditions.add("(courseId = ? OR courseId IS NULL OR courseId = '')");
       whereArgs.add(courseId);
     }
     final rows = conditions.isEmpty

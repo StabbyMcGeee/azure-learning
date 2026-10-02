@@ -89,9 +89,9 @@ Azure OpenAI, Azure AI Foundry) is not used.
 
 | Course | Items | Basis |
 |---|---|---|
-| az-900 | 146 | Existing-bank slots rewritten as fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus missing-objective and weighting items; 10 duplicate slots dropped (see below) |
+| az-900 | 141 | Existing-bank slots rewritten as fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added; 15 duplicate slots dropped (see below) |
 | dp-900 | 57 | Authored from the DP-900 skills outline (all four domains) |
-| ai-901 | 47 | Authored from the AI-901 skills outline (both domains) |
+| ai-901 | 40 | Authored from the AI-901 skills outline (both domains) |
 
 Domain weighting is aligned to the published study-guide bands:
 
@@ -114,7 +114,7 @@ Domain weighting is aligned to the published study-guide bands:
 
 ### AZ-900 bank slots dropped as duplicate topics
 
-The shipped AZ-900 ids run `001`..`156` with ten slots dropped. Each dropped
+The shipped AZ-900 ids run `001`..`156` with fifteen slots dropped. Each
 slot's topic is retained by a stronger item, so no subject is lost:
 
 | Dropped slot | Duplicate topic | Retained coverage |
@@ -123,9 +123,14 @@ slot's topic is retained by a stronger item, so no subject is lost:
 | az-900-056 | what ExpressRoute provides | az-900-013, az-900-070 |
 | az-900-061 | private endpoint benefit for storage | az-900-063, az-900-102 |
 | az-900-079 | scalability from autoscaling | az-900-008, az-900-089, az-900-093 |
-| az-900-090 | availability-zone characteristics | az-900-010, az-900-015, az-900-128, az-900-129 |
+| az-900-087 | discover/assess/migrate with Azure Migrate | az-900-021 |
+| az-900-090 | availability-zone characteristics | az-900-010, az-900-015, az-900-129 |
 | az-900-103 | infrastructure as code (IaC) | az-900-036, az-900-030, az-900-062 |
+| az-900-106 | unified metrics/logs view with Azure Monitor | az-900-040 |
 | az-900-109 | availability-set fault domains | az-900-078, az-900-129 |
+| az-900-126 | data governance with Microsoft Purview | az-900-057 |
+| az-900-128 | keep a workload running across availability zones | az-900-085 |
+| az-900-135 | isolated sovereign regions for compliance | az-900-130 |
 | az-900-141 | cloud computing definition | az-900-001, az-900-046 |
 | az-900-143 | private cloud model | az-900-107 |
 | az-900-152 | serverless compute | az-900-007 |

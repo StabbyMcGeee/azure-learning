@@ -74,6 +74,10 @@ class FakeLocalStore extends LocalStore {
       _settings.remove('contentLastVerifiedAt_$courseId');
     }
 
+    // Mirror production: replace this pack's rows in full so questions
+    // dropped from a newer version are removed.
+    _questions.removeWhere((q) => q.packId == pack.packId);
+
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
       _settings['contentLastVerifiedAt'] = pack.lastVerifiedAt;
       for (final courseId in courseIds) {
@@ -81,7 +85,6 @@ class FakeLocalStore extends LocalStore {
       }
     }
     for (final q in pack.questions) {
-      _questions.removeWhere((existing) => existing.id == q.id);
       _questions.add(q.toQuestion(packId: pack.packId));
     }
   }
@@ -154,21 +157,23 @@ class FakeLocalStore extends LocalStore {
     var result = List<Attempt>.from(_attempts);
     if (courseId != null) {
       result = result
-          .where((a) => _inCourse(a.questionId, courseId))
+          .where((a) => _inCourseOrUnattributed(a.questionId, courseId))
           .toList();
     }
     return List.unmodifiable(result.reversed.toList());
   }
 
-  /// Mirrors [LocalStore.getAttempts]: only attempts on questions attributed
-  /// to the selected course are shown under that course.
-  bool _inCourse(String questionId, String courseId) {
+  /// Mirrors [LocalStore.getAttempts]: rows without course attribution stay
+  /// visible in a course-scoped view.
+  bool _inCourseOrUnattributed(String questionId, String courseId) {
+    String? course;
     for (final q in _questions) {
       if (q.id == questionId) {
-        return q.courseId == courseId;
+        course = q.courseId;
+        break;
       }
     }
-    return false;
+    return course == null || course.isEmpty || course == courseId;
   }
 
   @override
@@ -181,7 +186,10 @@ class FakeLocalStore extends LocalStore {
       result = result.where((s) => s.mode == mode).toList();
     }
     if (courseId != null) {
-      result = result.where((s) => s.courseId == courseId).toList();
+      result = result
+          .where((s) =>
+              s.courseId == null || s.courseId!.isEmpty || s.courseId == courseId)
+          .toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);

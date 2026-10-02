@@ -139,10 +139,12 @@ as the question rows, so a failed write never leaves a stale ledger behind.
 Packs are applied inside a single SQLite transaction. If any part of the write
 fails, the whole transaction rolls back and the database is unchanged.
 
-Question rows are keyed by `id`. Re-applying the same pack, or applying a newer
-version with overlapping IDs, replaces the matching question rows but never
-touches the `attempts` or `sessions` tables. This makes repeat loading safe and
-keeps user history intact.
+Question rows are keyed by `id`. Applying a pack replaces that pack's rows in
+full inside the same transaction: questions present in the new pack version
+are inserted or updated, and questions dropped from a newer version are
+deleted. A pack with no questions is rejected (it would otherwise erase the
+bank). The `attempts` and `sessions` tables are never touched, so user history
+survives every apply.
 
 ## Schema migration from v1
 

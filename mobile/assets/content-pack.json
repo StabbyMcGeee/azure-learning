@@ -280,23 +280,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-087",
-      "text": "An organization wants to move its existing on-premises servers and databases to Azure and needs a hub of tools to assess and carry out the migration. Which service is designed for this?",
-      "options": [
-        "Azure Data Box",
-        "Azure Migrate",
-        "Azure Backup",
-        "Azure ExpressRoute"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Azure Migrate is a service that provides tools to discover, assess, and migrate on-premises servers, databases, and web apps to Azure.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-088",
       "text": "With infrastructure as a service (IaaS), which layers does the customer manage?",
       "options": [
@@ -1249,23 +1232,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-128",
-      "text": "Which design choice improves reliability by keeping a workload running when one datacenter in a region fails?",
-      "options": [
-        "Using a single availability zone",
-        "Deploying across multiple availability zones",
-        "Putting all resources in one resource group",
-        "Using one storage account"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Deploying across multiple availability zones keeps a workload running when a single datacenter in the region fails.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-129",
       "text": "Which feature keeps virtual machines available during Azure planned maintenance by placing them in separate update domains?",
       "options": [
@@ -1293,23 +1259,6 @@
       ],
       "correctOptionIndex": 1,
       "explanation": "Azure Virtual Desktop delivers virtualized desktops and applications that users access remotely.",
-      "domain": "Azure Architecture and Services",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-135",
-      "text": "A government agency needs Azure services that are physically and logically isolated from commercial Azure regions to satisfy national legal requirements. Which region type provides this?",
-      "options": [
-        "sovereign regions",
-        "availability zones",
-        "resource groups",
-        "virtual networks"
-      ],
-      "correctOptionIndex": 0,
-      "explanation": "Sovereign regions are physically and logically isolated Azure environments for customers with strict legal or compliance requirements, such as government agencies.",
       "domain": "Azure Architecture and Services",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -2082,23 +2031,6 @@
       "courseId": "az-900"
     },
     {
-      "id": "az-900-106",
-      "text": "Which service would you use to gain a unified view of metrics and logs across your Azure resources?",
-      "options": [
-        "Azure Advisor",
-        "Azure Policy",
-        "Azure Monitor",
-        "Azure Service Health"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "Azure Monitor provides a unified view of metrics and logs across Azure resources.",
-      "domain": "Azure Management and Governance",
-      "difficulty": "hard",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
       "id": "az-900-112",
       "text": "Which statement about Azure Monitor is correct?",
       "options": [
@@ -2194,23 +2126,6 @@
       ],
       "correctOptionIndex": 1,
       "explanation": "Microsoft Cost Management helps monitor spending, set budgets, and alert when costs exceed thresholds.",
-      "domain": "Azure Management and Governance",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "az-900"
-    },
-    {
-      "id": "az-900-126",
-      "text": "Which service classifies and labels sensitive data across an organization's data estate?",
-      "options": [
-        "Microsoft Purview",
-        "Azure Advisor",
-        "Azure Monitor",
-        "Azure Service Health"
-      ],
-      "correctOptionIndex": 0,
-      "explanation": "Microsoft Purview classifies and labels sensitive data so an organization can discover and govern it across its estate.",
       "domain": "Azure Management and Governance",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn, retrieved 2026-10-02",
@@ -3935,23 +3850,6 @@
       "courseId": "ai-901"
     },
     {
-      "id": "ai-901-029",
-      "text": "A developer wants a model's responses to be highly consistent and predictable. Which configuration parameter should be lowered?",
-      "options": [
-        "max tokens",
-        "the system prompt",
-        "the endpoint URL",
-        "temperature"
-      ],
-      "correctOptionIndex": 3,
-      "explanation": "Lowering the temperature reduces randomness, making responses more consistent and predictable.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
       "id": "ai-901-030",
       "text": "Which Foundry workflow step lets you test a model's responses directly through a chat interface in the portal?",
       "options": [
@@ -4020,23 +3918,6 @@
       "courseId": "ai-901"
     },
     {
-      "id": "ai-901-034",
-      "text": "A developer builds an app that converts spoken audio to text and then reads the answer back aloud. Which Foundry tool provides these speech capabilities?",
-      "options": [
-        "Azure Content Understanding in Foundry Tools",
-        "Azure Speech in Foundry Tools",
-        "A sentiment analysis model",
-        "A keyword extraction model"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "Azure Speech in Foundry Tools provides speech recognition and speech synthesis for converting audio to text and text to speech.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
       "id": "ai-901-035",
       "text": "Which Foundry capability lets a developer create new images from text descriptions?",
       "options": [
@@ -4064,23 +3945,6 @@
       ],
       "correctOptionIndex": 0,
       "explanation": "Microsoft Foundry supports building lightweight applications that perform text analysis such as entity detection and sentiment analysis.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
-      "id": "ai-901-037",
-      "text": "Which model type interprets visual input supplied in a prompt, such as asking about an uploaded image?",
-      "options": [
-        "A speech synthesis model",
-        "A multimodal model",
-        "A keyword extraction model",
-        "A data model"
-      ],
-      "correctOptionIndex": 1,
-      "explanation": "A multimodal model can interpret visual input in prompts, such as reasoning about an uploaded image alongside text.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
@@ -4156,40 +4020,6 @@
       "courseId": "ai-901"
     },
     {
-      "id": "ai-901-043",
-      "text": "A developer builds a lightweight application that shortens long documents while keeping their main points. Which text analysis technique does it use?",
-      "options": [
-        "summarization",
-        "entity detection",
-        "sentiment analysis",
-        "keyword extraction"
-      ],
-      "correctOptionIndex": 0,
-      "explanation": "Summarization condenses a long document into a shorter version while keeping the main points.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
-      "id": "ai-901-044",
-      "text": "A developer builds an app that answers spoken questions by using a model that processes both audio and text. Which model type is required?",
-      "options": [
-        "A keyword extraction model",
-        "A sentiment analysis model",
-        "A multimodal model",
-        "A table model"
-      ],
-      "correctOptionIndex": 2,
-      "explanation": "Responding to spoken prompts uses a deployed multimodal model that processes both audio and text.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
       "id": "ai-901-045",
       "text": "A developer builds an app that detects objects in photos. Which Foundry capability supports this?",
       "options": [
@@ -4200,40 +4030,6 @@
       ],
       "correctOptionIndex": 1,
       "explanation": "Vision capabilities in Foundry include object detection for locating objects within images.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
-      "id": "ai-901-046",
-      "text": "Which Foundry capability extracts printed text and structured fields from a scanned image?",
-      "options": [
-        "Speech synthesis",
-        "Sentiment analysis",
-        "Keyword extraction",
-        "Content Understanding"
-      ],
-      "correctOptionIndex": 3,
-      "explanation": "Content Understanding extracts information from images, including printed text and structured fields, using optical character recognition.",
-      "domain": "Microsoft Foundry",
-      "difficulty": "medium",
-      "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",
-      "rightsBasis": "original-human-ai-assisted",
-      "courseId": "ai-901"
-    },
-    {
-      "id": "ai-901-047",
-      "text": "A developer needs to extract spoken words and visual text from a video recording. Which Foundry capability handles audio and video content?",
-      "options": [
-        "Content Understanding",
-        "Speech synthesis",
-        "Sentiment analysis",
-        "Keyword extraction"
-      ],
-      "correctOptionIndex": 0,
-      "explanation": "Content Understanding extracts information from audio and video, including spoken words and visual text.",
       "domain": "Microsoft Foundry",
       "difficulty": "medium",
       "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts from Microsoft Learn AI-901 study guide (2026-04-15) and docs, retrieved 2026-10-02",

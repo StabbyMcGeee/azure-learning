@@ -1,8 +1,9 @@
-"""AZ-900 additions to align weighting to the study guide and fill gaps.
+"""AZ-900 additional items (coverage and weighting).
 
-Adds cloud-concepts items to lift the DC share into its 25-30% band and adds
-the two missing-objective items (storage tiers, defense-in-depth) plus two
-management items.
+Adds distinct cloud-concepts, management, and architecture items to round out
+coverage, including the missing-objective items for storage tiers and
+defense-in-depth. Weighting-pad items that duplicated an existing fact were
+later removed; only distinct items remain.
 """
 
 SRC = (

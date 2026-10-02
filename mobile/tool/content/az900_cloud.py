@@ -425,32 +425,6 @@ QUESTIONS = [
         "rightsBasis": BASIS,
         "courseId": COURSE,
     },
-    # az-900-087 -> AA.3 Azure Migrate (re-scoped from "6 Rs")
-    {
-        "id": "az-900-087",
-        "text": (
-            "An organization wants to move its existing on-premises servers "
-            "and databases to Azure and needs a hub of tools to assess and "
-            "carry out the migration. Which service is designed for this?"
-        ),
-        "options": [
-            "Azure Migrate",
-            "Azure Data Box",
-            "Azure Backup",
-            "Azure ExpressRoute",
-        ],
-        "correctOptionIndex": 0,
-        "explanation": (
-            "Azure Migrate is a service that provides tools to discover, "
-            "assess, and migrate on-premises servers, databases, and web "
-            "apps to Azure."
-        ),
-        "domain": "Azure Architecture and Services",
-        "difficulty": "hard",
-        "source": SRC,
-        "rightsBasis": BASIS,
-        "courseId": COURSE,
-    },
     # az-900-088 -> DC.3 IaaS / PaaS / SaaS
     {
         "id": "az-900-088",

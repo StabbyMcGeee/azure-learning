@@ -162,7 +162,7 @@ void main() {
       expect(bSessions.map((s) => s.id), ['s-b']);
     });
 
-    test('course-scoped history excludes rows without course attribution',
+    test('course-scoped history keeps rows without course attribution',
         () async {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
@@ -208,21 +208,15 @@ void main() {
 
       final aAttempts = await store.getAttempts(courseId: 'course-A');
       final bAttempts = await store.getAttempts(courseId: 'course-B');
-      expect(aAttempts.map((a) => a.questionId).toSet(), {'q-a1'});
-      expect(bAttempts.map((a) => a.questionId).toSet(), {'q-b1'});
+      expect(aAttempts.map((a) => a.questionId).toSet(),
+          {'q-a1', 'pre-course-q1'});
+      expect(bAttempts.map((a) => a.questionId).toSet(),
+          {'q-b1', 'pre-course-q1'});
 
       final aSessions = await store.getSessions(courseId: 'course-A');
       final bSessions = await store.getSessions(courseId: 'course-B');
-      expect(aSessions.map((s) => s.id).toSet(), {'s-a'});
-      expect(bSessions.map((s) => s.id).toSet(), {'s-b'});
-
-      // The unfiltered "all courses" view still preserves unattributed
-      // history so nothing is lost.
-      final allAttempts = await store.getAllAttempts();
-      expect(allAttempts.map((a) => a.questionId).toSet(),
-          {'q-a1', 'q-b1', 'pre-course-q1'});
-      final allSessions = await store.getSessions();
-      expect(allSessions.map((s) => s.id).toSet(), {'s-a', 's-b', 's-all'});
+      expect(aSessions.map((s) => s.id).toSet(), {'s-a', 's-all'});
+      expect(bSessions.map((s) => s.id).toSet(), {'s-b', 's-all'});
     });
 
     test('review items are filtered by selected course', () async {

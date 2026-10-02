@@ -1,9 +1,10 @@
 """AZ-900 management-and-governance replacement items (fresh originals).
 
-Covers the 52 governance-category slots of the existing 133-question bank.
-Items whose public objective is an architecture-and-services topic (Azure RBAC,
-Microsoft Defender for Cloud, sovereign regions) carry that domain tag. The
-bank's wording was not read or reused; each slot was rewritten from scratch.
+Fresh-original items for the management-and-governance domain of the existing
+133-question bank. Items whose public objective is an architecture-and-services
+topic (Azure RBAC, Microsoft Defender for Cloud, sovereign regions) carry that
+domain tag. The bank's wording was not read or reused; each item was rewritten
+from scratch.
 """
 
 SRC = (
@@ -587,20 +588,6 @@ QUESTIONS = [
       0,
       "Log Analytics stores and queries log data collected by Azure Monitor.",
       "hard"),
-    # az-900-106 -> MG.4 Azure Monitor
-    q("az-900-106",
-      "Which service would you use to gain a unified view of metrics and logs "
-      "across your Azure resources?",
-      [
-          "Azure Monitor",
-          "Azure Advisor",
-          "Azure Policy",
-          "Azure Service Health",
-      ],
-      0,
-      "Azure Monitor provides a unified view of metrics and logs across "
-      "Azure resources.",
-      "hard"),
     # az-900-112 -> MG.4 Azure Monitor
     q("az-900-112",
       "Which statement about Azure Monitor is correct?",
@@ -684,20 +671,6 @@ QUESTIONS = [
       0,
       "Microsoft Cost Management helps monitor spending, set budgets, and "
       "alert when costs exceed thresholds.",
-      "medium"),
-    # az-900-126 -> MG.2 Microsoft Purview (re-scoped from compliance offerings)
-    q("az-900-126",
-      "Which service classifies and labels sensitive data across an "
-      "organization's data estate?",
-      [
-          "Microsoft Purview",
-          "Azure Advisor",
-          "Azure Monitor",
-          "Azure Service Health",
-      ],
-      0,
-      "Microsoft Purview classifies and labels sensitive data so an "
-      "organization can discover and govern it across its estate.",
       "medium"),
     # az-900-130 -> AA.1 sovereign regions (adjacent: EU Data Boundary)
     q("az-900-130",

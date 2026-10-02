@@ -274,6 +274,9 @@ class ContentPackValidator {
   }
 
   void _validateQuestions(List<String> errors) {
+    if (pack.questions.isEmpty) {
+      errors.add('Pack must contain at least one question');
+    }
     if (pack.questions.length > contentPackMaxQuestions) {
       errors.add(
         'Pack contains ${pack.questions.length} questions; '

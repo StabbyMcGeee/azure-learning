@@ -47,7 +47,7 @@ void main() {
     for (final q in pack.questions) {
       counts[q.courseId] = (counts[q.courseId] ?? 0) + 1;
     }
-    expect(counts, {'az-900': 146, 'dp-900': 57, 'ai-901': 47});
+    expect(counts, {'az-900': 141, 'dp-900': 57, 'ai-901': 40});
   });
 
   test('AZ-900 ships every slot except the recorded duplicates', () {
@@ -60,9 +60,14 @@ void main() {
       'az-900-056',
       'az-900-061',
       'az-900-079',
+      'az-900-087',
       'az-900-090',
       'az-900-103',
+      'az-900-106',
       'az-900-109',
+      'az-900-126',
+      'az-900-128',
+      'az-900-135',
       'az-900-141',
       'az-900-143',
       'az-900-152',
@@ -71,7 +76,7 @@ void main() {
       for (var n = 1; n <= 156; n++) 'az-900-${n.toString().padLeft(3, '0')}',
     }..removeAll(dropped);
 
-    expect(az.length, 146);
+    expect(az.length, 141);
     expect(az.map((q) => q.id).toSet(), expected);
   });
 
