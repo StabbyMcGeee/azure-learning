@@ -5,9 +5,10 @@ import 'local_store.dart';
 
 /// Loads bounded, versioned offline content packs into a [LocalStore].
 ///
-/// The loader is defensive: malformed, unsupported, or missing packs are
-/// ignored so the app always starts with the bank it already has, including
-/// preserved user history.
+/// The loader is total: every problem - a missing asset, malformed JSON, an
+/// unsupported or invalid pack, a rejected downgrade, or a storage failure -
+/// leaves the question bank and user history untouched instead of throwing, so
+/// callers can always fall back to the current bank.
 class ContentPackLoader {
   static const String defaultAssetPath = 'assets/content-pack.json';
 
@@ -16,44 +17,41 @@ class ContentPackLoader {
   /// Attempts to load a bundled pack from [assetPath].
   ///
   /// Returns `true` when a pack was found, parsed, validated, and applied.
-  /// Returns `false` for any problem — a missing asset, malformed pack,
-  /// database failure, or platform error — so the app always keeps its
-  /// existing bank and starts regardless of pack-load outcome.
+  /// Returns `false` for any problem, including a missing asset, so the app
+  /// keeps its existing bank.
   static Future<bool> loadBundledPackIfPresent(
     LocalStore store, {
     String assetPath = defaultAssetPath,
   }) async {
     try {
       final jsonString = await rootBundle.loadString(assetPath);
-      return await ContentPackLoader.loadPackFromString(store, jsonString);
-    } catch (_) {
-      // Missing/invalid asset, malformed pack, or any storage/platform error:
-      // keep the existing bank and never prevent the app from starting.
+      return await loadPackFromString(store, jsonString);
+    } on Object {
       return false;
     }
   }
 
   /// Parses, validates, and applies a pack from a raw JSON string.
   ///
-  /// Returns `true` on success, `false` when the pack is invalid.
+  /// Returns `true` on success, `false` when the pack is invalid or could not
+  /// be applied.
   static Future<bool> loadPackFromString(LocalStore store, String jsonString) async {
-    late final ContentPack pack;
+    final ContentPack pack;
     try {
       pack = ContentPack.parse(jsonString);
     } on FormatException {
       return false;
     }
 
-    final errors = ContentPackValidator(pack).validate();
-    if (errors.isNotEmpty) {
+    if (ContentPackValidator(pack).validate().isNotEmpty) {
       return false;
     }
 
     try {
       await store.applyContentPack(pack);
-      return true;
-    } on PackVersionTooLowException {
+    } on Object {
       return false;
     }
+    return true;
   }
 }

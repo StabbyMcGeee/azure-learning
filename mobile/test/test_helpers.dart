@@ -136,7 +136,13 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
-  Future<String?> getSelectedCourseId() async => _selectedCourseId;
+  Future<String?> getSelectedCourseId() async {
+    final courses = await getCourses();
+    if (_selectedCourseId != null && !courses.contains(_selectedCourseId)) {
+      _selectedCourseId = null;
+    }
+    return _selectedCourseId;
+  }
 
   @override
   Future<void> setSelectedCourseId(String? courseId) async {
@@ -158,24 +164,18 @@ class FakeLocalStore extends LocalStore {
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     var result = List<Attempt>.from(_attempts);
     if (courseId != null) {
-      result = result
-          .where((a) => _inCourseOrUnattributed(a.questionId, courseId))
-          .toList();
+      final courseQuestionIds = _questions
+          .where((q) => q.courseId == courseId)
+          .map((q) => q.id)
+          .toSet();
+      result = result.where((a) {
+        if (courseQuestionIds.contains(a.questionId)) return true;
+        return _questions
+            .where((q) => q.id == a.questionId)
+            .every((q) => q.courseId == null || q.courseId!.isEmpty);
+      }).toList();
     }
     return List.unmodifiable(result.reversed.toList());
-  }
-
-  /// Mirrors [LocalStore.getAttempts]: rows without course attribution stay
-  /// visible in a course-scoped view.
-  bool _inCourseOrUnattributed(String questionId, String courseId) {
-    String? course;
-    for (final q in _questions) {
-      if (q.id == questionId) {
-        course = q.courseId;
-        break;
-      }
-    }
-    return course == null || course.isEmpty || course == courseId;
   }
 
   @override
@@ -188,10 +188,8 @@ class FakeLocalStore extends LocalStore {
       result = result.where((s) => s.mode == mode).toList();
     }
     if (courseId != null) {
-      result = result
-          .where((s) =>
-              s.courseId == null || s.courseId!.isEmpty || s.courseId == courseId)
-          .toList();
+      result =
+          result.where((s) => s.courseId == courseId || s.courseId == null).toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);
@@ -214,29 +212,6 @@ class FakeLocalStore extends LocalStore {
     final statuses = _studyStatuses[courseId];
     if (statuses == null) return const {};
     return Map.unmodifiable(statuses);
-  }
-
-  @override
-  Future<StudyProgress> getStudyProgress(String courseId) async {
-    final questions = _questions.where((q) => q.courseId == courseId).toList();
-    final statuses = _studyStatuses[courseId] ?? const {};
-    int seen = 0;
-    int needsReview = 0;
-    for (final q in questions) {
-      final status = statuses[q.id];
-      if (status == StudyMaterialStatus.seen) {
-        seen++;
-      } else if (status == StudyMaterialStatus.needsReview) {
-        seen++;
-        needsReview++;
-      }
-    }
-    return StudyProgress(
-      courseId: courseId,
-      total: questions.length,
-      seen: seen,
-      needsReview: needsReview,
-    );
   }
 
   @override

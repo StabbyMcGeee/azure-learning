@@ -27,6 +27,7 @@ const String _validPackJson = '''
       "text": "Sample question one?",
       "options": ["A", "B", "C"],
       "correctOptionIndex": 1,
+      "explanation": "B is correct.",
       "domain": "Domain A",
       "difficulty": "easy",
       "source": "Per-question fixture",
@@ -140,6 +141,16 @@ void main() {
       final pack = ContentPack.parse(json);
       final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('missing or empty rightsBasis')));
+    });
+
+    test('rejects missing per-question explanation', () {
+      final json = _validPackJson.replaceFirst(
+        '"explanation": "B is correct.",',
+        '',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('missing or empty explanation')));
     });
 
     test('rejects missing per-question courseId', () {
@@ -361,6 +372,35 @@ void main() {
       final success = await ContentPackLoader.loadPackFromString(store, badPack);
       expect(success, isFalse);
       expect(await store.getQuestions(), isEmpty);
+    });
+
+    test('pack without an explanation is rejected and writes nothing', () async {
+      final noExplanation = _validPackJson.replaceFirst(
+        '"explanation": "B is correct.",',
+        '',
+      );
+      final success =
+          await ContentPackLoader.loadPackFromString(store, noExplanation);
+      expect(success, isFalse);
+      expect(await store.getQuestions(), isEmpty);
+    });
+
+    test('storage failures are reported as false instead of propagating',
+        () async {
+      final db = await openTestDatabase();
+      final store = LocalStore.withDatabase(db);
+      await store.applyContentPack(ContentPack.parse(_validPackJson));
+      expect(await store.getQuestions(), hasLength(2));
+
+      // Every write against a closed database fails.
+      await db.close();
+
+      final success = await ContentPackLoader.loadPackFromString(
+        store,
+        _validPackJson,
+      );
+
+      expect(success, isFalse);
     });
 
     test('repeat loading does not duplicate questions', () async {

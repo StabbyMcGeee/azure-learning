@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,6 +9,7 @@ import 'package:study_app/data/content_pack_loader.dart';
 import 'package:study_app/data/local_store.dart';
 import 'package:study_app/models/attempt.dart';
 import 'package:study_app/models/content_pack.dart';
+import 'package:study_app/models/question.dart';
 import 'package:study_app/models/session.dart';
 
 import 'test_helpers.dart';
@@ -23,12 +25,12 @@ String _packJson({
     'text': 'Question $id',
     'options': <String>['A', 'B'],
     'correctOptionIndex': 0,
+    'explanation': 'A is correct.',
     'domain': 'Domain',
     'difficulty': 'easy',
     'source': 'Test fixture',
     'rightsBasis': 'original-human',
     'courseId': courseId,
-  }).toList();
 
   return '''
   {
@@ -242,11 +244,124 @@ void main() {
     });
 
     test('selected course is persisted', () async {
+      await store.applyContentPack(ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 1,
+        courseId: 'course-A',
+        questionIds: ['q-a1'],
+      )));
       expect(await store.getSelectedCourseId(), isNull);
       await store.setSelectedCourseId('az-900');
       expect(await store.getSelectedCourseId(), 'az-900');
       await store.setSelectedCourseId(null);
       expect(await store.getSelectedCourseId(), isNull);
+    });
+
+    test('a selection whose course is withdrawn is cleared', () async {
+      await store.applyContentPack(ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 1,
+        courseId: 'course-A',
+        questionIds: ['q-a1'],
+      )));
+      await store.applyContentPack(ContentPack.parse(_packJson(
+        packId: 'pack-b',
+        packVersion: 1,
+        courseId: 'course-B',
+        questionIds: ['q-b1'],
+      )));
+      await store.setSelectedCourseId('course-A');
+      expect(await store.getSelectedCourseId(), 'course-A');
+
+      await store.withdrawPack('pack-a');
+
+      expect(await store.getSelectedCourseId(), isNull);
+      final effective = await store.getSelectedCourseId();
+      expect(await store.getQuestions(courseId: effective), hasLength(1));
+    });
+
+    test('history without course attribution stays visible in every course',
+        () async {
+      await store.applyContentPack(ContentPack.parse(_packJson(
+        packId: 'pack-a',
+        packVersion: 1,
+        courseId: 'course-A',
+        questionIds: ['q-a1'],
+      )));
+      await store.applyContentPack(ContentPack.parse(_packJson(
+        packId: 'pack-b',
+        packVersion: 1,
+        courseId: 'course-B',
+        questionIds: ['q-b1'],
+      )));
+
+      // A question from before courses existed, plus its attempt and session.
+      await store.insertQuestions(const [
+        Question(
+          id: 'legacy-001',
+          text: 'Legacy question',
+          options: ['A', 'B'],
+          correctOptionIndex: 0,
+          explanation: 'A is correct.',
+          domain: 'Legacy',
+          difficulty: 'easy',
+        ),
+      ]);
+      await store.recordAttempt(Attempt(
+        questionId: 'legacy-001',
+        selectedOptionIndex: 0,
+        correct: true,
+        timestamp: DateTime.now(),
+      ));
+      await store.recordAttempt(Attempt(
+        questionId: 'q-a1',
+        selectedOptionIndex: 0,
+        correct: true,
+        timestamp: DateTime.now(),
+      ));
+      await store.recordAttempt(Attempt(
+        questionId: 'q-b1',
+        selectedOptionIndex: 0,
+        correct: false,
+        timestamp: DateTime.now(),
+      ));
+      await store.saveSession(StudySession(
+        id: 'legacy-session',
+        mode: 'exam',
+        startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
+        finishedAt: DateTime.now(),
+        questionCount: 1,
+        correctCount: 1,
+        scorePercent: 100,
+      ));
+      await store.saveSession(StudySession(
+        id: 'b-session',
+        mode: 'exam',
+        courseId: 'course-B',
+        startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
+        finishedAt: DateTime.now(),
+        questionCount: 1,
+        correctCount: 0,
+        scorePercent: 0,
+      ));
+
+      final aAttempts = await store.getAttempts(courseId: 'course-A');
+      final bAttempts = await store.getAttempts(courseId: 'course-B');
+      expect(aAttempts.map((a) => a.questionId),
+          containsAll(['legacy-001', 'q-a1']));
+      expect(aAttempts.map((a) => a.questionId), isNot(contains('q-b1')));
+      expect(bAttempts.map((a) => a.questionId),
+          containsAll(['legacy-001', 'q-b1']));
+      expect(bAttempts.map((a) => a.questionId), isNot(contains('q-a1')));
+
+      expect(
+        (await store.getSessions(courseId: 'course-A')).map((s) => s.id),
+        ['legacy-session'],
+      );
+      expect(
+        (await store.getSessions(courseId: 'course-B')).map((s) => s.id),
+        containsAll(['legacy-session', 'b-session']),
+      );
     });
   });
 
@@ -399,6 +514,13 @@ void main() {
       expect(await store.getAttempts(), hasLength(2));
       expect(await store.getSessions(), hasLength(1));
 
+      // Attempts on withdrawn questions are not attributable to any course,
+      // so they stay visible in every course scope.
+      expect(
+        (await store.getAttempts(courseId: 'course-B')).map((a) => a.questionId),
+        containsAll(['q-a1', 'q-b1']),
+      );
+
       // Re-applying the withdrawn pack at its original version succeeds now
       // that the ledger entry has been removed.
       await store.applyContentPack(packA);
@@ -431,6 +553,15 @@ void main() {
       expect(questions, isNotEmpty);
       expect(questions.map((q) => q.courseId).toSet(),
           containsAll(['az-900', 'dp-900', 'ai-901']));
+    });
+
+    testWidgets('bundled content-pack asset is resolvable by the asset bundle',
+        (tester) async {
+      await expectLater(
+        rootBundle.loadString(ContentPackLoader.defaultAssetPath),
+        completes,
+      );
+    });
     });
 
     test('loadBundledPackIfPresent returns false for a missing asset path',

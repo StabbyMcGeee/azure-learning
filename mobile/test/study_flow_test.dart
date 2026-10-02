@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:study_app/app.dart';
+import 'package:study_app/models/content_pack.dart';
 import 'package:study_app/models/question.dart';
 
 import 'test_helpers.dart';
@@ -143,7 +144,7 @@ void main() {
       await tester.tap(find.text('Needs more work').first);
       await tester.pumpAndSettle();
 
-      expect(await store.getAllAttempts(), isEmpty);
+      expect(await store.getAttempts(), isEmpty);
     });
 
     testWidgets('Resume action surfaces when there is unfinished material',
@@ -158,8 +159,92 @@ void main() {
 
       expect(find.text('Resume'), findsOneWidget);
     });
+
+    testWidgets('coverage follows content that is replaced or withdrawn',
+        (tester) async {
+      final store = FakeLocalStore();
+      await store.applyContentPack(
+        _pack('pack-a', 'AZ-900', ['study-001', 'study-002']),
+      );
+      await tester.pumpWidget(StudyApp(store: store));
+
+      await tester.tap(find.text('Study'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('AZ-900'));
+      await tester.pumpAndSettle();
+      expect(find.text('0 of 2 items seen'), findsOneWidget);
+
+      await tester.ensureVisible(find.text('Mark seen').first);
+      await tester.tap(find.text('Mark seen').first);
+      await tester.pumpAndSettle();
+      await tester.fling(find.byType(ListView), const Offset(0, 300), 1000);
+      await tester.pumpAndSettle();
+      expect(find.text('1 of 2 items seen'), findsOneWidget);
+
+      // The course's pack is replaced by different material. The status stored
+      // for the withdrawn item must not count toward the new total.
+      await store.withdrawPack('pack-a');
+      await store.applyContentPack(
+        _pack('pack-b', 'AZ-900', ['study-009']),
+      );
+      await tester.fling(find.byType(ListView), const Offset(0, 300), 1000);
+      await tester.pumpAndSettle();
+      expect(find.text('0 of 1 items seen'), findsOneWidget);
+      expect(find.text('New'), findsOneWidget);
+    });
+
+    testWidgets('a withdrawn course selection falls back to all content',
+        (tester) async {
+      final store = FakeLocalStore();
+      await store.applyContentPack(
+        _pack('pack-a', 'course-A', ['a-001', 'a-002']),
+      );
+      await store.applyContentPack(
+        _pack('pack-b', 'course-B', ['b-001']),
+      );
+      await tester.pumpWidget(StudyApp(store: store));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('All courses'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('course-A').last);
+      await tester.pumpAndSettle();
+      expect(await store.getSelectedCourseId(), 'course-A');
+
+      await store.withdrawPack('pack-a');
+      await tester.tap(find.text('Practice'));
+      await tester.pumpAndSettle();
+
+      expect(await store.getSelectedCourseId(), isNull);
+      expect(find.text('Question b-001'), findsOneWidget);
+    });
   });
 }
+
+ContentPack _pack(String packId, String courseId, List<String> questionIds) =>
+    ContentPack(
+      formatVersion: contentPackFormatVersion,
+      packId: packId,
+      packVersion: 1,
+      title: 'Test pack',
+      source: 'synthetic',
+      rightsBasis: 'synthetic',
+      questions: [
+        for (final id in questionIds)
+          PackQuestion(
+            id: id,
+            text: 'Question $id',
+            options: const ['A', 'B'],
+            correctOptionIndex: 0,
+            explanation: 'A is correct.',
+            domain: 'Cloud Concepts',
+            difficulty: 'easy',
+            source: 'synthetic',
+            rightsBasis: 'synthetic',
+            courseId: courseId,
+          ),
+      ],
+    );
 
 List<Question> _sampleQuestions() => const [
   Question(

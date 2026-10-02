@@ -20,8 +20,9 @@ On startup the app attempts to load a bundled asset at:
 assets/content-pack.json
 ```
 
-If the asset is absent, malformed, unsupported, or invalid, the loader returns
-`false` and the app keeps the bank it already has. No error is shown
+If the asset is absent, malformed, unsupported, invalid, or cannot be written to
+the database, the loader returns `false` and the app keeps the current bank. It
+never throws, so startup always reaches the first frame. No error is shown
 to the user. To ship a pack, place the prepared JSON file at that path and make
 sure it is listed in the `assets` section of `pubspec.yaml`.
 
@@ -81,7 +82,7 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 | `text`                | string  | yes      | Question prompt.                                                               |
 | `options`             | array   | yes      | At least two strings.                                                          |
 | `correctOptionIndex`  | int     | yes      | Zero-based index into `options`.                                               |
-| `explanation`         | string  | no       | Explanation shown after answering.                                             |
+| `explanation`         | string  | yes      | Explanation shown with the correct answer in study mode.               |
 | `domain`              | string  | yes      | Domain or topic tag.                                                           |
 | `difficulty`          | string  | yes      | Difficulty label.                                                              |
 | `source`              | string  | yes      | Per-question source; can differ from pack-level source.                        |
@@ -92,7 +93,12 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 
 The `courseId` is never hardcoded in the app. A learner can select any course
 present in the loaded packs, and study, practice, exam, review, and progress
-screens scope their content to that selection.
+screens scope their content to that selection. A stored selection whose course
+is no longer in the bank (its pack was withdrawn or replaced) is cleared, so
+every screen falls back to all content instead of an empty course. History rows
+that carry no `courseId` - questions from before courses existed, and questions
+whose pack was withdrawn - count in every course scope, so selecting a course
+never hides earlier attempts or sessions.
 
 ## Validation
 
@@ -104,6 +110,7 @@ Before any database write the parser/validator checks:
 - All required pack-level and per-question string fields are present and non-empty.
 - Optional string fields (`licenseRef`, `attributionText`, `lastVerifiedAt`) are
   strings when present; non-string values throw `FormatException`.
+- Every question has an `explanation`, so study mode always shows the answer together with its reasoning.
 - Every question has at least two options.
 - `correctOptionIndex` is within the range of the options array.
 - All question IDs are unique within the pack.
@@ -185,6 +192,8 @@ automatically when an older database is opened at version 3.
 3. Build a JSON file matching the `azpack-v2` schema above and run the
    terminology lint over the content (the validator does this automatically).
 4. Validate the file locally:
+   - Parse it with `ContentPack.parse(jsonString)` and assert that
+     `ContentPackValidator(pack).validate()` is empty in a Dart script or test.
    - Run the mobile tests, which exercise the validator with synthetic fixtures,
      or run `tool/build_content_pack.py` to regenerate and validate the
      production pack.

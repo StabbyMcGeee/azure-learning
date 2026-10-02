@@ -421,6 +421,11 @@ class LocalStore {
   }
 
   /// Returns the learner-selected course, or null when no course is selected.
+  ///
+  /// A stored id whose course is no longer in the bank (its pack was withdrawn
+  /// or replaced) is cleared here, so the dropdown and every other consumer
+  /// read the same selection instead of filtering to a course that has no
+  /// content.
   Future<String?> getSelectedCourseId() async {
     final db = await database;
     final rows = await db.query(
@@ -431,6 +436,11 @@ class LocalStore {
     if (rows.isEmpty) return null;
     final value = rows.first['value'] as String?;
     if (value == null || value.isEmpty) return null;
+    final courses = await getCourses();
+    if (!courses.contains(value)) {
+      await setSelectedCourseId(null);
+      return null;
+    }
     return value;
   }
 
@@ -481,30 +491,6 @@ class LocalStore {
     };
   }
 
-  /// Compute coverage for a course from the currently loaded question bank.
-  Future<StudyProgress> getStudyProgress(String courseId) async {
-    final questions = await getQuestions(courseId: courseId);
-    final statuses = await getStudyStatusesForCourse(courseId);
-
-    int seen = 0;
-    int needsReview = 0;
-    for (final q in questions) {
-      final status = statuses[q.id];
-      if (status == StudyMaterialStatus.seen) {
-        seen++;
-      } else if (status == StudyMaterialStatus.needsReview) {
-        seen++;
-        needsReview++;
-      }
-    }
-    return StudyProgress(
-      courseId: courseId,
-      total: questions.length,
-      seen: seen,
-      needsReview: needsReview,
-    );
-  }
-
   Future<void> recordAttempt(Attempt attempt) async {
     final db = await database;
     await db.insert('attempts', attempt.toMap());
@@ -524,9 +510,9 @@ class LocalStore {
   /// All recorded attempts, optionally filtered to a single course by joining
   /// with the current question bank.
   ///
-  /// Rows with no course attribution — attempts on a question the bank never
-  /// attributed, or whose question is no longer in the bank — are kept in the
-  /// course-scoped view so scoping never silently drops history.
+  /// Rows that cannot be attributed to any course - a question with no
+  /// `courseId`, or a question whose pack has been withdrawn - belong to every
+  /// course scope, so selecting a course never hides earlier history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
@@ -535,7 +521,7 @@ class LocalStore {
             '''
             SELECT a.* FROM attempts a
             LEFT JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ? OR q.courseId IS NULL OR q.courseId = ''
+            WHERE q.courseId = ? OR q.courseId IS NULL
             ORDER BY a.timestamp DESC
             ''',
             [courseId],
@@ -552,9 +538,10 @@ class LocalStore {
     );
   }
 
-  /// Recorded sessions, optionally filtered by mode and course. Sessions with
-  /// no course attribution (taken while every course was in scope) are kept in
-  /// a course-scoped view so scoping never silently drops history.
+  /// Sessions, optionally filtered by mode and course.
+  ///
+  /// Sessions without a `courseId` - every session recorded before courses
+  /// existed - belong to every course scope.
   Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
     final conditions = <String>[];
@@ -564,7 +551,7 @@ class LocalStore {
       whereArgs.add(mode);
     }
     if (courseId != null) {
-      conditions.add("(courseId = ? OR courseId IS NULL OR courseId = '')");
+      conditions.add('(courseId = ? OR courseId IS NULL)');
       whereArgs.add(courseId);
     }
     final rows = conditions.isEmpty

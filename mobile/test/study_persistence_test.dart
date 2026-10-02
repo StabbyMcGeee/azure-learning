@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:study_app/data/local_store.dart';
 import 'package:study_app/data/question_bank.dart';
-import 'package:study_app/models/question.dart';
+import 'package:study_app/models/content_pack.dart';
 import 'package:study_app/models/study_status.dart';
 
 import 'test_helpers.dart';
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('schema stores courseId on questions', () async {
-      final loaded = await store.getAllQuestions();
+      final loaded = await store.getQuestions();
       expect(loaded.every((q) => q.courseId?.isNotEmpty ?? false), isTrue);
     });
 
@@ -65,23 +65,6 @@ void main() {
       expect(az104['fixture-001'], StudyMaterialStatus.needsReview);
     });
 
-    test('getStudyProgress reflects only loaded course content', () async {
-      final progress = await store.getStudyProgress('AZ-900');
-      expect(progress.total, QuestionBank.syntheticFixtures().length);
-      expect(progress.seen, 0);
-      expect(progress.coverage, 0.0);
-
-      await store.saveStudyStatus(
-        courseId: 'AZ-900',
-        questionId: 'fixture-001',
-        status: StudyMaterialStatus.seen,
-      );
-      final updated = await store.getStudyProgress('AZ-900');
-      expect(updated.seen, 1);
-      expect(updated.needsReview, 0);
-      expect(updated.coverage, 1 / QuestionBank.syntheticFixtures().length);
-    });
-
     test('clearAllData removes study status rows', () async {
       await store.saveStudyStatus(
         courseId: 'AZ-900',
@@ -89,45 +72,51 @@ void main() {
         status: StudyMaterialStatus.seen,
       );
       await store.clearAllData();
-      expect(await store.getAllQuestions(), isEmpty);
+      expect(await store.getQuestions(), isEmpty);
       expect(await store.getStudyStatusesForCourse('AZ-900'), isEmpty);
     });
 
-    test('progress stays correct when content changes', () async {
-      // Mark all current AZ-900 fixtures as seen.
-      for (final q in QuestionBank.syntheticFixtures()) {
-        await store.saveStudyStatus(
-          courseId: 'AZ-900',
-          questionId: q.id,
-          status: StudyMaterialStatus.seen,
-        );
-      }
-
-      // Replace content with a single new question; previous statuses remain
-      // in the table but should not count toward the new coverage total.
-      await store.clearAllData();
-      await store.insertQuestions(const [
-        Question(
-          id: 'new-001',
-          text: 'New question',
-          options: ['A', 'B'],
-          correctOptionIndex: 0,
-          explanation: 'Because A is correct.',
-          domain: 'Cloud Concepts',
-          courseId: 'AZ-900',
-          difficulty: 'easy',
-        ),
-      ]);
+    test('statuses survive content replacement and stay per course', () async {
       await store.saveStudyStatus(
         courseId: 'AZ-900',
-        questionId: 'new-001',
-        status: StudyMaterialStatus.seen,
+        questionId: 'fixture-001',
+        status: StudyMaterialStatus.needsReview,
       );
 
-      final progress = await store.getStudyProgress('AZ-900');
-      expect(progress.total, 1);
-      expect(progress.seen, 1);
-      expect(progress.complete, isTrue);
+      // Content for the course is replaced by a pack carrying different ids.
+      await store.applyContentPack(ContentPack.parse(_replacementPackJson));
+
+      final statuses = await store.getStudyStatusesForCourse('AZ-900');
+      expect(statuses['fixture-001'], StudyMaterialStatus.needsReview);
+      expect(statuses.containsKey('replacement-001'), isFalse);
+      final otherCourse =
+          await store.getStudyStatusesForCourse('AZ-104');
+      expect(otherCourse, isEmpty);
     });
   });
 }
+
+const String _replacementPackJson = '''
+{
+  "formatVersion": "azpack-v2",
+  "packId": "com.example.studyapp.replacement",
+  "packVersion": 1,
+  "title": "Replacement pack",
+  "source": "Synthetic fixture",
+  "rightsBasis": "synthetic-fixture",
+  "questions": [
+    {
+      "id": "replacement-001",
+      "text": "Replacement question?",
+      "options": ["A", "B"],
+      "correctOptionIndex": 0,
+      "explanation": "A is correct.",
+      "domain": "Cloud Concepts",
+      "difficulty": "easy",
+      "source": "Synthetic fixture",
+      "rightsBasis": "synthetic-fixture",
+      "courseId": "AZ-900"
+    }
+  ]
+}
+''';

@@ -299,6 +299,10 @@ class ContentPackValidator {
         errors.add('$prefix: missing or empty text');
       }
 
+      if (q.explanation == null || q.explanation!.trim().isEmpty) {
+        errors.add('$prefix: missing or empty explanation');
+      }
+
       if (q.options.length < 2) {
         errors.add('$prefix: must have at least two options');
       }
