@@ -42,9 +42,30 @@ void main() {
     }
   });
 
-  test('AZ-900 replaces all 133 legacy slots plus the 7 gap topics', () {
+  test('course item counts match the documented coverage', () {
+    final counts = <String, int>{};
+    for (final q in pack.questions) {
+      counts[q.courseId] = (counts[q.courseId] ?? 0) + 1;
+    }
+    expect(counts, {'az-900': 152, 'dp-900': 57, 'ai-901': 49});
+  });
+
+  test('AZ-900 ships every slot except the four recorded duplicates', () {
     final az = pack.questions.where((q) => q.courseId == 'az-900').toList();
-    expect(az.length, greaterThanOrEqualTo(140));
+    // Ids run 001..156. 019/056/061/090 are dropped duplicate topics whose
+    // subject is retained elsewhere; see docs/content-provenance.md.
+    final dropped = {
+      'az-900-019',
+      'az-900-056',
+      'az-900-061',
+      'az-900-090',
+    };
+    final expected = {
+      for (var n = 1; n <= 156; n++) 'az-900-${n.toString().padLeft(3, '0')}',
+    }..removeAll(dropped);
+
+    expect(az.length, 152);
+    expect(az.map((q) => q.id).toSet(), expected);
   });
 
   test('question ids are unique across the pack', () {

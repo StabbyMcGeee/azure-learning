@@ -78,7 +78,7 @@ Azure OpenAI, Azure AI Foundry) is not used.
 
 | Course | Items | Basis |
 |---|---|---|
-| az-900 | 152 | 133 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus weighting-balance and missing-objective items (storage tiers, defense-in-depth) |
+| az-900 | 152 | 129 legacy slots replaced by fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added, plus 16 domain-weighting and missing-objective items (az-900-141..156, ending with storage tiers and defense-in-depth) |
 | dp-900 | 57 | Authored from the DP-900 skills outline (all four domains) |
 | ai-901 | 49 | Authored from the AI-901 skills outline (both domains) |
 
@@ -100,6 +100,19 @@ Domain weighting is aligned to the published study-guide bands:
 | az-900-125 | Azure support plans | MG.1 Microsoft Cost Management |
 | az-900-126 | Service Trust Portal | MG.2 Microsoft Purview |
 | az-900-132 | Azure Lighthouse | MG.3 Azure Arc |
+
+### AZ-900 legacy slots dropped as duplicate topics
+
+The shipped AZ-900 ids run `001`..`156`. Four legacy slots have no shipped id
+because their topic was already covered by a stronger item and keeping both
+would ship near-duplicate questions. Their subject is not lost:
+
+| Dropped slot | Duplicate topic | Retained coverage |
+|---|---|---|
+| az-900-019 | private IP address inside a virtual network | az-900-043, az-900-102 |
+| az-900-056 | what ExpressRoute provides | az-900-013, az-900-070 |
+| az-900-061 | private endpoint benefit for storage | az-900-063, az-900-102 |
+| az-900-090 | availability-zone characteristics | az-900-010, az-900-015, az-900-128, az-900-129 |
 
 ### AZ-900 gap topics added (not covered by the legacy bank)
 

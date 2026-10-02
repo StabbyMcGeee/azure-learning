@@ -3,7 +3,7 @@
   "packId": "com.example.studyapp.content.v1",
   "packVersion": 1,
   "title": "Azure Learning Launch Content",
-  "source": "Original AI-fleet-authored content with substantive human review by the publisher (Dimitri Meier); facts verified against Microsoft Learn study guides, retrieved 2026-10-02",
+  "source": "Original AI-fleet-authored content; publisher substantive review PENDING (Dimitri Meier); facts verified against Microsoft Learn study guides, retrieved 2026-10-02",
   "rightsBasis": "original-human-ai-assisted",
   "lastVerifiedAt": "2026-10-02",
   "questions": [
