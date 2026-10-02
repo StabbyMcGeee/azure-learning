@@ -118,6 +118,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(FilledButton), findsOneWidget);
-    expect(find.textContaining('View third-party licenses'), findsOneWidget);
+    expect(find.text('View third-party licenses'), findsOneWidget);
   });
 }

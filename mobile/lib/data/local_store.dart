@@ -217,16 +217,6 @@ class LocalStore {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    await txn.insert(
-      'pack_ledger',
-      {
-        'packId': pack.packId,
-        'version': pack.packVersion,
-        'appliedAt': DateTime.now().millisecondsSinceEpoch,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-
     // Clear any previously stored content-last-verified dates before writing
     // new ones, so About \u0026 Legal never shows a stale date after a pack
     // revision that omits lastVerifiedAt.

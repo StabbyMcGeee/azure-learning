@@ -194,6 +194,16 @@ void main() {
       );
     });
 
+
+    test('rejects partial or invalid ISO-8601 dates', () {
+      final item = _validItem();
+      item['authoredAt'] = '2026';
+      item['lastVerifiedAt'] = '2026-02-31';
+      final errors = EvidenceRegisterValidator.validateItem(item);
+      expect(errors, hasLength(2));
+      expect(errors, everyElement(contains('ISO-8601 date')));
+    });
+
     test('validates the committed evidence-register.json artifact', () async {
       final file = File('data/evidence-register.json');
       expect(file.existsSync(), isTrue);

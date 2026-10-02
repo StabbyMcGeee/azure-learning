@@ -270,6 +270,36 @@ void main() {
       expect(errors, contains(contains('RBAC')));
     });
 
+    test('rejects non-string optional fields', () {
+      final json = _validPackJson.replaceFirst(
+        '"source": "Test fixture"',
+        '"source": "Test fixture",\n  "lastVerifiedAt": 2026',
+      );
+      expect(
+        () => ContentPack.parse(json),
+        throwsA(isA<FormatException>().having(
+          (e) => e.message,
+          'message',
+          contains('lastVerifiedAt'),
+        )),
+      );
+    });
+
+    test('rejects non-string optional per-question companion fields', () {
+      final json = _validPackJson.replaceFirst(
+        '"rightsBasis": "original-human",\n      "courseId": "az-900"',
+        '"rightsBasis": "original-human",\n      "licenseRef": 12345,\n      "courseId": "az-900"',
+      );
+      expect(
+        () => ContentPack.parse(json),
+        throwsA(isA<FormatException>().having(
+          (e) => e.message,
+          'message',
+          contains('licenseRef'),
+        )),
+      );
+    });
+
     test('rejects an unknown courseId', () {
       final json = _validPackJson.replaceFirst(
         '"courseId": "az-900"',
