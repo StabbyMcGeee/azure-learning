@@ -121,7 +121,6 @@ class TerminologyLinter {
     for (final candidate in candidates) {
       final candidateLower = candidate.toLowerCase();
       if (knownPatterns.contains(candidateLower)) continue;
-      if (knownPatterns.any((p) => candidateLower.startsWith(p))) continue;
       if (knownPatterns.any((p) => p.startsWith(candidateLower))) continue;
       violations.add(TerminologyViolation(
         itemId: itemId,
