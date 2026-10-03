@@ -49,12 +49,12 @@ void main() {
     testWidgets('progress labels the selected course as its scope',
         (tester) async {
       final store = FakeLocalStore(QuestionBank.syntheticFixtures());
-      await store.setSelectedCourseId('az-900');
+      await store.setSelectedCourseId('AZ-900');
       await tester.pumpWidget(
         StudyApp(store: store, initialRoute: AppRouter.progress),
       );
       await tester.pumpAndSettle();
-      expect(find.text('Accuracy for az-900'), findsOneWidget);
+      expect(find.text('Accuracy for AZ-900'), findsOneWidget);
       expect(find.textContaining('Recent attempts'), findsOneWidget);
     });
 

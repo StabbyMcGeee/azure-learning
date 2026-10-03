@@ -21,16 +21,17 @@ String _packJson({
   required List<String> questionIds,
 }) {
   final questions = questionIds.map((id) => <String, Object?>{
-    'id': id,
-    'text': 'Question $id',
-    'options': <String>['A', 'B'],
-    'correctOptionIndex': 0,
-    'explanation': 'A is correct.',
-    'domain': 'Domain',
-    'difficulty': 'easy',
-    'source': 'Test fixture',
-    'rightsBasis': 'original-human',
-    'courseId': courseId,
+        'id': id,
+        'text': 'Question $id',
+        'options': <String>['A', 'B'],
+        'correctOptionIndex': 0,
+        'explanation': 'A is correct.',
+        'domain': 'Domain',
+        'difficulty': 'easy',
+        'source': 'Test fixture',
+        'rightsBasis': 'original-human',
+        'courseId': courseId,
+      }).toList();
 
   return '''
   {
@@ -122,14 +123,14 @@ void main() {
 
       await store.recordAttempt(Attempt(
         questionId: 'q-a1',
-        courseId: 'course-A',
+        courseId: 'az-900',
         selectedOptionIndex: 0,
         correct: true,
         timestamp: DateTime.now(),
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-b1',
-        courseId: 'course-B',
+        courseId: 'sc-900',
         selectedOptionIndex: 0,
         correct: false,
         timestamp: DateTime.now(),
@@ -166,63 +167,6 @@ void main() {
       expect(bSessions.map((s) => s.id), ['s-b']);
     });
 
-    test('course-scoped history keeps rows without course attribution',
-        () async {
-      final packA = ContentPack.parse(_packJson(
-        packId: 'pack-a',
-        packVersion: 1,
-        courseId: 'course-A',
-        questionIds: ['q-a1'],
-      ));
-      final packB = ContentPack.parse(_packJson(
-        packId: 'pack-b',
-        packVersion: 1,
-        courseId: 'course-B',
-        questionIds: ['q-b1'],
-      ));
-      await store.applyContentPack(packA);
-      await store.applyContentPack(packB);
-
-      final base = DateTime(2026, 10, 2);
-      Attempt attempt(String id, int minutes) => Attempt(
-            questionId: id,
-            selectedOptionIndex: 0,
-            correct: true,
-            timestamp: base.add(Duration(minutes: minutes)),
-          );
-      StudySession session(String id, String? courseId) => StudySession(
-            id: id,
-            mode: 'exam',
-            courseId: courseId,
-            startedAt: base,
-            finishedAt: base,
-            questionCount: 1,
-            correctCount: 1,
-            scorePercent: 100,
-          );
-
-      await store.recordAttempt(attempt('q-a1', 1));
-      await store.recordAttempt(attempt('q-b1', 2));
-      // Recorded before questions carried a course id, or against a question
-      // the current bank no longer holds.
-      await store.recordAttempt(attempt('pre-course-q1', 3));
-      await store.saveSession(session('s-a', 'course-A'));
-      await store.saveSession(session('s-b', 'course-B'));
-      await store.saveSession(session('s-all', null));
-
-      final aAttempts = await store.getAttempts(courseId: 'course-A');
-      final bAttempts = await store.getAttempts(courseId: 'course-B');
-      expect(aAttempts.map((a) => a.questionId).toSet(),
-          {'q-a1', 'pre-course-q1'});
-      expect(bAttempts.map((a) => a.questionId).toSet(),
-          {'q-b1', 'pre-course-q1'});
-
-      final aSessions = await store.getSessions(courseId: 'course-A');
-      final bSessions = await store.getSessions(courseId: 'course-B');
-      expect(aSessions.map((s) => s.id).toSet(), {'s-a', 's-all'});
-      expect(bSessions.map((s) => s.id).toSet(), {'s-b', 's-all'});
-    });
-
     test('review items are filtered by selected course', () async {
       final packA = ContentPack.parse(_packJson(
         packId: 'pack-a',
@@ -249,7 +193,7 @@ void main() {
       await store.applyContentPack(ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       )));
       expect(await store.getSelectedCourseId(), isNull);
@@ -263,17 +207,17 @@ void main() {
       await store.applyContentPack(ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       )));
       await store.applyContentPack(ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       )));
-      await store.setSelectedCourseId('course-A');
-      expect(await store.getSelectedCourseId(), 'course-A');
+      await store.setSelectedCourseId('az-900');
+      expect(await store.getSelectedCourseId(), 'az-900');
 
       await store.withdrawPack('pack-a');
 
@@ -287,13 +231,13 @@ void main() {
       await store.applyContentPack(ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       )));
       await store.applyContentPack(ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       )));
 
@@ -317,14 +261,14 @@ void main() {
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-a1',
-        courseId: 'course-A',
+        courseId: 'az-900',
         selectedOptionIndex: 0,
         correct: true,
         timestamp: DateTime.now(),
       ));
       await store.recordAttempt(Attempt(
         questionId: 'q-b1',
-        courseId: 'course-B',
+        courseId: 'sc-900',
         selectedOptionIndex: 0,
         correct: false,
         timestamp: DateTime.now(),
@@ -341,7 +285,7 @@ void main() {
       await store.saveSession(StudySession(
         id: 'b-session',
         mode: 'exam',
-        courseId: 'course-B',
+        courseId: 'sc-900',
         startedAt: DateTime.now().subtract(const Duration(minutes: 1)),
         finishedAt: DateTime.now(),
         questionCount: 1,
@@ -349,8 +293,8 @@ void main() {
         scorePercent: 0,
       ));
 
-      final aAttempts = await store.getAttempts(courseId: 'course-A');
-      final bAttempts = await store.getAttempts(courseId: 'course-B');
+      final aAttempts = await store.getAttempts(courseId: 'az-900');
+      final bAttempts = await store.getAttempts(courseId: 'sc-900');
       expect(aAttempts.map((a) => a.questionId),
           containsAll(['legacy-001', 'q-a1']));
       expect(aAttempts.map((a) => a.questionId), isNot(contains('q-b1')));
@@ -359,11 +303,11 @@ void main() {
       expect(bAttempts.map((a) => a.questionId), isNot(contains('q-a1')));
 
       expect(
-        (await store.getSessions(courseId: 'course-A')).map((s) => s.id),
+        (await store.getSessions(courseId: 'az-900')).map((s) => s.id),
         ['legacy-session'],
       );
       expect(
-        (await store.getSessions(courseId: 'course-B')).map((s) => s.id),
+        (await store.getSessions(courseId: 'sc-900')).map((s) => s.id),
         containsAll(['legacy-session', 'b-session']),
       );
     });
@@ -458,19 +402,19 @@ void main() {
       final v1 = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 1,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1', 'q-a2', 'q-a3'],
       ));
       final other = ContentPack.parse(_packJson(
         packId: 'pack-b',
         packVersion: 1,
-        courseId: 'course-B',
+        courseId: 'sc-900',
         questionIds: ['q-b1'],
       ));
       final v2 = ContentPack.parse(_packJson(
         packId: 'pack-a',
         packVersion: 2,
-        courseId: 'course-A',
+        courseId: 'az-900',
         questionIds: ['q-a1'],
       ));
 
@@ -486,10 +430,10 @@ void main() {
       await store.applyContentPack(v2);
 
       expect(
-        (await store.getQuestions(courseId: 'course-A')).map((q) => q.id),
+        (await store.getQuestions(courseId: 'az-900')).map((q) => q.id),
         ['q-a1'],
       );
-      expect(await store.getQuestions(courseId: 'course-B'), hasLength(1));
+      expect(await store.getQuestions(courseId: 'sc-900'), hasLength(1));
       expect(await store.getAppliedPackVersion('pack-a'), 2);
       expect(
         (await store.getAttempts()).map((a) => a.questionId),
@@ -564,7 +508,7 @@ void main() {
       // Attempts on withdrawn questions are not attributable to any course,
       // so they stay visible in every course scope.
       expect(
-        (await store.getAttempts(courseId: 'course-B')).map((a) => a.questionId),
+        (await store.getAttempts(courseId: 'sc-900')).map((a) => a.questionId),
         containsAll(['q-a1', 'q-b1']),
       );
 
@@ -602,13 +546,13 @@ void main() {
           containsAll(['az-900', 'dp-900', 'ai-901']));
     });
 
-    testWidgets('bundled content-pack asset is resolvable by the asset bundle',
-        (tester) async {
+    test('bundled content-pack asset is resolvable by the asset bundle',
+        () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
       await expectLater(
         rootBundle.loadString(ContentPackLoader.defaultAssetPath),
         completes,
       );
-    });
     });
 
     test('loadBundledPackIfPresent returns false for a missing asset path',

@@ -307,6 +307,8 @@ class LocalStore {
         'appliedAt': DateTime.now().millisecondsSinceEpoch,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
     // Clear previously stored content-last-verified dates only for the courses
     // present in this pack, preserving dates for unrelated courses.
     final courseIds = pack.questions

@@ -205,6 +205,7 @@ void main() {
             "text": "Sample question one?",
             "options": ["A", "B", "C"],
             "correctOptionIndex": 1,
+            "explanation": "B is correct.",
             "domain": "Domain A",
             "difficulty": "easy",
             "source": "Per-question fixture",

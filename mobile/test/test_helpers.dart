@@ -260,6 +260,15 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
+  Future<void> withdrawPack(String packId) async {
+    _questions.removeWhere((q) => q.packId == packId);
+    _packVersions.remove(packId);
+  }
+
+  @override
+  Future<int?> getAppliedPackVersion(String packId) async => _packVersions[packId];
+
+  @override
   Future<void> clearAllData() async {
     _questions.clear();
     _attempts.clear();
