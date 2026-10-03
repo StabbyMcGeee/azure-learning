@@ -320,6 +320,20 @@ void main() {
       final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('not a registered course')));
     });
+
+    test('rejects a pack with no questions', () {
+      final pack = ContentPack(
+        formatVersion: 'azpack-v2',
+        packId: 'empty-pack',
+        packVersion: 1,
+        title: 'Empty',
+        source: 'synthetic',
+        rightsBasis: 'synthetic',
+        questions: const [],
+      );
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('at least one question')));
+    });
   });
 
   group('ContentPack atomic application', () {

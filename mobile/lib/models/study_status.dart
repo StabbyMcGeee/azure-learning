@@ -31,21 +31,17 @@ extension StudyMaterialStatusX on StudyMaterialStatus {
 
 /// Per-course study coverage computed from the currently loaded question bank.
 class StudyProgress {
-  final String courseId;
   final int total;
   final int seen;
   final int needsReview;
 
   const StudyProgress({
-    required this.courseId,
     required this.total,
     required this.seen,
     required this.needsReview,
   });
 
-  int get remaining => total - seen;
   double get coverage => total == 0 ? 0.0 : seen / total;
-  bool get complete => total > 0 && seen >= total;
 }
 
 /// A single persisted study status row.
@@ -68,11 +64,4 @@ class StudyStatusRecord {
         'status': status.storageValue,
         'updatedAt': updatedAt.millisecondsSinceEpoch,
       };
-
-  factory StudyStatusRecord.fromMap(Map<String, dynamic> map) => StudyStatusRecord(
-        courseId: map['courseId'] as String,
-        questionId: map['questionId'] as String,
-        status: StudyMaterialStatusX.fromStorage(map['status'] as String),
-        updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updatedAt'] as int),
-      );
 }

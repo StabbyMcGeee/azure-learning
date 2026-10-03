@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:study_app/app.dart';
 import 'package:study_app/data/local_store.dart';
 import 'package:study_app/data/question_bank.dart';
 import 'package:study_app/models/attempt.dart';
+import 'package:study_app/models/question.dart';
+import 'package:study_app/navigation/app_router.dart';
 
 import 'test_helpers.dart';
 
@@ -49,6 +53,43 @@ void main() {
       final attempts = await store.getAttemptsFor(q.id);
       expect(attempts.length, 1);
       expect(attempts.first.correct, isTrue);
+    });
+
+    testWidgets('exam session is stamped with the questions\' course',
+        (tester) async {
+      final store = FakeLocalStore([
+        const Question(
+          id: 'exam-q1',
+          text: 'Q1',
+          options: ['A', 'B'],
+          correctOptionIndex: 0,
+          explanation: 'A',
+          domain: 'D',
+          courseId: 'AZ-900',
+          difficulty: 'easy',
+        ),
+      ]);
+      await tester.pumpWidget(StudyApp(
+        store: store,
+        initialRoute: AppRouter.exam,
+      ));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('A'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, 'Finish'));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.widgetWithText(FilledButton, 'Finish'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final sessions = await store.getSessions();
+      expect(sessions.length, 1);
+      expect(sessions.first.courseId, 'AZ-900');
     });
   });
 }

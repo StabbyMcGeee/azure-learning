@@ -96,9 +96,12 @@ present in the loaded packs, and study, practice, exam, review, and progress
 screens scope their content to that selection. A stored selection whose course
 is no longer in the bank (its pack was withdrawn or replaced) is cleared, so
 every screen falls back to all content instead of an empty course. History rows
-that carry no `courseId` - questions from before courses existed, and questions
-whose pack was withdrawn - count in every course scope, so selecting a course
-never hides earlier attempts or sessions.
+that carry no `courseId` - sessions and attempts written before courses existed,
+or attempts whose source question never had a `courseId` - count in every course
+scope, so selecting a course never hides earlier history. Attempts written by
+the current app record the answered question's `courseId`, so even if that
+question's pack is later withdrawn the attempt remains scoped to its original
+course and is not attributed to any other course.
 
 ## Validation
 

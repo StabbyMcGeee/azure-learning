@@ -23,10 +23,8 @@ class CourseStudyScreen extends StatefulWidget {
 
 class _CourseStudyScreenState extends State<CourseStudyScreen> {
   LocalStore get _store => context.read<LocalStore>();
-  final Map<String, GlobalKey> _itemKeys = {};
   List<_StudyRow> _rows = const [];
   StudyProgress _progress = const StudyProgress(
-    courseId: '',
     total: 0,
     seen: 0,
     needsReview: 0,
@@ -60,9 +58,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
     List<Question> questions,
     Map<String, StudyMaterialStatus> statuses,
   ) {
-    final ids = {for (final q in questions) q.id};
-    _itemKeys.removeWhere((id, _) => !ids.contains(id));
-
     final grouped = <String, List<Question>>{};
     for (final q in questions) {
       grouped.putIfAbsent(q.domain, () => <Question>[]).add(q);
@@ -80,7 +75,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
         rows.add(_QuestionRow(
           question: q,
           status: statuses[q.id],
-          key: _itemKeys.putIfAbsent(q.id, GlobalKey.new),
         ));
       }
     }
@@ -99,7 +93,6 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
       if (status == StudyMaterialStatus.needsReview) needsReview++;
     }
     return StudyProgress(
-      courseId: widget.courseId,
       total: questions.length,
       seen: seen,
       needsReview: needsReview,
@@ -153,8 +146,7 @@ class _CourseStudyScreenState extends State<CourseStudyScreen> {
       _ProgressRow() => _progressCard(theme, _progress),
       _DomainRow(:final domain, :final seen, :final total) =>
         _domainHeader(theme, domain: domain, seen: seen, total: total),
-      _QuestionRow(:final question, :final status, :final key) => Padding(
-          key: key,
+      _QuestionRow(:final question, :final status) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           child: _StudyItem(
             question: question,
@@ -246,12 +238,10 @@ class _DomainRow extends _StudyRow {
 class _QuestionRow extends _StudyRow {
   final Question question;
   final StudyMaterialStatus? status;
-  final GlobalKey key;
 
   const _QuestionRow({
     required this.question,
     required this.status,
-    required this.key,
   });
 }
 
@@ -281,16 +271,16 @@ class _StudyItem extends StatelessWidget {
           onSelect: null,
         ),
         const SizedBox(height: 8),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             _statusChip(theme),
-            const Spacer(),
             OutlinedButton(
               onPressed: onMarkSeen,
               child: const Text('Mark seen'),
             ),
-            const SizedBox(width: 8),
             OutlinedButton(
               onPressed: onMarkNeedsReview,
               child: const Text('Needs more work'),

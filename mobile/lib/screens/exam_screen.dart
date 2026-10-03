@@ -191,12 +191,16 @@ class _ExamScreenState extends State<ExamScreen> {
       }
       // Unanswered items are wrong but not persisted.
     }
-    final courseId = await _store.getSelectedCourseId();
+    final courseIds = _questions
+        .map((q) => q.courseId)
+        .where((c) => c != null && c.isNotEmpty)
+        .toSet();
+    final sessionCourseId = courseIds.length == 1 ? courseIds.first : null;
     final sessionId = 'exam-${now.millisecondsSinceEpoch}';
     await _store.saveSession(StudySession(
       id: sessionId,
       mode: 'exam',
-      courseId: courseId,
+      courseId: sessionCourseId,
       startedAt: now.subtract(const Duration(minutes: 1)),
       finishedAt: now,
       questionCount: _questions.length,
