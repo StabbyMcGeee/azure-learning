@@ -4,11 +4,13 @@ The mobile app uses a bounded, versioned offline content-pack format called
 **azpack-v2**. A pack is a single JSON file that carries both pack-level and
 per-question provenance metadata. The app parses, validates, and applies packs
 atomically to its SQLite question bank. Missing or invalid packs leave the bank
-empty and preserve all user attempt/session history.
+unchanged and preserve all user attempt/session history.
 
 > **Important:** Provenance metadata is required, but it does **not** by itself
-> prove that a question is rights-cleared. Real curriculum must be human-authored
-> or commercially licensed and reviewed by the project before it is shipped.
+> prove that a question is rights-cleared. Curriculum must carry a recorded
+> rights basis — original AI-fleet-authored material with the captain as the
+> human reviewer, or commercially licensed content — and a qualified human legal
+> review is still required before paid sale.
 
 ## Where packs are loaded from
 
@@ -19,7 +21,7 @@ assets/content-pack.json
 ```
 
 If the asset is absent, malformed, unsupported, or invalid, the loader returns
-`false` and the app keeps the current empty production bank. No error is shown
+`false` and the app keeps the bank it already has. No error is shown
 to the user. To ship a pack, place the prepared JSON file at that path and make
 sure it is listed in the `assets` section of `pubspec.yaml`.
 
@@ -31,8 +33,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
   "packId": "com.example.studyapp.az900.v1",
   "packVersion": 1,
   "title": "Example AZ-900 Study Pack",
-  "source": "Original human-authored content",
-  "rightsBasis": "original-human",
+  "source": "Original AI-fleet-authored content; publisher review PENDING",
+  "rightsBasis": "original-human-ai-assisted",
   "lastVerifiedAt": "2026-10-02",
   "questions": [
     {
@@ -48,8 +50,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
       "explanation": "Elasticity is the ability to scale resources up or down and pay for what you use.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original human-authored content",
-      "rightsBasis": "original-human",
+      "source": "Original AI-fleet-authored content; publisher review PENDING",
+      "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     }
   ]
@@ -132,23 +134,17 @@ one already recorded. Equal and higher versions are accepted, making repeat
 loads and upgrades safe. The ledger entry is written inside the same transaction
 as the question rows, so a failed write never leaves a stale ledger behind.
 
-## Per-pack withdrawal
-
-A pack can be withdrawn by `packId`. This deletes every question row that
-carries that `packId` and removes the ledger entry for the pack. Attempts and
-sessions are not touched, and questions from other packs remain in the bank.
-After withdrawal, the withdrawn pack can be re-applied at any version because its
-ledger entry has been cleared.
-
 ## Atomic application and repeat safety
 
 Packs are applied inside a single SQLite transaction. If any part of the write
 fails, the whole transaction rolls back and the database is unchanged.
 
-Question rows are keyed by `id`. Re-applying the same pack, or applying a newer
-version with overlapping IDs, replaces the matching question rows but never
-touches the `attempts` or `sessions` tables. This makes repeat loading safe and
-keeps user history intact.
+Question rows are keyed by `id`. Applying a pack replaces that pack's rows in
+full inside the same transaction: questions present in the new pack version
+are inserted or updated, and questions dropped from a newer version are
+deleted. A pack with no questions is rejected (it would otherwise erase the
+bank). The `attempts` and `sessions` tables are never touched, so user history
+survives every apply.
 
 ## Schema migration from v1
 
@@ -181,7 +177,7 @@ CREATE TABLE settings(
 Existing rows receive `NULL` pack/course identity. The migrations run
 automatically when an older database is opened at version 3.
 
-## How to prepare a future human-authored or licensed pack
+## How to prepare a future pack
 
 1. Produce or license original questions.
 2. Record, for every question, the source author/licensor, the rights basis,
@@ -189,18 +185,19 @@ automatically when an older database is opened at version 3.
 3. Build a JSON file matching the `azpack-v2` schema above and run the
    terminology lint over the content (the validator does this automatically).
 4. Validate the file locally:
-   - Use `ContentPackLoader.dryRun(jsonString)` in a Dart script or test.
+   - Run the mobile tests, which exercise the validator with synthetic fixtures,
+     or run `tool/build_content_pack.py` to regenerate and validate the
+     production pack.
    - Run `dart run tool/validate_evidence_register.dart` to validate the
      private evidence register (`data/evidence-register.json`).
-   - Or run the mobile tests, which exercise the validator with synthetic fixtures.
 5. Place the validated file at `assets/content-pack.json` and register it in
    `pubspec.yaml`. Keep the private evidence register out of `assets/`.
 6. Update `packVersion` when you revise content so the app can detect and
    replace older rows.
 
-Do not reuse the legacy 133 desktop questions unless their rights are
-independently cleared. Do not ship the synthetic demo fixture as production
-content.
+Rewrite any item of the existing 133-question desktop bank that carries a
+legal issue, and do not reuse its wording, unless its rights are independently
+cleared. Do not ship the synthetic demo fixture as production content.
 
 ## Example: loading a pack in a test
 

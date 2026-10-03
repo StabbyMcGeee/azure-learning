@@ -4,3 +4,6 @@
 # Python test caches
 __pycache__/
 .pytest_cache/
+
+# Python bytecode caches (content-pack build tooling).
+*.pyc

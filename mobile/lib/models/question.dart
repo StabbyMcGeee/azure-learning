@@ -1,11 +1,14 @@
 /// A single study question.
 ///
-/// The mobile v1 bank is intentionally empty at runtime. The legacy 133
-/// desktop questions are NOT carried into this build because their rights are
-/// unresolved. Synthetic fixtures may be injected in tests only.
+/// Runtime questions come from the bundled content pack
+/// (`assets/content-pack.json`), applied to SQLite by `ContentPackLoader` at
+/// startup. Every slot of the existing 133-question desktop bank was rewritten
+/// from scratch rather than carried over, so no original wording ships;
+/// production content is authored fresh in the pack with a recorded rights
+/// basis. Synthetic fixtures may be injected in tests only.
 ///
 /// Questions loaded from a [ContentPack] carry [source] and [rightsBasis]
-/// provenance metadata; legacy rows may leave these null.
+/// provenance metadata; rows from other sources may leave these null.
 class Question {
   final String id;
   final String text;

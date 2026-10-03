@@ -67,7 +67,7 @@ class TerminologyLinter {
     // 1. Retired or renamed product names.
     for (final retired in TerminologyRegister.retiredTerms) {
       if (!retired.courses.contains(courseId)) continue;
-      if (_contains(lower, retired.pattern.toLowerCase())) {
+      if (_containsWholeWord(lower, retired.pattern.toLowerCase())) {
         violations.add(TerminologyViolation(
           itemId: itemId,
           field: field,
@@ -83,7 +83,7 @@ class TerminologyLinter {
       final acronym = entry.key;
       final coursePhrase = entry.value[courseId];
       if (coursePhrase == null) continue;
-      if (_contains(lower, acronym.toLowerCase())) {
+      if (_containsWholeWord(lower, acronym.toLowerCase())) {
         // Accept the bare acronym only if the exact course-qualified phrase
         // appears in the same field.
         if (!_contains(lower, coursePhrase.toLowerCase())) {
@@ -100,7 +100,7 @@ class TerminologyLinter {
 
     // 3. Known incorrect spellings / variants of official terms.
     for (final entry in TerminologyRegister.knownMisspellings.entries) {
-      if (_contains(lower, entry.key)) {
+      if (_containsWholeWord(lower, entry.key)) {
         violations.add(TerminologyViolation(
           itemId: itemId,
           field: field,
@@ -202,11 +202,17 @@ class TerminologyLinter {
   }
 
   bool _isProductMarker(String value) {
+    if (value.isEmpty) return false;
+    // Only capitalised marker words (or marker embedded in a camel-case word)
+    // are treated as product names. Lower-case words such as "files" or
+    // "power" in ordinary prose are ignored.
+    final firstCode = value.codeUnitAt(0);
+    final firstIsUpper = firstCode >= 65 && firstCode <= 90;
     final lower = value.toLowerCase();
     for (final marker in TerminologyRegister.productTermMarkers) {
-      if (lower == marker) return true;
-      // Match a marker at word boundaries, e.g. "azure" inside "AzurePortal"
-      // but not inside "powerful".
+      if (lower == marker) return firstIsUpper;
+      // Match a marker at word boundaries inside a token, e.g. "azure" inside
+      // "AzurePortal" but not inside "powerful".
       if (RegExp(r'(^|[0-9_-])' + marker + r'($|[0-9_-])').hasMatch(lower)) {
         return true;
       }
@@ -227,4 +233,11 @@ class TerminologyLinter {
   }
 
   bool _contains(String haystack, String needle) => haystack.contains(needle);
+
+  /// True when [needle] appears in [haystack] as a whole word/phrase, using
+  /// RegExp word boundaries. Multi-word needles are matched literally.
+  bool _containsWholeWord(String haystack, String needle) {
+    final escaped = RegExp.escape(needle);
+    return RegExp(r'\b' + escaped + r'\b').hasMatch(haystack);
+  }
 }

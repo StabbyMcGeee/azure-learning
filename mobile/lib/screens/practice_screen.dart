@@ -9,9 +9,9 @@ import '../widgets/question_card.dart';
 
 /// Free-form practice mode.
 ///
-/// If the local store has no questions, it seeds the synthetic test fixtures
-/// only so the screen remains testable during development. Production builds
-/// must keep the bank empty until rights-cleared content is added.
+/// Questions come from the store, scoped to the learner's selected course. The
+/// empty state is reached only when no pack is loaded or the selected course
+/// has no items; this screen never seeds content of its own.
 class PracticeScreen extends StatefulWidget {
   const PracticeScreen({super.key});
 
@@ -60,9 +60,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
       return const EmptyState(
         icon: Icons.quiz,
         title: 'No practice questions yet',
-        message:
-            'Load rights-cleared questions to start practicing. '
-            'No legacy desktop questions are imported.',
+        message: 'No practice questions are available. The bundled course '
+            'content could not be loaded.',
       );
     }
     final question = _questions[_index];

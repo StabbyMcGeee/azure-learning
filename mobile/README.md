@@ -12,10 +12,11 @@ Offline-first Flutter mobile app for iOS and Android.
 - v1 is a **single, one-time paid app download** (target ~$1 upfront).
 - **No** account, sign-in, sync, analytics, ads, or in-app payment SDK.
 - Works offline. All study progress is stored locally with SQLite.
-- The runtime question bank starts **empty**. The legacy desktop 133-question
-  bank is intentionally **not** imported into the mobile build because content
-  rights are unresolved. Real curriculum must be human-authored and
-  rights-cleared before being loaded.
+- The runtime question bank is loaded at startup from the bundled content pack
+  (`assets/content-pack.json`, AZ-900 / DP-900 / AI-901). The existing desktop
+  133-question bank is not imported as-is; every slot was rewritten from
+  scratch, and production content carries a per-item rights basis recorded in
+  `docs/content-provenance.md`.
 - Synthetic test fixtures exist only in `test/` and are never shipped as
   production curriculum.
 
@@ -23,7 +24,8 @@ Offline-first Flutter mobile app for iOS and Android.
 
 - `lib/models/` — question, attempt, session, progress data classes.
 - `lib/data/` — `LocalStore` (SQLite persistence) and `QuestionBank` (empty
-  production bank + synthetic test fixtures).
+  hardcoded list + synthetic test fixtures; runtime content comes from the
+  bundled pack).
 - `lib/navigation/` — named-route router.
 - `lib/screens/` — dashboard, study, practice, exam, exam result, review,
   progress.
@@ -55,8 +57,9 @@ Offline-first Flutter mobile app for iOS and Android.
    - `android/app/src/main/AndroidManifest.xml`
    - `ios/Runner/Info.plist`
    - `pubspec.yaml` description
-3. Obtain rights-cleared human-authored curriculum and load it into
-   `QuestionBank.productionBank` or via a future content-loading mechanism.
+3. Complete the publisher's substantive review of the launch pack, recorded as
+   PENDING in `docs/content-provenance.md`, and obtain a qualified human legal
+   review before paid sale.
 4. Add app icons, splash screens, store metadata, privacy policy, support URL,
    and an in-app About/Legal screen.
 5. Add release signing for Android and iOS.

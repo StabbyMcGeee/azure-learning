@@ -7,8 +7,8 @@ import '../widgets/empty_state.dart';
 
 /// Study mode landing screen.
 ///
-/// Shows the empty-content state when no rights-cleared curriculum has been
-/// loaded, and scopes any loaded study material to the selected course.
+/// Shows the empty-content state when nothing is loaded in the bank, and scopes
+/// any loaded study material to the selected course.
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
 
@@ -55,9 +55,8 @@ class _StudyScreenState extends State<StudyScreen> {
           icon: Icons.menu_book,
           title: 'Study material is empty',
           message: _selectedCourseId == null
-              ? 'The first release curriculum has not been loaded. '
-                  'Once human-authored, rights-cleared content is ready, '
-                  'it will appear here for offline study.'
+              ? 'No study material is available. The bundled course content '
+                  'could not be loaded.'
               : 'No study material is available for $_selectedCourseId yet.',
           actionLabel: 'Go to Practice',
           onAction: () => Navigator.pushNamed(context, AppRouter.practice),
@@ -80,6 +79,13 @@ class _StudyScreenState extends State<StudyScreen> {
               ),
               const SizedBox(height: 8),
               Text('$_questionCount questions available offline'),
+              const SizedBox(height: 24),
+              FilledButton.icon(
+                icon: const Icon(Icons.edit_note),
+                label: const Text('Start practicing'),
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRouter.practice),
+              ),
             ],
           ),
         ),

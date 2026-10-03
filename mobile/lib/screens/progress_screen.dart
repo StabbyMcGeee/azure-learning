@@ -19,6 +19,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   LocalStore get _store => context.read<LocalStore>();
   List<Attempt> _attempts = [];
   List<StudySession> _sessions = [];
+  String? _courseId;
   bool _loaded = false;
 
   @override
@@ -35,10 +36,13 @@ class _ProgressScreenState extends State<ProgressScreen> {
       setState(() {
         _attempts = attempts;
         _sessions = sessions;
+        _courseId = courseId;
         _loaded = true;
       });
     }
   }
+
+  String get _scopeLabel => _courseId ?? 'all courses';
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 children: [
                   _statCard(theme),
                   const SizedBox(height: 16),
-                  Text('Recent exam sessions', style: theme.textTheme.titleMedium),
+                  Text('Recent exam sessions · $_scopeLabel',
+                      style: theme.textTheme.titleMedium),
                   const SizedBox(height: 8),
                   if (_sessions.isEmpty)
                     const Text('No exam sessions yet.')
@@ -66,7 +71,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           ),
                         )),
                   const SizedBox(height: 16),
-                  Text('Recent attempts', style: theme.textTheme.titleMedium),
+                  Text('Recent attempts · $_scopeLabel',
+                      style: theme.textTheme.titleMedium),
                   const SizedBox(height: 8),
                   if (_attempts.isEmpty)
                     const Text('No attempts yet.')
@@ -96,7 +102,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Lifetime accuracy', style: theme.textTheme.titleMedium),
+            Text(
+              'Accuracy for $_scopeLabel',
+              style: theme.textTheme.titleMedium,
+            ),
             const SizedBox(height: 8),
             Text(
               '$accuracy%',

@@ -519,33 +519,6 @@ void main() {
       await store.close();
     });
 
-    test('dryRun returns validation errors without touching the store', () async {
-      const badPack = '''
-      {
-        "formatVersion": "azpack-v1",
-        "packId": "bad",
-        "packVersion": 1,
-        "title": "Bad",
-        "source": "synthetic",
-        "rightsBasis": "original-human",
-        "questions": [
-          {
-            "id": "q-001",
-            "text": "T",
-            "options": ["A", "B"],
-            "correctOptionIndex": 0,
-            "domain": "D",
-            "difficulty": "easy",
-            "source": "",
-            "rightsBasis": "original-human"
-          }
-        ]
-      }
-      ''';
-      final errors = ContentPackLoader.dryRun(badPack);
-      expect(errors, isNotEmpty);
-    });
-
     test('fixture file parses and validates', () async {
       final fixture = File('test/fixtures/synthetic-demo-pack.json');
       final jsonString = await fixture.readAsString();

@@ -12,14 +12,15 @@ This file is a short current-state pointer. Use `.agents/skills/azure-learning-h
 - Flutter offline study/practice/exam/review/progress shell is implemented. `flutter analyze` and targeted tests passed. Android/iOS packaging and device tests have not run; this host lacks Android SDK/Java and a Mac/Xcode.
 - `fm/azpack-v1` at `e61850f` adds versioned content-pack loading, per-question provenance, and SQLite migration. All 40 tests and `flutter analyze` passed with synthetic fixtures only. Production content is empty. The captain approved landing exactly `e61850f` locally, but it has not been merged.
 - `fm/azcontent-gate-v1` adds enumerated `rightsBasis` validation, a private evidence-register validator, terminology lint, and an About & Legal screen. Follow-up commits address a no-mistakes review gate: registered courseIds are enforced, verifiedTerms are wired into the linter, AI-901 retired terms are course-scoped, stale contentLastVerifiedAt dates are cleared on every pack apply, legacy getter aliases are removed, the committed evidence-register.json is validated in tests, and the five auto-fix findings (optional-field typing, duplicated ledger insert, pubspec substring test, LicenseRegistry drain, and lenient ISO date parsing) are resolved. `flutter analyze` and all 98 mobile tests pass; 3 Python tests pass. Production content remains empty.
+- Course selection and course-scoped progress are implemented on `fm/azmulti-course-packs-v1`; the multi-course catalog beyond the three launch courses is still open.
 
 ## Content and rights
-- The legacy 133-question desktop bank is not cleared for paid mobile use.
+- The existing 133-question desktop bank is not cleared for paid mobile use as it stands; each slot is rewritten from scratch rather than carried over, so no wording or legal issue from that bank ships.
 - AI-assisted/original study content is permitted if factual sources and commercial-use rights are verified. Audit items individually; retain only defensible material and replace the rest with original questions from acceptable sources. Record source title/URL/access date/license/rights rationale and authoring method per item.
 - Do not copy/closely paraphrase restricted material, reproduce real certification-exam questions, or label AI work human-authored. Public availability is not a reuse license; rewriting is not a workaround. Human counsel must review before sale; an agent cannot guarantee legal clearance.
 
 ## Next work and release gates
-Extend the pack system for multiple courses and authoring provenance, then create a rights-screened AI-assisted AZ-900 pack and add further base courses after selection. Keep production empty until item-level evidence is reviewed. Finish content/legal, privacy/support, accessibility, offline/device, signing, and store QA before enrollment or payment. Nov 30, 2026 is a stretch submission target and Dec 15 a conditional working target; move dates rather than compress quality.
+Multi-course pack support, per-item authoring provenance, and the AZ-900/DP-900/AI-901 launch pack are in place. The open content gate is the publisher's substantive review of the shipped items, recorded as PENDING in `mobile/docs/content-provenance.md`, plus a qualified human legal review before paid sale; add further base courses after course selection. Finish content/legal, privacy/support, accessibility, offline/device, signing, and store QA before enrollment or payment. Nov 30, 2026 is a stretch submission target and Dec 15 a conditional working target; move dates rather than compress quality.
 
 ## Selective history
 - Current product/content rights decisions: `archive/handoff/product-scope-and-content-rights-2026-10.md`.
@@ -28,3 +29,10 @@ Extend the pack system for multiple courses and authoring provenance, then creat
 - Sources/terminology: `archive/handoff/terminology-and-sources-2026-09.md`.
 - QA/usability: `archive/handoff/qa-audits-and-usability-2026-09.md`.
 - Full previous handoff snapshot: `archive/handoff/handoff-2026-10-01-pre-85-refresh.md`.
+
+## Launch content packs — 2026-10-02 (fm/azmulti-course-packs-v1)
+- Authored the launch content pack at `mobile/assets/content-pack.json` (238 items): AZ-900 141, DP-900 57, AI-901 40. Generated from `mobile/tool/content/*.py` by `mobile/tool/build_content_pack.py`. The pack is bundled in `pubspec.yaml` and loaded at startup, so the runtime bank is no longer empty.
+- AZ-900: existing-bank slots rewritten as fresh originals on their public objective, 6 out-of-scope topics re-scoped, 7 outline gap topics added; 15 duplicate slots dropped (their subject retained elsewhere). DP-900 and AI-901 authored from their skills outlines. All items carry `rightsBasis: original-human-ai-assisted`; the publisher's substantive review is recorded as PENDING, not done.
+- Provenance and coverage record: `mobile/docs/content-provenance.md`.
+- Validation: `python3 tool/build_content_pack.py` (schema + rightsBasis enum + terminology + answer-key spread), `flutter test test/content_pack_production_test.dart`, full `flutter test` (61 pass), `flutter analyze` clean.
+- Coordination for fm/azcontent-gate-v1: its terminology lint matches retired wording by naive substring and would falsely flag the official term "Azure Advisor" as retired "Azure AD". Use whole-word matching before gating this content.
