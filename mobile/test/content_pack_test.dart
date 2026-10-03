@@ -519,7 +519,6 @@ void main() {
       await store.close();
     });
 
-<<<<<<< HEAD
     test('fixture file parses and validates', () async {
       final fixture = File('test/fixtures/synthetic-demo-pack.json');
       final jsonString = await fixture.readAsString();

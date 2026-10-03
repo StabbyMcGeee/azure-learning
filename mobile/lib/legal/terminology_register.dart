@@ -6,7 +6,7 @@
 class TerminologyRegister {
   const TerminologyRegister._();
 
-  static const List<String> allCourses = ['az-900', 'sc-900', 'ai-901'];
+  static const List<String> allCourses = ['az-900', 'sc-900', 'ai-901', 'dp-900'];
 
   /// Returns true when [courseId] is one of the launch courses covered by the
   /// register. The pack validator uses this to reject unknown/typo courseIds
@@ -110,6 +110,26 @@ class TerminologyRegister {
       'Azure Monitor alerts',
       'Azure Monitor Application Insights',
       'shared responsibility model',
+      'Azure App Service',
+      'Azure Arc Resource Bridge',
+      'Azure Arc-enabled Kubernetes',
+      'Azure Blob Storage',
+      'Azure Container Apps',
+      'Azure Container Instances',
+      'Azure Files',
+      'Azure Firewall',
+      'Azure Front Door',
+      'Azure Functions',
+      'Azure Hybrid Benefit',
+      'Azure Kubernetes Service',
+      'Azure Private Link',
+      'Azure Queue Storage',
+      'Azure Reservations',
+      'Azure Resource Health',
+      'Azure Spot Virtual Machines',
+      'Azure Table Storage',
+      'SQL Server',
+      'SQL Managed Instance',
     ],
     'sc-900': [
       'shared responsibility model',
@@ -210,16 +230,36 @@ class TerminologyRegister {
       'Azure Speech in Foundry Tools',
       'Azure Content Understanding in Foundry Tools',
       'Content Understanding',
+      'Azure Blob Storage',
+      'Azure Cosmos DB',
+      'Azure Databricks',
+      'Azure Files',
+      'Foundry Tools',
+      'SQL',
     ],
-  };
-
-  /// Common misspellings or incorrect variants of official terms, mapped to
-  /// the exact expected wording. The linter reports the expected value.
-  static const Map<String, String> knownMisspellings = {
-    'defence-in-depth': 'defense-in-depth',
-    'multi-factor authentication': 'multifactor authentication (MFA)',
-    'multi factor authentication': 'multifactor authentication (MFA)',
-    'geo-redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
+    'dp-900': [
+      'Azure Blob Storage',
+      'Azure Cosmos DB',
+      'Azure Cosmos DB API',
+      'Azure Data Explorer',
+      'Azure Data Factory',
+      'Azure Data Lake Storage',
+      'Azure Database',
+      'Azure Databricks',
+      'Azure Event Hubs',
+      'Azure Files',
+      'Azure PaaS',
+      'Azure SQL Database',
+      'Azure SQL Managed Instance',
+      'Azure Stream Analytics',
+      'Azure Table Storage',
+      'Azure Virtual Machines',
+      'Microsoft Fabric',
+      'Microsoft Power BI',
+      'Power BI',
+      'SQL Server',
+      'SQL-like',
+    ],
   };
 
   /// Substrings that strongly suggest a Microsoft/Azure product or feature
@@ -252,6 +292,15 @@ class TerminologyRegister {
     'ddos',
     'waf',
   ];
+
+  /// Common misspellings or incorrect variants of official terms, mapped to
+  /// the exact expected wording. The linter reports the expected value.
+  static const Map<String, String> knownMisspellings = {
+    'defence-in-depth': 'defense-in-depth',
+    'multi-factor authentication': 'multifactor authentication (MFA)',
+    'multi factor authentication': 'multifactor authentication (MFA)',
+    'geo-redundant zones': 'geo-zone-redundant storage (GZRS) under "redundancy options"',
+  };
 
   /// Ambiguous abbreviations and the exact qualified phrase each course requires.
   ///
