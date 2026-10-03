@@ -113,6 +113,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
     final correct = item.question.isCorrect(_selected!);
     await _store.recordAttempt(Attempt(
       questionId: item.question.id,
+      courseId: item.question.courseId,
       selectedOptionIndex: _selected!,
       correct: correct,
       timestamp: DateTime.now(),

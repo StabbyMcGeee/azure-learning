@@ -8,6 +8,7 @@ import 'package:study_app/models/attempt.dart';
 import 'package:study_app/models/content_pack.dart';
 import 'package:study_app/models/question.dart';
 import 'package:study_app/models/session.dart';
+import 'package:study_app/models/study_status.dart';
 
 /// Initializes the FFI sqlite implementation used by unit/integration tests on
 /// desktop/WSL Linux where the mobile sqflite implementation is unavailable.
@@ -51,6 +52,7 @@ class FakeLocalStore extends LocalStore {
   final Map<String, int> _packVersions = {};
   final Map<String, String?> _settings = {};
   String? _selectedCourseId;
+  final Map<String, Map<String, StudyMaterialStatus>> _studyStatuses = {};
 
   FakeLocalStore([List<Question>? questions]) {
     if (questions != null) _questions.addAll(questions);
@@ -74,6 +76,10 @@ class FakeLocalStore extends LocalStore {
       _settings.remove('contentLastVerifiedAt_$courseId');
     }
 
+    // Mirror production: replace this pack's rows in full so questions
+    // dropped from a newer version are removed.
+    _questions.removeWhere((q) => q.packId == pack.packId);
+
     if (pack.lastVerifiedAt != null && pack.lastVerifiedAt!.isNotEmpty) {
       _settings['contentLastVerifiedAt'] = pack.lastVerifiedAt;
       for (final courseId in courseIds) {
@@ -81,7 +87,6 @@ class FakeLocalStore extends LocalStore {
       }
     }
     for (final q in pack.questions) {
-      _questions.removeWhere((existing) => existing.id == q.id);
       _questions.add(q.toQuestion(packId: pack.packId));
     }
   }
@@ -91,15 +96,6 @@ class FakeLocalStore extends LocalStore {
     Transaction txn,
     ContentPack pack,
   ) async => applyContentPack(pack);
-
-  @override
-  Future<void> withdrawPack(String packId) async {
-    _packVersions.remove(packId);
-    _questions.removeWhere((q) => q.packId == packId);
-  }
-
-  @override
-  Future<int?> getAppliedPackVersion(String packId) async => _packVersions[packId];
 
   @override
   Future<void> close() async {}
@@ -140,7 +136,13 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
-  Future<String?> getSelectedCourseId() async => _selectedCourseId;
+  Future<String?> getSelectedCourseId() async {
+    final courses = await getCourses();
+    if (_selectedCourseId != null && !courses.contains(_selectedCourseId)) {
+      _selectedCourseId = null;
+    }
+    return _selectedCourseId;
+  }
 
   @override
   Future<void> setSelectedCourseId(String? courseId) async {
@@ -162,9 +164,7 @@ class FakeLocalStore extends LocalStore {
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     var result = List<Attempt>.from(_attempts);
     if (courseId != null) {
-      final courseQuestionIds =
-          _questions.where((q) => q.courseId == courseId).map((q) => q.id).toSet();
-      result = result.where((a) => courseQuestionIds.contains(a.questionId)).toList();
+      result = result.where((a) => a.courseId == courseId || a.courseId == null).toList();
     }
     return List.unmodifiable(result.reversed.toList());
   }
@@ -179,10 +179,31 @@ class FakeLocalStore extends LocalStore {
       result = result.where((s) => s.mode == mode).toList();
     }
     if (courseId != null) {
-      result = result.where((s) => s.courseId == courseId).toList();
+      result = result
+          .where((s) => s.courseId == courseId || s.courseId == null)
+          .toList();
     }
     result.sort((a, b) => b.finishedAt.compareTo(a.finishedAt));
     return List.unmodifiable(result);
+  }
+
+  @override
+  Future<void> saveStudyStatus({
+    required String courseId,
+    required String questionId,
+    required StudyMaterialStatus status,
+    DateTime? updatedAt,
+  }) async {
+    _studyStatuses.putIfAbsent(courseId, () => {});
+    _studyStatuses[courseId]![questionId] = status;
+  }
+
+  @override
+  Future<Map<String, StudyMaterialStatus>> getStudyStatusesForCourse(
+      String courseId) async {
+    final statuses = _studyStatuses[courseId];
+    if (statuses == null) return const {};
+    return Map.unmodifiable(statuses);
   }
 
   @override
@@ -239,6 +260,15 @@ class FakeLocalStore extends LocalStore {
   }
 
   @override
+  Future<void> withdrawPack(String packId) async {
+    _questions.removeWhere((q) => q.packId == packId);
+    _packVersions.remove(packId);
+  }
+
+  @override
+  Future<int?> getAppliedPackVersion(String packId) async => _packVersions[packId];
+
+  @override
   Future<void> clearAllData() async {
     _questions.clear();
     _attempts.clear();
@@ -246,5 +276,6 @@ class FakeLocalStore extends LocalStore {
     _packVersions.clear();
     _settings.clear();
     _selectedCourseId = null;
+    _studyStatuses.clear();
   }
 }

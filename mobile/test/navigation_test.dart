@@ -23,7 +23,7 @@ void main() {
       await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
       await tester.tap(find.text('Study'));
       await tester.pumpAndSettle();
-      expect(find.text('Study material is empty'), findsOneWidget);
+      expect(find.text('No study material yet'), findsOneWidget);
     });
 
     testWidgets('tapping Practice navigates to practice screen', (tester) async {
@@ -44,6 +44,29 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('Progress'), findsWidgets);
+    });
+
+    testWidgets('progress labels the selected course as its scope',
+        (tester) async {
+      final store = FakeLocalStore(QuestionBank.syntheticFixtures());
+      await store.setSelectedCourseId('AZ-900');
+      await tester.pumpWidget(
+        StudyApp(store: store, initialRoute: AppRouter.progress),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Accuracy for AZ-900'), findsOneWidget);
+      expect(find.textContaining('Recent attempts'), findsOneWidget);
+    });
+
+    testWidgets('progress labels the no-filter scope as all courses',
+        (tester) async {
+      final store = FakeLocalStore(QuestionBank.syntheticFixtures());
+      await tester.pumpWidget(
+        StudyApp(store: store, initialRoute: AppRouter.progress),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Accuracy for all courses'), findsOneWidget);
+      expect(find.textContaining('Recent exam sessions'), findsOneWidget);
     });
   });
 }

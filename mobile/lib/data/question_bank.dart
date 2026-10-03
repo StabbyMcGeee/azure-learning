@@ -1,10 +1,12 @@
 import '../models/question.dart';
 
-/// The runtime question bank.
+/// The hardcoded question bank.
 ///
-/// v1 intentionally starts empty. The legacy desktop 133-question bank is NOT
-/// imported because content rights are unresolved. Real curriculum content must
-/// be human-authored and rights-cleared before it is loaded here.
+/// This list is intentionally empty. The app's runtime questions are loaded
+/// from the bundled content pack (`assets/content-pack.json`) by
+/// `ContentPackLoader`, not from this list. Every slot of the existing desktop
+/// 133-question bank was rewritten from scratch; production content is authored
+/// fresh in the pack with a recorded rights basis.
 class QuestionBank {
   static const List<Question> productionBank = [];
 
@@ -24,6 +26,7 @@ class QuestionBank {
           explanation: 'Elasticity is the ability to scale resources up or down '
               'and pay for what you use.',
           domain: 'Cloud Concepts',
+          courseId: 'AZ-900',
           difficulty: 'easy',
         ),
         Question(
@@ -39,6 +42,7 @@ class QuestionBank {
           explanation: 'CapEx is upfront spending on physical assets such as '
               'server hardware.',
           domain: 'Cloud Concepts',
+          courseId: 'AZ-900',
           difficulty: 'easy',
         ),
         Question(
@@ -54,6 +58,7 @@ class QuestionBank {
           correctOptionIndex: 2,
           explanation: 'SaaS delivers fully managed applications.',
           domain: 'Cloud Architecture',
+          courseId: 'AZ-900',
           difficulty: 'medium',
         ),
       ];

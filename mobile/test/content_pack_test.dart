@@ -27,6 +27,7 @@ const String _validPackJson = '''
       "text": "Sample question one?",
       "options": ["A", "B", "C"],
       "correctOptionIndex": 1,
+      "explanation": "B is correct.",
       "domain": "Domain A",
       "difficulty": "easy",
       "source": "Per-question fixture",
@@ -142,6 +143,16 @@ void main() {
       expect(errors, contains(contains('missing or empty rightsBasis')));
     });
 
+    test('rejects missing per-question explanation', () {
+      final json = _validPackJson.replaceFirst(
+        '"explanation": "B is correct.",',
+        '',
+      );
+      final pack = ContentPack.parse(json);
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('missing or empty explanation')));
+    });
+
     test('rejects missing per-question courseId', () {
       final json = _validPackJson.replaceFirst(
         '"courseId": "az-900"',
@@ -194,6 +205,7 @@ void main() {
             "text": "Sample question one?",
             "options": ["A", "B", "C"],
             "correctOptionIndex": 1,
+            "explanation": "B is correct.",
             "domain": "Domain A",
             "difficulty": "easy",
             "source": "Per-question fixture",
@@ -309,6 +321,20 @@ void main() {
       final errors = ContentPackValidator(pack).validate();
       expect(errors, contains(contains('not a registered course')));
     });
+
+    test('rejects a pack with no questions', () {
+      final pack = ContentPack(
+        formatVersion: 'azpack-v2',
+        packId: 'empty-pack',
+        packVersion: 1,
+        title: 'Empty',
+        source: 'synthetic',
+        rightsBasis: 'synthetic',
+        questions: const [],
+      );
+      final errors = ContentPackValidator(pack).validate();
+      expect(errors, contains(contains('at least one question')));
+    });
   });
 
   group('ContentPack atomic application', () {
@@ -361,6 +387,35 @@ void main() {
       final success = await ContentPackLoader.loadPackFromString(store, badPack);
       expect(success, isFalse);
       expect(await store.getQuestions(), isEmpty);
+    });
+
+    test('pack without an explanation is rejected and writes nothing', () async {
+      final noExplanation = _validPackJson.replaceFirst(
+        '"explanation": "B is correct.",',
+        '',
+      );
+      final success =
+          await ContentPackLoader.loadPackFromString(store, noExplanation);
+      expect(success, isFalse);
+      expect(await store.getQuestions(), isEmpty);
+    });
+
+    test('storage failures are reported as false instead of propagating',
+        () async {
+      final db = await openTestDatabase();
+      final store = LocalStore.withDatabase(db);
+      await store.applyContentPack(ContentPack.parse(_validPackJson));
+      expect(await store.getQuestions(), hasLength(2));
+
+      // Every write against a closed database fails.
+      await db.close();
+
+      final success = await ContentPackLoader.loadPackFromString(
+        store,
+        _validPackJson,
+      );
+
+      expect(success, isFalse);
     });
 
     test('repeat loading does not duplicate questions', () async {
@@ -517,33 +572,6 @@ void main() {
       final success = await ContentPackLoader.loadPackFromString(store, 'not-json');
       expect(success, isFalse);
       await store.close();
-    });
-
-    test('dryRun returns validation errors without touching the store', () async {
-      const badPack = '''
-      {
-        "formatVersion": "azpack-v1",
-        "packId": "bad",
-        "packVersion": 1,
-        "title": "Bad",
-        "source": "synthetic",
-        "rightsBasis": "original-human",
-        "questions": [
-          {
-            "id": "q-001",
-            "text": "T",
-            "options": ["A", "B"],
-            "correctOptionIndex": 0,
-            "domain": "D",
-            "difficulty": "easy",
-            "source": "",
-            "rightsBasis": "original-human"
-          }
-        ]
-      }
-      ''';
-      final errors = ContentPackLoader.dryRun(badPack);
-      expect(errors, isNotEmpty);
     });
 
     test('fixture file parses and validates', () async {

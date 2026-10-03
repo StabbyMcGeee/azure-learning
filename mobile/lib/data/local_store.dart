@@ -7,6 +7,7 @@ import '../models/attempt.dart';
 import '../models/content_pack.dart';
 import '../models/question.dart';
 import '../models/session.dart';
+import '../models/study_status.dart';
 
 /// Thrown when a content pack is rejected because its version is lower than the
 /// version already recorded in the local pack ledger.
@@ -29,6 +30,87 @@ class LocalStore {
 
   Future<Database> get database async => _testDb ?? (_db ??= await _initDb());
 
+  // Column definitions are the single owner of the table shapes. A fresh
+  // install and the migrations both derive from these lists, so a column can
+  // never be added to one path and forgotten in the other.
+
+  static const List<String> _questionsV1Columns = [
+    'id TEXT PRIMARY KEY',
+    'text TEXT NOT NULL',
+    'options TEXT NOT NULL',
+    'correctOptionIndex INTEGER NOT NULL',
+    'explanation TEXT',
+    'domain TEXT NOT NULL',
+    'difficulty TEXT NOT NULL',
+  ];
+
+  static const List<String> _questionsV2Columns = [
+    ..._questionsV1Columns,
+    'source TEXT',
+    'rightsBasis TEXT',
+  ];
+
+  static const List<String> _questionsV3Columns = [
+    ..._questionsV2Columns,
+    'packId TEXT',
+    'courseId TEXT',
+  ];
+
+  static const List<String> _attemptsColumns = [
+    'id INTEGER PRIMARY KEY AUTOINCREMENT',
+    'questionId TEXT NOT NULL',
+    'selectedOptionIndex INTEGER NOT NULL',
+    'correct INTEGER NOT NULL',
+    'timestamp INTEGER NOT NULL',
+  ];
+
+  static const List<String> _sessionsV1Columns = [
+    'id TEXT PRIMARY KEY',
+    'mode TEXT NOT NULL',
+    'startedAt INTEGER NOT NULL',
+    'finishedAt INTEGER NOT NULL',
+    'questionCount INTEGER NOT NULL',
+    'correctCount INTEGER NOT NULL',
+    'scorePercent INTEGER',
+  ];
+
+  static const List<String> _sessionsV3Columns = [
+    ..._sessionsV1Columns,
+    'courseId TEXT',
+  ];
+
+  static const List<String> _packLedgerColumns = [
+    'packId TEXT PRIMARY KEY',
+    'version INTEGER NOT NULL',
+    'appliedAt INTEGER NOT NULL',
+  ];
+
+  static const List<String> _settingsColumns = [
+    'key TEXT PRIMARY KEY',
+    'value TEXT',
+  ];
+
+  static Future<void> _createTable(
+    Database db,
+    String table,
+    List<String> columns,
+  ) async {
+    await db.execute(
+      'CREATE TABLE IF NOT EXISTS $table(${columns.join(', ')})',
+    );
+  }
+
+  static Future<void> _addColumns(
+    Database db,
+    String table,
+    List<String> columns,
+  ) async {
+    for (final column in columns) {
+      await db.execute('ALTER TABLE $table ADD COLUMN $column');
+    }
+  }
+
+  /// Creates the current (v5) schema for a fresh database.
   static Future<void> createSchema(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS questions(
@@ -49,6 +131,7 @@ class LocalStore {
       CREATE TABLE IF NOT EXISTS attempts(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         questionId TEXT NOT NULL,
+        courseId TEXT,
         selectedOptionIndex INTEGER NOT NULL,
         correct INTEGER NOT NULL,
         timestamp INTEGER NOT NULL
@@ -79,6 +162,15 @@ class LocalStore {
         value TEXT
       )
     ''');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS study_status(
+        courseId TEXT NOT NULL,
+        questionId TEXT NOT NULL,
+        status TEXT NOT NULL,
+        updatedAt INTEGER NOT NULL,
+        PRIMARY KEY (courseId, questionId)
+      )
+    ''');
   }
 
   /// Creates the original v1 schema without provenance, pack, or course
@@ -87,64 +179,56 @@ class LocalStore {
   /// This helper exists only for migration testing; production code always
   /// uses [createSchema] for new databases.
   static Future<void> createV1Schema(Database db) async {
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS questions(
-        id TEXT PRIMARY KEY,
-        text TEXT NOT NULL,
-        options TEXT NOT NULL,
-        correctOptionIndex INTEGER NOT NULL,
-        explanation TEXT,
-        domain TEXT NOT NULL,
-        difficulty TEXT NOT NULL
-      )
-    ''');
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS attempts(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        questionId TEXT NOT NULL,
-        selectedOptionIndex INTEGER NOT NULL,
-        correct INTEGER NOT NULL,
-        timestamp INTEGER NOT NULL
-      )
-    ''');
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS sessions(
-        id TEXT PRIMARY KEY,
-        mode TEXT NOT NULL,
-        startedAt INTEGER NOT NULL,
-        finishedAt INTEGER NOT NULL,
-        questionCount INTEGER NOT NULL,
-        correctCount INTEGER NOT NULL,
-        scorePercent INTEGER
-      )
-    ''');
+    await _createTable(db, 'questions', _questionsV1Columns);
+    await _createTable(db, 'attempts', _attemptsColumns);
+    await _createTable(db, 'sessions', _sessionsV1Columns);
   }
 
   /// Migrates an existing v1 database to v2, adding provenance columns.
   static Future<void> migrateV1ToV2(Database db) async {
-    await db.execute('ALTER TABLE questions ADD COLUMN source TEXT');
-    await db.execute('ALTER TABLE questions ADD COLUMN rightsBasis TEXT');
+    await _addColumns(
+      db,
+      'questions',
+      _questionsV2Columns.sublist(_questionsV1Columns.length),
+    );
   }
 
   /// Migrates an existing v2 database to v3, adding pack/course identity
   /// columns and the pack ledger and settings tables.
   static Future<void> migrateV2ToV3(Database db) async {
-    await db.execute('ALTER TABLE questions ADD COLUMN packId TEXT');
-    await db.execute('ALTER TABLE questions ADD COLUMN courseId TEXT');
-    await db.execute('ALTER TABLE sessions ADD COLUMN courseId TEXT');
+    await _addColumns(
+      db,
+      'questions',
+      _questionsV3Columns.sublist(_questionsV2Columns.length),
+    );
+    await _addColumns(
+      db,
+      'sessions',
+      _sessionsV3Columns.sublist(_sessionsV1Columns.length),
+    );
+    await _createTable(db, 'pack_ledger', _packLedgerColumns);
+    await _createTable(db, 'settings', _settingsColumns);
+  }
+
+  /// Migrates an existing v3 database to v4, adding the per-course study
+  /// status table.
+  static Future<void> migrateV3ToV4(Database db) async {
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS pack_ledger(
-        packId TEXT PRIMARY KEY,
-        version INTEGER NOT NULL,
-        appliedAt INTEGER NOT NULL
+      CREATE TABLE IF NOT EXISTS study_status(
+        courseId TEXT NOT NULL,
+        questionId TEXT NOT NULL,
+        status TEXT NOT NULL,
+        updatedAt INTEGER NOT NULL,
+        PRIMARY KEY (courseId, questionId)
       )
     ''');
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS settings(
-        key TEXT PRIMARY KEY,
-        value TEXT
-      )
-    ''');
+  }
+
+  /// Migrates an existing v4 database to v5, adding the courseId column to
+  /// attempts so history rows keep their course attribution even when the
+  /// question row is retired or withdrawn.
+  static Future<void> migrateV4ToV5(Database db) async {
+    await db.execute('ALTER TABLE attempts ADD COLUMN courseId TEXT');
   }
 
   static Future<Database> _initDb() async {
@@ -152,7 +236,7 @@ class LocalStore {
     final path = join(dbPath, 'study_app.db');
     return openDatabase(
       path,
-      version: 3,
+      version: 5,
       onCreate: (db, version) async => createSchema(db),
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
@@ -160,6 +244,12 @@ class LocalStore {
         }
         if (oldVersion < 3) {
           await migrateV2ToV3(db);
+        }
+        if (oldVersion < 4) {
+          await migrateV3ToV4(db);
+        }
+        if (oldVersion < 5) {
+          await migrateV4ToV5(db);
         }
       },
     );
@@ -174,11 +264,13 @@ class LocalStore {
 
   /// Atomically applies a validated [ContentPack] to the question bank.
   ///
-  /// Existing questions with the same id are replaced, but attempt and session
-  /// history is left untouched because those rows live in separate tables.
-  /// Repeat calls with the same or a higher version are safe. A lower version
-  /// than the one recorded in the pack ledger is rejected and leaves the bank
-  /// unchanged.
+  /// After the call the applied version is the bank's only source of truth for
+  /// that `packId`: rows whose id is still carried are replaced and rows the
+  /// new version dropped are deleted, so retired content cannot linger. Attempt,
+  /// session, and study-status history is left untouched because those rows live
+  /// in separate tables. Repeat calls with the same or a higher version are
+  /// safe. A lower version than the one recorded in the pack ledger is rejected
+  /// and leaves the bank unchanged.
   Future<void> applyContentPack(ContentPack pack) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -237,6 +329,16 @@ class LocalStore {
         where: "key = 'contentLastVerifiedAt'",
       );
     }
+
+    // Replace this pack's existing rows inside the same transaction so a
+    // question dropped from a newer pack version is removed from the bank
+    // rather than left behind. This is pack-scoped replace-on-upgrade, not
+    // withdrawal: the ledger entry above is kept.
+    await txn.delete(
+      'questions',
+      where: 'packId = ?',
+      whereArgs: [pack.packId],
+    );
 
     // Record content-last-verified dates from the pack metadata. A per-course
     // date is recorded for every course present in the pack, plus a global date.
@@ -375,6 +477,11 @@ class LocalStore {
   }
 
   /// Returns the learner-selected course, or null when no course is selected.
+  ///
+  /// A stored id whose course is no longer in the bank (its pack was withdrawn
+  /// or replaced) is cleared here, so the dropdown and every other consumer
+  /// read the same selection instead of filtering to a course that has no
+  /// content.
   Future<String?> getSelectedCourseId() async {
     final db = await database;
     final rows = await db.query(
@@ -385,6 +492,11 @@ class LocalStore {
     if (rows.isEmpty) return null;
     final value = rows.first['value'] as String?;
     if (value == null || value.isEmpty) return null;
+    final courses = await getCourses();
+    if (!courses.contains(value)) {
+      await setSelectedCourseId(null);
+      return null;
+    }
     return value;
   }
 
@@ -396,6 +508,43 @@ class LocalStore {
       {'key': 'selectedCourseId', 'value': courseId ?? ''},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+  /// Persist the learner's study status for a single question.
+  Future<void> saveStudyStatus({
+    required String courseId,
+    required String questionId,
+    required StudyMaterialStatus status,
+    DateTime? updatedAt,
+  }) async {
+    final db = await database;
+    final record = StudyStatusRecord(
+      courseId: courseId,
+      questionId: questionId,
+      status: status,
+      updatedAt: updatedAt ?? DateTime.now(),
+    );
+    await db.insert(
+      'study_status',
+      record.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  /// Load all study statuses for a course, keyed by question id.
+  Future<Map<String, StudyMaterialStatus>> getStudyStatusesForCourse(
+      String courseId) async {
+    final db = await database;
+    final rows = await db.query(
+      'study_status',
+      where: 'courseId = ?',
+      whereArgs: [courseId],
+    );
+    return {
+      for (final row in rows)
+        row['questionId'] as String:
+            StudyMaterialStatusX.fromStorage(row['status'] as String),
+    };
   }
 
   Future<void> recordAttempt(Attempt attempt) async {
@@ -414,20 +563,20 @@ class LocalStore {
     return rows.map(Attempt.fromMap).toList();
   }
 
-  /// All recorded attempts, optionally filtered to a single course by joining
-  /// with the current question bank.
+  /// All recorded attempts, optionally filtered to a single course.
+  ///
+  /// Attempts written before courses existed have a NULL `courseId` and
+  /// belong to every course scope, so selecting a course never hides earlier
+  /// history.
   Future<List<Attempt>> getAttempts({String? courseId}) async {
     final db = await database;
     final rows = courseId == null
         ? await db.query('attempts', orderBy: 'timestamp DESC')
-        : await db.rawQuery(
-            '''
-            SELECT a.* FROM attempts a
-            INNER JOIN questions q ON q.id = a.questionId
-            WHERE q.courseId = ?
-            ORDER BY a.timestamp DESC
-            ''',
-            [courseId],
+        : await db.query(
+            'attempts',
+            where: 'courseId = ? OR courseId IS NULL',
+            whereArgs: [courseId],
+            orderBy: 'timestamp DESC',
           );
     return rows.map(Attempt.fromMap).toList();
   }
@@ -441,6 +590,10 @@ class LocalStore {
     );
   }
 
+  /// Sessions, optionally filtered by mode and course.
+  ///
+  /// Sessions without a `courseId` - every session recorded before courses
+  /// existed - belong to every course scope.
   Future<List<StudySession>> getSessions({String? mode, String? courseId}) async {
     final db = await database;
     final conditions = <String>[];
@@ -450,7 +603,7 @@ class LocalStore {
       whereArgs.add(mode);
     }
     if (courseId != null) {
-      conditions.add('courseId = ?');
+      conditions.add('(courseId = ? OR courseId IS NULL)');
       whereArgs.add(courseId);
     }
     final rows = conditions.isEmpty
@@ -526,5 +679,6 @@ class LocalStore {
     await db.delete('sessions');
     await db.delete('pack_ledger');
     await db.delete('settings');
+    await db.delete('study_status');
   }
 }

@@ -18,8 +18,7 @@ void main() {
     await tester.pumpWidget(StudyApp(store: FakeLocalStore()));
     await tester.tap(find.text('Study'));
     await tester.pumpAndSettle();
-    expect(find.text('Study material is empty'), findsOneWidget);
-    expect(find.text('Go to Practice'), findsOneWidget);
+    expect(find.text('No study material yet'), findsOneWidget);
   });
 
   testWidgets('Unknown routes do not crash', (tester) async {

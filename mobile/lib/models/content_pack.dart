@@ -274,6 +274,9 @@ class ContentPackValidator {
   }
 
   void _validateQuestions(List<String> errors) {
+    if (pack.questions.isEmpty) {
+      errors.add('Pack must contain at least one question');
+    }
     if (pack.questions.length > contentPackMaxQuestions) {
       errors.add(
         'Pack contains ${pack.questions.length} questions; '
@@ -294,6 +297,10 @@ class ContentPackValidator {
 
       if (q.text.trim().isEmpty) {
         errors.add('$prefix: missing or empty text');
+      }
+
+      if (q.explanation == null || q.explanation!.trim().isEmpty) {
+        errors.add('$prefix: missing or empty explanation');
       }
 
       if (q.options.length < 2) {

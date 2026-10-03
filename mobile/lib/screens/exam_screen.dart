@@ -81,8 +81,8 @@ class _ExamScreenState extends State<ExamScreen> {
       return const EmptyState(
         icon: Icons.assignment,
         title: 'No exam questions available',
-        message:
-            'Rights-cleared questions must be loaded before an exam can run.',
+        message: 'No exam content is available. The bundled course content '
+            'could not be loaded.',
       );
     }
     final question = _questions[_index];
@@ -183,6 +183,7 @@ class _ExamScreenState extends State<ExamScreen> {
         // Persist attempts only for answered items.
         await _store.recordAttempt(Attempt(
           questionId: q.id,
+          courseId: q.courseId,
           selectedOptionIndex: selected,
           correct: correct,
           timestamp: now,
@@ -190,12 +191,16 @@ class _ExamScreenState extends State<ExamScreen> {
       }
       // Unanswered items are wrong but not persisted.
     }
-    final courseId = await _store.getSelectedCourseId();
+    final courseIds = _questions
+        .map((q) => q.courseId)
+        .where((c) => c != null && c.isNotEmpty)
+        .toSet();
+    final sessionCourseId = courseIds.length == 1 ? courseIds.first : null;
     final sessionId = 'exam-${now.millisecondsSinceEpoch}';
     await _store.saveSession(StudySession(
       id: sessionId,
       mode: 'exam',
-      courseId: courseId,
+      courseId: sessionCourseId,
       startedAt: now.subtract(const Duration(minutes: 1)),
       finishedAt: now,
       questionCount: _questions.length,

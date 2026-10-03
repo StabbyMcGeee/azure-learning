@@ -7,6 +7,7 @@ class QuestionCard extends StatelessWidget {
   final Question question;
   final int? selectedIndex;
   final bool showResult;
+  final bool showDomain;
   final ValueChanged<int>? onSelect;
 
   const QuestionCard({
@@ -14,6 +15,7 @@ class QuestionCard extends StatelessWidget {
     required this.question,
     this.selectedIndex,
     this.showResult = false,
+    this.showDomain = true,
     this.onSelect,
   });
 
@@ -28,14 +30,16 @@ class QuestionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              question.domain,
-              style: theme.textTheme.labelLarge?.copyWith(
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 8),
+            if (showDomain) ...[
+              Text(
+                question.domain,
+                style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 8),
+            ],
             Text(
               question.text,
               style: theme.textTheme.titleMedium,

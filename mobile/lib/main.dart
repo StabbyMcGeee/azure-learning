@@ -8,9 +8,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final store = LocalStore();
-  // If a content pack is bundled at assets/content-pack.json, load it.
-  // If the asset is absent or invalid, the app starts with the empty v1 bank
-  // and any existing attempt/session history remains intact.
+  // If a content pack is bundled at assets/content-pack.json, load it. The
+  // loader never throws: a missing, invalid, or unwritable pack leaves the
+  // current bank and any existing attempt/session history intact.
   await ContentPackLoader.loadBundledPackIfPresent(store);
 
   runApp(StudyApp(store: store));

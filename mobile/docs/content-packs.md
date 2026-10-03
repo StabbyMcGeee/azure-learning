@@ -4,11 +4,13 @@ The mobile app uses a bounded, versioned offline content-pack format called
 **azpack-v2**. A pack is a single JSON file that carries both pack-level and
 per-question provenance metadata. The app parses, validates, and applies packs
 atomically to its SQLite question bank. Missing or invalid packs leave the bank
-empty and preserve all user attempt/session history.
+unchanged and preserve all user attempt/session history.
 
 > **Important:** Provenance metadata is required, but it does **not** by itself
-> prove that a question is rights-cleared. Real curriculum must be human-authored
-> or commercially licensed and reviewed by the project before it is shipped.
+> prove that a question is rights-cleared. Curriculum must carry a recorded
+> rights basis — original AI-fleet-authored material with the captain as the
+> human reviewer, or commercially licensed content — and a qualified human legal
+> review is still required before paid sale.
 
 ## Where packs are loaded from
 
@@ -18,8 +20,9 @@ On startup the app attempts to load a bundled asset at:
 assets/content-pack.json
 ```
 
-If the asset is absent, malformed, unsupported, or invalid, the loader returns
-`false` and the app keeps the current empty production bank. No error is shown
+If the asset is absent, malformed, unsupported, invalid, or cannot be written to
+the database, the loader returns `false` and the app keeps the current bank. It
+never throws, so startup always reaches the first frame. No error is shown
 to the user. To ship a pack, place the prepared JSON file at that path and make
 sure it is listed in the `assets` section of `pubspec.yaml`.
 
@@ -31,8 +34,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
   "packId": "com.example.studyapp.az900.v1",
   "packVersion": 1,
   "title": "Example AZ-900 Study Pack",
-  "source": "Original human-authored content",
-  "rightsBasis": "original-human",
+  "source": "Original AI-fleet-authored content; publisher review PENDING",
+  "rightsBasis": "original-human-ai-assisted",
   "lastVerifiedAt": "2026-10-02",
   "questions": [
     {
@@ -48,8 +51,8 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
       "explanation": "Elasticity is the ability to scale resources up or down and pay for what you use.",
       "domain": "Cloud Concepts",
       "difficulty": "easy",
-      "source": "Original human-authored content",
-      "rightsBasis": "original-human",
+      "source": "Original AI-fleet-authored content; publisher review PENDING",
+      "rightsBasis": "original-human-ai-assisted",
       "courseId": "az-900"
     }
   ]
@@ -79,7 +82,7 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 | `text`                | string  | yes      | Question prompt.                                                               |
 | `options`             | array   | yes      | At least two strings.                                                          |
 | `correctOptionIndex`  | int     | yes      | Zero-based index into `options`.                                               |
-| `explanation`         | string  | no       | Explanation shown after answering.                                             |
+| `explanation`         | string  | yes      | Explanation shown with the correct answer in study mode.               |
 | `domain`              | string  | yes      | Domain or topic tag.                                                           |
 | `difficulty`          | string  | yes      | Difficulty label.                                                              |
 | `source`              | string  | yes      | Per-question source; can differ from pack-level source.                        |
@@ -90,7 +93,15 @@ sure it is listed in the `assets` section of `pubspec.yaml`.
 
 The `courseId` is never hardcoded in the app. A learner can select any course
 present in the loaded packs, and study, practice, exam, review, and progress
-screens scope their content to that selection.
+screens scope their content to that selection. A stored selection whose course
+is no longer in the bank (its pack was withdrawn or replaced) is cleared, so
+every screen falls back to all content instead of an empty course. History rows
+that carry no `courseId` - sessions and attempts written before courses existed,
+or attempts whose source question never had a `courseId` - count in every course
+scope, so selecting a course never hides earlier history. Attempts written by
+the current app record the answered question's `courseId`, so even if that
+question's pack is later withdrawn the attempt remains scoped to its original
+course and is not attributed to any other course.
 
 ## Validation
 
@@ -102,6 +113,7 @@ Before any database write the parser/validator checks:
 - All required pack-level and per-question string fields are present and non-empty.
 - Optional string fields (`licenseRef`, `attributionText`, `lastVerifiedAt`) are
   strings when present; non-string values throw `FormatException`.
+- Every question has an `explanation`, so study mode always shows the answer together with its reasoning.
 - Every question has at least two options.
 - `correctOptionIndex` is within the range of the options array.
 - All question IDs are unique within the pack.
@@ -132,22 +144,17 @@ one already recorded. Equal and higher versions are accepted, making repeat
 loads and upgrades safe. The ledger entry is written inside the same transaction
 as the question rows, so a failed write never leaves a stale ledger behind.
 
-## Per-pack withdrawal
-
-A pack can be withdrawn by `packId`. This deletes every question row that
-carries that `packId` and removes the ledger entry for the pack. Attempts and
-sessions are not touched, and questions from other packs remain in the bank.
-After withdrawal, the withdrawn pack can be re-applied at any version because its
-ledger entry has been cleared.
-
 ## Atomic application and repeat safety
 
 Packs are applied inside a single SQLite transaction. If any part of the write
 fails, the whole transaction rolls back and the database is unchanged.
 
-Question rows are keyed by `id`. Re-applying the same pack, or applying a newer
-version with overlapping IDs, replaces the matching question rows but never
-touches the `attempts` or `sessions` tables. This makes repeat loading safe and
+Question rows are keyed by `id`. Applying a pack makes the applied version the
+only source of rows for that `packId`: rows the pack still carries are replaced
+and rows it no longer carries are deleted, so retired content cannot linger in
+the bank. A pack with no questions is rejected (it would otherwise erase the
+bank). Other packs' rows are never touched, and the `attempts`, `sessions`,
+and `study_status` tables are left alone. This makes repeat loading safe and
 keeps user history intact.
 
 ## Schema migration from v1
@@ -179,9 +186,33 @@ CREATE TABLE settings(
 ```
 
 Existing rows receive `NULL` pack/course identity. The migrations run
-automatically when an older database is opened at version 3.
+automatically when an older database is opened at version 5.
 
-## How to prepare a future human-authored or licensed pack
+### v4 study-status migration
+
+The v4 schema adds the per-course study status table:
+
+```sql
+CREATE TABLE study_status(
+  courseId TEXT NOT NULL,
+  questionId TEXT NOT NULL,
+  status TEXT NOT NULL,
+  updatedAt INTEGER NOT NULL,
+  PRIMARY KEY (courseId, questionId)
+);
+```
+
+### v5 attempt-courseId migration
+
+The v5 schema adds a `courseId` column to `attempts` so that history rows keep
+their course attribution even when the question row they answer is retired or
+withdrawn:
+
+```sql
+ALTER TABLE attempts ADD COLUMN courseId TEXT;
+```
+
+## How to prepare a future pack
 
 1. Produce or license original questions.
 2. Record, for every question, the source author/licensor, the rights basis,
@@ -189,18 +220,20 @@ automatically when an older database is opened at version 3.
 3. Build a JSON file matching the `azpack-v2` schema above and run the
    terminology lint over the content (the validator does this automatically).
 4. Validate the file locally:
-   - Use `ContentPackLoader.dryRun(jsonString)` in a Dart script or test.
+   - Parse it with `ContentPack.parse(jsonString)` and assert that
+     `ContentPackValidator(pack).validate()` is empty in a Dart script or test.
+   - Run the mobile tests, which exercise the validator with synthetic fixtures,
+     or run `tool/build_content_pack.py` to regenerate and validate the
+     production pack.
    - Run `dart run tool/validate_evidence_register.dart` to validate the
      private evidence register (`data/evidence-register.json`).
-   - Or run the mobile tests, which exercise the validator with synthetic fixtures.
 5. Place the validated file at `assets/content-pack.json` and register it in
    `pubspec.yaml`. Keep the private evidence register out of `assets/`.
 6. Update `packVersion` when you revise content so the app can detect and
-   replace older rows.
-
-Do not reuse the legacy 133 desktop questions unless their rights are
-independently cleared. Do not ship the synthetic demo fixture as production
-content.
+   replace older rows and drop the items the new version retires.
+Rewrite any item of the existing 133-question desktop bank that carries a
+legal issue, and do not reuse its wording, unless its rights are independently
+cleared. Do not ship the synthetic demo fixture as production content.
 
 ## Example: loading a pack in a test
 

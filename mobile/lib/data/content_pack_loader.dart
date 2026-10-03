@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import '../models/content_pack.dart';
@@ -6,9 +5,10 @@ import 'local_store.dart';
 
 /// Loads bounded, versioned offline content packs into a [LocalStore].
 ///
-/// The loader is defensive: malformed, unsupported, or missing packs are
-/// ignored so the app always falls back to the current empty question bank and
-/// preserved user history.
+/// The loader is total: every problem - a missing asset, malformed JSON, an
+/// unsupported or invalid pack, a rejected downgrade, or a storage failure -
+/// leaves the question bank and user history untouched instead of throwing, so
+/// callers can always fall back to the current bank.
 class ContentPackLoader {
   static const String defaultAssetPath = 'assets/content-pack.json';
 
@@ -18,56 +18,40 @@ class ContentPackLoader {
   ///
   /// Returns `true` when a pack was found, parsed, validated, and applied.
   /// Returns `false` for any problem, including a missing asset, so the app
-  /// keeps its existing empty bank.
+  /// keeps its existing bank.
   static Future<bool> loadBundledPackIfPresent(
     LocalStore store, {
     String assetPath = defaultAssetPath,
   }) async {
     try {
       final jsonString = await rootBundle.loadString(assetPath);
-      return await ContentPackLoader.loadPackFromString(store, jsonString);
-    } on FlutterError {
-      // Asset not found or not registered. Keep the empty bank.
-      return false;
-    } on FormatException {
+      return await loadPackFromString(store, jsonString);
+    } on Object {
       return false;
     }
   }
 
   /// Parses, validates, and applies a pack from a raw JSON string.
   ///
-  /// Returns `true` on success, `false` when the pack is invalid.
+  /// Returns `true` on success, `false` when the pack is invalid or could not
+  /// be applied.
   static Future<bool> loadPackFromString(LocalStore store, String jsonString) async {
-    late final ContentPack pack;
+    final ContentPack pack;
     try {
       pack = ContentPack.parse(jsonString);
     } on FormatException {
       return false;
     }
 
-    final errors = ContentPackValidator(pack).validate();
-    if (errors.isNotEmpty) {
+    if (ContentPackValidator(pack).validate().isNotEmpty) {
       return false;
     }
 
     try {
       await store.applyContentPack(pack);
-      return true;
-    } on PackVersionTooLowException {
+    } on Object {
       return false;
     }
-  }
-
-  /// Parses a pack without applying it, returning validation errors.
-  ///
-  /// This is useful for diagnostics and tooling. An empty error list does not
-  /// prove that rights are cleared.
-  static List<String> dryRun(String jsonString) {
-    try {
-      final pack = ContentPack.parse(jsonString);
-      return ContentPackValidator(pack).validate();
-    } on FormatException catch (e) {
-      return [e.message];
-    }
+    return true;
   }
 }
